@@ -1,3 +1,39 @@
 grumphp:
     tasks:
         composer: null
+        git_blacklist:
+            keywords:
+                - "die("
+                - "var_dump("
+                - "exit;"
+                - "dump("
+                - "print_r("
+                - "exit("
+        git_commit_message:
+            allow_empty_message: false
+            enforce_capitalized_subject: false
+            type_scope_conventions:
+                types:
+                    - build
+                    - ci
+                    - chore
+                    - docs
+                    - feat
+                    - fix
+                    - perf
+                    - refactor
+                    - revert
+                    - style
+                    - test
+                scopes: []
+        composer_script:
+            script: test:yaml
+        composer_script_2:
+            script: test:twig
+            metadata:
+                task: composer_script
+        phpcsfixer:
+            config: .php-cs-fixer.dist.php
+        phpstan:
+    fixer:
+        enabled: false
