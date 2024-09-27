@@ -10,8 +10,9 @@ class SemesterFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        SemesterFactory::createMany(20);
-
+        for ($i = 1; $i <= 6; ++$i) {
+            SemesterFactory::createOne(['number' => $i]);
+        }
         $manager->flush();
     }
 }
