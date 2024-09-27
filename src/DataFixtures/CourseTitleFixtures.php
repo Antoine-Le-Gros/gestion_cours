@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Factory\CourseTitleFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class CourseTitleFixtures extends Fixture implements DependentFixtureInterface
