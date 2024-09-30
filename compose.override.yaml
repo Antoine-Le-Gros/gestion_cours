@@ -1,18 +1,23 @@
+version: '3.8'
 
 services:
-###> doctrine/doctrine-bundle ###
+  ###> doctrine/doctrine-bundle ###
   database:
     ports:
-      - "5432"
-###< doctrine/doctrine-bundle ###
+      - "5432:5432"
+  ###< doctrine/doctrine-bundle ###
 
-###> symfony/mailer ###
-  mailer:
-    image: axllent/mailpit
+  ###> symfony/mailer ###
+  adminer:
+    image: adminer  # Utilisation de l'image officielle Adminer
     ports:
-      - "1025"
-      - "8025"
+      - "7080:8080"  # Expose Adminer sur le port 7080 de l'hôte
     environment:
-      MP_SMTP_AUTH_ACCEPT_ANY: 1
-      MP_SMTP_AUTH_ALLOW_INSECURE: 1
-###< symfony/mailer ###
+      ADMINER_DB: ${POSTGRES_DB:-sae5}  # Nom de la base de données
+      ADMINER_DRIVER: pgsql  # Type de base de données
+      ADMINER_PASSWORD: ${POSTGRES_PASSWORD:-test}  # Mot de passe de la base de données
+      ADMINER_SERVER: database  # Nom du service PostgreSQL dans docker-compose.yml
+      ADMINER_USERNAME: ${POSTGRES_USER:-test}  # Nom d'utilisateur pour la base de données
+      ADMINER_AUTOLOGIN: 1
+      ADMINER_NAME: This will be in the title!
+  ###< symfony/mailer ###
