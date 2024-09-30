@@ -6,6 +6,7 @@ use App\Repository\TypeCourseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TypeCourseRepository::class)]
 class TypeCourse
@@ -16,6 +17,7 @@ class TypeCourse
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\Choice(choices: ['CM', 'TP', 'TD', 'TDM'])]
     private ?string $name = null;
 
     /**

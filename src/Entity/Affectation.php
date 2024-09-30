@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AffectationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AffectationRepository::class)]
 class Affectation
@@ -20,6 +21,7 @@ class Affectation
     private ?User $teacher = null;
 
     #[ORM\Column]
+    #[Assert\GreaterThan(0)]
     private ?int $numberGroupTaken = null;
 
     public function getId(): ?int
