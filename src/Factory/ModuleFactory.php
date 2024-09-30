@@ -33,7 +33,7 @@ final class ModuleFactory extends PersistentProxyObjectFactory
     {
         return [
             'name' => self::faker()->text(255),
-            'semester' => SemesterFactory::new(),
+            'semester' => SemesterFactory::random(),
         ];
     }
 
