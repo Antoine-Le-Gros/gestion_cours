@@ -14,4 +14,13 @@ class CourseFixtures extends Fixture
 
         $manager->flush();
     }
+
+    public function getDependencies(): array
+    {
+        return [
+            TypeCourseFixtures::class,
+            CourseTitleFixtures::class,
+
+        ];
+    }
 }
