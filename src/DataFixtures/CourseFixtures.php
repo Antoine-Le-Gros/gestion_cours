@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Factory\CourseFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -9,8 +10,7 @@ class CourseFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        // $product = new Product();
-        // $manager->persist($product);
+        CourseFactory::createMany(50);
 
         $manager->flush();
     }

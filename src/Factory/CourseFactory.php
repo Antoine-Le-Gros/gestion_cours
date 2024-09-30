@@ -32,8 +32,13 @@ final class CourseFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         $gpMax = self::faker()->numberBetween(1, 5);
+        $Sae = null;
+        if (self::random() < 0.2) {
+            $Sae = self::faker()->text(30);
+        }
         return [
             'groupMaxNumber' => $gpMax,
+            'SAESupport' => $Sae,
             'courseTitle' => CourseTitleFactory::random(),
             'typeCourse' => TypeCourseFactory::random(),
             'year' => YearFactory::random(),
