@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\HourlyVolumeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: HourlyVolumeRepository::class)]
 class HourlyVolume
@@ -14,9 +15,11 @@ class HourlyVolume
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\Range(min: 1, max: 53)]
     private ?int $week = null;
 
     #[ORM\Column]
+    #[Assert\GreaterThanOrEqual(0)]
     private ?float $volume = null;
 
     #[ORM\ManyToOne(inversedBy: 'hourlyVolumes')]
