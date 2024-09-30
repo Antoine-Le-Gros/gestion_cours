@@ -33,9 +33,10 @@ final class CourseFactory extends PersistentProxyObjectFactory
     {
         $gpMax = self::faker()->numberBetween(1, 5);
         $Sae = null;
-        if (self::random() < 0.2) {
+        if (rand(0, 10) < 2) {
             $Sae = self::faker()->text(30);
         }
+
         return [
             'groupMaxNumber' => $gpMax,
             'SAESupport' => $Sae,
