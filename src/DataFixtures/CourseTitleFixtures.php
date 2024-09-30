@@ -2,23 +2,23 @@
 
 namespace App\DataFixtures;
 
-use App\Factory\UserFactory;
+use App\Factory\CourseTitleFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class UserFixtures extends Fixture implements DependentFixtureInterface
+class CourseTitleFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        UserFactory::createMany(10);
+        CourseTitleFactory::createMany(20);
         $manager->flush();
     }
 
     public function getDependencies(): array
     {
         return [
-            ExternalHourRecordFixtures::class,
+            ModuleFixtures::class,
         ];
     }
 }
