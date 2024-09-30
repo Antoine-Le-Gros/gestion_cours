@@ -20,7 +20,7 @@ class CourseFixtures extends Fixture
         return [
             TypeCourseFixtures::class,
             CourseTitleFixtures::class,
-
+            YearFixtures::class,
         ];
     }
 }
