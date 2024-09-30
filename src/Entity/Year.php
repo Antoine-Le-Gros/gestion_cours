@@ -27,6 +27,9 @@ class Year
     #[ORM\OneToMany(targetEntity: ExternalHourRecord::class, mappedBy: 'year', orphanRemoval: true)]
     private Collection $externalHourRecords;
 
+    #[ORM\Column(length: 9)]
+    private ?string $name = null;
+
     public function __construct()
     {
         $this->courses = new ArrayCollection();
@@ -94,6 +97,18 @@ class Year
                 $externalHourRecord->setYear(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
 
         return $this;
     }
