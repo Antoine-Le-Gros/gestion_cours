@@ -73,5 +73,11 @@ php bin/console doctrine:migrations:migrate --no-interaction
 php bin/console doctrine:fixtures:load --no-interaction
 ```
 
-
+## Identifiants
+### Base de données
+Voici l'identifiants utilisé dans le projet pour se connecter à la base de données __PostgreSQL__ :
+```
+Login : test
+Mot de passe : test
+```
 
