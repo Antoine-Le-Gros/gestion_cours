@@ -77,7 +77,10 @@ php bin/console doctrine:fixtures:load --no-interaction
 ### Base de données
 Voici l'identifiants utilisé dans le projet pour se connecter à la base de données __PostgreSQL__ :
 ```
-Login : test
+Serveur : database
+Utilisateur : test
 Mot de passe : test
+Base de données : sae5
 ```
+La base de données est disponible à l'URL : http://localhost:7080
 
