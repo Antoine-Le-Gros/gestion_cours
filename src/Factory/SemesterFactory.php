@@ -33,6 +33,7 @@ final class SemesterFactory extends PersistentProxyObjectFactory
     {
         return [
             'number' => self::faker()->numberBetween(1, 6),
+            'year' => YearFactory::random(),
         ];
     }
 
