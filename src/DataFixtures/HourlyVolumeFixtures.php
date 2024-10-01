@@ -19,6 +19,7 @@ class HourlyVolumeFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             CourseFixtures::class,
+            WeekFixtures::class,
         ];
     }
 }
