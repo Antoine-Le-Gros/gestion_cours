@@ -18,10 +18,6 @@ class Course
 
     #[ORM\ManyToOne(inversedBy: 'courses')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Year $year = null;
-
-    #[ORM\ManyToOne(inversedBy: 'courses')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?CourseTitle $courseTitle = null;
 
     #[ORM\ManyToOne(inversedBy: 'courses')]
@@ -56,18 +52,6 @@ class Course
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getYear(): ?Year
-    {
-        return $this->year;
-    }
-
-    public function setYear(?Year $year): static
-    {
-        $this->year = $year;
-
-        return $this;
     }
 
     public function getCourseTitle(): ?CourseTitle
