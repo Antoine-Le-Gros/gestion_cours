@@ -21,6 +21,7 @@ class SemesterFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             WeekFixtures::class,
+            YearFixtures::class,
         ];
     }
 }
