@@ -27,10 +27,12 @@ final class AffectationFactory extends PersistentProxyObjectFactory
      */
     protected function defaults(): array|callable
     {
+        $course = CourseFactory::random();
+
         return [
-            'course' => CourseFactory::random(),
+            'course' => $course,
             'teacher' => UserFactory::random(),
-            'numberGroupTaken' => self::faker()->randomNumber(),
+            'numberGroupTaken' => self::faker()->numberBetween(1, $course->getGroupMaxNumber()),
         ];
     }
 
