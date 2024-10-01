@@ -31,14 +31,14 @@ final class ModuleFactory extends PersistentProxyObjectFactory
      */
     protected function defaults(): array|callable
     {
-        return [
-            'semester' => SemesterFactory::random(),
-            'name' => function () {
-                $semester = SemesterFactory::random();
-                $randomDigits = self::faker()->randomNumber(2, true);
+        $semester = SemesterFactory::random();
+        $randomDigits = self::faker()->randomNumber(2, true);
 
-                return 'MR'.$semester->getNumber().$randomDigits;
-            },
+        $name = 'MR'.$semester->getNumber().$randomDigits;
+
+        return [
+            'semester' => $semester,
+            'name' => $name,
         ];
     }
 
