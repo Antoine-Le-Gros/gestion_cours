@@ -24,9 +24,16 @@ class Week
     #[ORM\ManyToMany(targetEntity: Semester::class, inversedBy: 'weeks')]
     private Collection $semesters;
 
+    /**
+     * @var Collection<int, HourlyVolume>
+     */
+    #[ORM\OneToMany(targetEntity: HourlyVolume::class, mappedBy: 'week', orphanRemoval: true)]
+    private Collection $hourlyVolumes;
+
     public function __construct()
     {
         $this->semesters = new ArrayCollection();
+        $this->hourlyVolumes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -66,6 +73,36 @@ class Week
     public function removeSemester(Semester $semester): static
     {
         $this->semesters->removeElement($semester);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, HourlyVolume>
+     */
+    public function getHourlyVolumes(): Collection
+    {
+        return $this->hourlyVolumes;
+    }
+
+    public function addHourlyVolume(HourlyVolume $hourlyVolume): static
+    {
+        if (!$this->hourlyVolumes->contains($hourlyVolume)) {
+            $this->hourlyVolumes->add($hourlyVolume);
+            $hourlyVolume->setWeek($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHourlyVolume(HourlyVolume $hourlyVolume): static
+    {
+        if ($this->hourlyVolumes->removeElement($hourlyVolume)) {
+            // set the owning side to null (unless already changed)
+            if ($hourlyVolume->getWeek() === $this) {
+                $hourlyVolume->setWeek(null);
+            }
+        }
 
         return $this;
     }
