@@ -24,7 +24,7 @@ class Course
     #[ORM\JoinColumn(nullable: false)]
     private ?TypeCourse $typeCourse = null;
 
-    #[ORM\Column(length: 20, nullable: true)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $SAESupport = null;
 
     #[ORM\Column]

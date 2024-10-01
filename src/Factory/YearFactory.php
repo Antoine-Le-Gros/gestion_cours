@@ -22,7 +22,7 @@ final class YearFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'year' => 2024,
+            'name' => '2024/2025',
         ];
     }
 
