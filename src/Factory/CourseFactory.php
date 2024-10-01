@@ -42,7 +42,6 @@ final class CourseFactory extends PersistentProxyObjectFactory
             'SAESupport' => $Sae,
             'courseTitle' => CourseTitleFactory::random(),
             'typeCourse' => TypeCourseFactory::random(),
-            'year' => YearFactory::random(),
         ];
     }
 

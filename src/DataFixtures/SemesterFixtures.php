@@ -4,9 +4,10 @@ namespace App\DataFixtures;
 
 use App\Factory\SemesterFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class SemesterFixtures extends Fixture
+class SemesterFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -14,5 +15,12 @@ class SemesterFixtures extends Fixture
             SemesterFactory::createOne(['number' => $i]);
         }
         $manager->flush();
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            WeekFixtures::class,
+        ];
     }
 }

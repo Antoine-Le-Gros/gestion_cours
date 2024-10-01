@@ -2,13 +2,13 @@
 
 namespace App\Factory;
 
-use App\Entity\Semester;
+use App\Entity\Week;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<Semester>
+ * @extends PersistentProxyObjectFactory<Week>
  */
-final class SemesterFactory extends PersistentProxyObjectFactory
+final class WeekFactory extends PersistentProxyObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
@@ -21,7 +21,7 @@ final class SemesterFactory extends PersistentProxyObjectFactory
 
     public static function class(): string
     {
-        return Semester::class;
+        return Week::class;
     }
 
     /**
@@ -32,8 +32,7 @@ final class SemesterFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'number' => self::faker()->numberBetween(1, 6),
-            'year' => YearFactory::random(),
+            'number' => self::faker()->numberBetween(1, 52),
         ];
     }
 
@@ -43,7 +42,7 @@ final class SemesterFactory extends PersistentProxyObjectFactory
     protected function initialize(): static
     {
         return $this
-            // ->afterInstantiate(function(Semester $semester): void {})
+            // ->afterInstantiate(function(Week $week): void {})
         ;
     }
 }

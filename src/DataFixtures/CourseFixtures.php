@@ -4,9 +4,10 @@ namespace App\DataFixtures;
 
 use App\Factory\CourseFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class CourseFixtures extends Fixture
+class CourseFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -20,7 +21,6 @@ class CourseFixtures extends Fixture
         return [
             TypeCourseFixtures::class,
             CourseTitleFixtures::class,
-            YearFixtures::class,
         ];
     }
 }

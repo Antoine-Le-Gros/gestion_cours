@@ -32,8 +32,13 @@ final class ModuleFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'name' => self::faker()->text(255),
             'semester' => SemesterFactory::random(),
+            'name' => function () {
+                $semester = SemesterFactory::random();
+                $randomDigits = self::faker()->randomNumber(2, true);
+
+                return 'MR'.$semester->getNumber().$randomDigits;
+            },
         ];
     }
 
