@@ -16,12 +16,6 @@ class Year
     private ?int $id = null;
 
     /**
-     * @var Collection<int, Course>
-     */
-    #[ORM\OneToMany(targetEntity: Course::class, mappedBy: 'year', orphanRemoval: true)]
-    private Collection $courses;
-
-    /**
      * @var Collection<int, ExternalHourRecord>
      */
     #[ORM\OneToMany(targetEntity: ExternalHourRecord::class, mappedBy: 'year', orphanRemoval: true)]
@@ -30,45 +24,21 @@ class Year
     #[ORM\Column(length: 9)]
     private ?string $name = null;
 
+    /**
+     * @var Collection<int, Semester>
+     */
+    #[ORM\OneToMany(targetEntity: Semester::class, mappedBy: 'year', orphanRemoval: true)]
+    private Collection $semesters;
+
     public function __construct()
     {
-        $this->courses = new ArrayCollection();
         $this->externalHourRecords = new ArrayCollection();
+        $this->semesters = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection<int, Course>
-     */
-    public function getCourses(): Collection
-    {
-        return $this->courses;
-    }
-
-    public function addCourse(Course $course): static
-    {
-        if (!$this->courses->contains($course)) {
-            $this->courses->add($course);
-            $course->setYear($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCourse(Course $course): static
-    {
-        if ($this->courses->removeElement($course)) {
-            // set the owning side to null (unless already changed)
-            if ($course->getYear() === $this) {
-                $course->setYear(null);
-            }
-        }
-
-        return $this;
     }
 
     /**
@@ -109,6 +79,36 @@ class Year
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Semester>
+     */
+    public function getSemesters(): Collection
+    {
+        return $this->semesters;
+    }
+
+    public function addSemester(Semester $semester): static
+    {
+        if (!$this->semesters->contains($semester)) {
+            $this->semesters->add($semester);
+            $semester->setYear($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSemester(Semester $semester): static
+    {
+        if ($this->semesters->removeElement($semester)) {
+            // set the owning side to null (unless already changed)
+            if ($semester->getYear() === $this) {
+                $semester->setYear(null);
+            }
+        }
 
         return $this;
     }

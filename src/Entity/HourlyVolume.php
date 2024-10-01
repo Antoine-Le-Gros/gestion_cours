@@ -15,10 +15,6 @@ class HourlyVolume
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Assert\Range(min: 1, max: 53)]
-    private ?int $week = null;
-
-    #[ORM\Column]
     #[Assert\GreaterThanOrEqual(0)]
     private ?float $volume = null;
 
@@ -26,21 +22,13 @@ class HourlyVolume
     #[ORM\JoinColumn(nullable: false)]
     private ?Course $course = null;
 
+    #[ORM\ManyToOne(inversedBy: 'hourlyVolumes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Week $week = null;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getWeek(): ?int
-    {
-        return $this->week;
-    }
-
-    public function setWeek(int $week): static
-    {
-        $this->week = $week;
-
-        return $this;
     }
 
     public function getVolume(): ?float
@@ -63,6 +51,18 @@ class HourlyVolume
     public function setCourse(?Course $course): static
     {
         $this->course = $course;
+
+        return $this;
+    }
+
+    public function getWeek(): ?Week
+    {
+        return $this->week;
+    }
+
+    public function setWeek(?Week $week): static
+    {
+        $this->week = $week;
 
         return $this;
     }

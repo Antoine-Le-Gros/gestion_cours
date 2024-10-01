@@ -26,9 +26,20 @@ class Semester
     #[ORM\OneToMany(targetEntity: Module::class, mappedBy: 'semester', orphanRemoval: true)]
     private Collection $modules;
 
+    #[ORM\ManyToOne(inversedBy: 'semesters')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Year $year = null;
+
+    /**
+     * @var Collection<int, Week>
+     */
+    #[ORM\ManyToMany(targetEntity: Week::class, mappedBy: 'semesters')]
+    private Collection $weeks;
+
     public function __construct()
     {
         $this->modules = new ArrayCollection();
+        $this->weeks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -73,6 +84,45 @@ class Semester
             if ($module->getSemester() === $this) {
                 $module->setSemester(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getYear(): ?Year
+    {
+        return $this->year;
+    }
+
+    public function setYear(?Year $year): static
+    {
+        $this->year = $year;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Week>
+     */
+    public function getWeeks(): Collection
+    {
+        return $this->weeks;
+    }
+
+    public function addWeek(Week $week): static
+    {
+        if (!$this->weeks->contains($week)) {
+            $this->weeks->add($week);
+            $week->addSemester($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWeek(Week $week): static
+    {
+        if ($this->weeks->removeElement($week)) {
+            $week->removeSemester($this);
         }
 
         return $this;
