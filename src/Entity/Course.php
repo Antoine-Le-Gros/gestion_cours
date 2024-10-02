@@ -2,45 +2,71 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\CourseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CourseRepository::class)]
+#[ApiResource(
+    operations: [
+        new GetCollection(),
+        new Post(securityPostDenormalize: "is_granted('ROLE_ADMIN')"),
+        new Get(),
+        new Patch(securityPostDenormalize: "is_granted('ROLE_ADMIN')"),
+        new Delete(securityPostDenormalize: "is_granted('ROLE_ADMIN')"),
+    ],
+    normalizationContext: ['groups' => ['course_read']],
+    denormalizationContext: ['groups' => ['course_write']],
+    order: ['courseTitle' => 'ASC'],
+)]
 class Course
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['course_read'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'courses')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['course_read', 'course_write', 'affectation_read'])]
     private ?CourseTitle $courseTitle = null;
 
     #[ORM\ManyToOne(inversedBy: 'courses')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['course_read', 'course_write'])]
     private ?TypeCourse $typeCourse = null;
 
     #[ORM\Column(length: 50, nullable: true)]
+    #[Groups(['course_read', 'course_write'])]
     private ?string $SAESupport = null;
 
     #[ORM\Column]
     #[Assert\GreaterThan(0)]
+    #[Groups(['course_read', 'course_write'])]
     private ?int $groupMaxNumber = null;
 
     /**
      * @var Collection<int, Affectation>
      */
     #[ORM\OneToMany(targetEntity: Affectation::class, mappedBy: 'course')]
+    #[Groups(['course_read', 'course_write'])]
     private Collection $affectations;
 
     /**
      * @var Collection<int, HourlyVolume>
      */
     #[ORM\OneToMany(targetEntity: HourlyVolume::class, mappedBy: 'course', orphanRemoval: true)]
+    #[Groups(['course_read'])]
     private Collection $hourlyVolumes;
 
     public function __construct()

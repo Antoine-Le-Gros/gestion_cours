@@ -2,27 +2,46 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\WeekRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: WeekRepository::class)]
+#[ApiResource(
+    operations: [
+        new GetCollection(),
+        new Post(securityPostDenormalize: "is_granted('ROLE_ADMIN')"),
+        new Get(),
+        new Patch(securityPostDenormalize: "is_granted('ROLE_ADMIN')"),
+        new Delete(securityPostDenormalize: "is_granted('ROLE_ADMIN')"),
+    ],
+    normalizationContext: ['groups' => ['week_read']],
+    denormalizationContext: ['groups' => ['week_write']],
+    order: ['number' => 'ASC'],
+)]
 class Week
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['week_read'])]
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups(['week_read', 'course_read'])]
     private ?int $number = null;
 
-    /**
-     * @var Collection<int, Semester>
-     */
-    #[ORM\ManyToMany(targetEntity: Semester::class, inversedBy: 'weeks')]
-    private Collection $semesters;
+    #[ORM\ManyToOne(targetEntity: Semester::class, inversedBy: 'weeks')]
+    #[Groups(['course_read'])]
+    private Semester $semesters;
 
     /**
      * @var Collection<int, HourlyVolume>
@@ -32,7 +51,6 @@ class Week
 
     public function __construct()
     {
-        $this->semesters = new ArrayCollection();
         $this->hourlyVolumes = new ArrayCollection();
     }
 
@@ -53,28 +71,14 @@ class Week
         return $this;
     }
 
-    /**
-     * @return Collection<int, Semester>
-     */
-    public function getSemesters(): Collection
+    public function getSemesters(): Semester
     {
         return $this->semesters;
     }
 
-    public function addSemester(Semester $semester): static
+    public function setSemesters(Semester $semesters): void
     {
-        if (!$this->semesters->contains($semester)) {
-            $this->semesters->add($semester);
-        }
-
-        return $this;
-    }
-
-    public function removeSemester(Semester $semester): static
-    {
-        $this->semesters->removeElement($semester);
-
-        return $this;
+        $this->semesters = $semesters;
     }
 
     /**

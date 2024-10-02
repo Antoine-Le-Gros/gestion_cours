@@ -2,24 +2,49 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[ApiResource(
+    operations: [
+        new GetCollection(),
+        new Post(),
+        new Get(),
+        new Patch(
+            security: "is_granted('ROLE_USER') and object.getUserIdentifier() == user.getUserIdentifier()",
+        ),
+        new Delete(
+            security: "is_granted('ROLE_ADMIN')",
+        ),
+    ],
+    normalizationContext: ['groups' => ['user_read']],
+    denormalizationContext: ['groups' => ['user_write']],
+    order: ['login' => 'ASC'],
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['user_read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
+    #[Groups(['user_read'])]
     private ?string $email = null;
 
     /**
@@ -32,18 +57,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Groups(['user_write'])]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['course_read', 'user_read', 'user_write', 'affectation_read'])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['course_read', 'user_read', 'user_write', 'affectation_read'])]
     private ?string $lastname = null;
 
     #[ORM\Column]
+    #[Groups(['user_read'])]
     private ?bool $isActive = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['user_read', 'user_write'])]
     private ?string $login = null;
 
     /**
@@ -56,6 +86,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Collection<int, ExternalHourRecord>
      */
     #[ORM\OneToMany(targetEntity: ExternalHourRecord::class, mappedBy: 'teacher', orphanRemoval: true)]
+    #[Groups(['user_read'])]
     private Collection $externalHourRecords;
 
     public function __construct()
