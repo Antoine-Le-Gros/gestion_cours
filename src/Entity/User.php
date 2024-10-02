@@ -80,6 +80,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Collection<int, Affectation>
      */
     #[ORM\OneToMany(targetEntity: Affectation::class, mappedBy: 'teacher')]
+    #[Groups(['affectation_read'])]
     private Collection $affectations;
 
     /**
