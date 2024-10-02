@@ -61,11 +61,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user_read', 'user_write'])]
+    #[Groups(['course_read', 'user_read', 'user_write', 'affectation_read'])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user_read', 'user_write'])]
+    #[Groups(['course_read', 'user_read', 'user_write', 'affectation_read'])]
     private ?string $lastname = null;
 
     #[ORM\Column]
@@ -80,13 +80,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Collection<int, Affectation>
      */
     #[ORM\OneToMany(targetEntity: Affectation::class, mappedBy: 'teacher')]
-    #[Groups(['affectation_read'])]
     private Collection $affectations;
 
     /**
      * @var Collection<int, ExternalHourRecord>
      */
     #[ORM\OneToMany(targetEntity: ExternalHourRecord::class, mappedBy: 'teacher', orphanRemoval: true)]
+    #[Groups(['user_read'])]
     private Collection $externalHourRecords;
 
     public function __construct()
