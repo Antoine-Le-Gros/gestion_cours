@@ -2,22 +2,43 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\SemesterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SemesterRepository::class)]
+#[ApiResource(
+    operations: [
+        new GetCollection(),
+        new Post(securityPostDenormalize: "is_granted('ROLE_ADMIN')"),
+        new Get(),
+        new Patch(securityPostDenormalize: "is_granted('ROLE_ADMIN')"),
+        new Delete(securityPostDenormalize: "is_granted('ROLE_ADMIN')"),
+    ],
+    normalizationContext: ['groups' => ['semester_read']],
+    denormalizationContext: ['groups' => ['semester_write']],
+    order: ['number' => 'ASC'],
+)]
 class Semester
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['semester_read'])]
     private ?int $id = null;
 
     #[ORM\Column]
     #[Assert\Range(min: 1, max: 6)]
+    #[Groups(['semester_read', 'week_read'])]
     private ?int $number = null;
 
     /**
@@ -28,12 +49,13 @@ class Semester
 
     #[ORM\ManyToOne(inversedBy: 'semesters')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['course_read'])]
     private ?Year $year = null;
 
     /**
      * @var Collection<int, Week>
      */
-    #[ORM\ManyToMany(targetEntity: Week::class, mappedBy: 'semesters')]
+    #[ORM\OneToMany(targetEntity: Week::class, mappedBy: 'semesters')]
     private Collection $weeks;
 
     public function __construct()
@@ -109,22 +131,11 @@ class Semester
         return $this->weeks;
     }
 
-    public function addWeek(Week $week): static
+    /**
+     * @param Collection<int, Week> $weeks
+     */
+    public function setWeeks(Collection $weeks): void
     {
-        if (!$this->weeks->contains($week)) {
-            $this->weeks->add($week);
-            $week->addSemester($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWeek(Week $week): static
-    {
-        if ($this->weeks->removeElement($week)) {
-            $week->removeSemester($this);
-        }
-
-        return $this;
+        $this->weeks = $weeks;
     }
 }
