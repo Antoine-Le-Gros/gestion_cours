@@ -28,6 +28,7 @@ final class UserFactory extends PersistentProxyObjectFactory
 
     protected function defaults(): array|callable
     {
+        $roles = ['ADMINISTRATION', 'ENSEIGNANT_AGRÉGÉ', 'ENSEIGNANT_CERTIFIÉ', 'ENSEIGNANT_CHERCHEUR', 'VACATAIRE'];
         $firstName = $this->normalizeName(self::faker()->firstName());
         $lastName = $this->normalizeName(self::faker()->lastName());
         $numerified = self::faker()->unique()->numerify('###');
@@ -40,7 +41,7 @@ final class UserFactory extends PersistentProxyObjectFactory
             'lastname' => $lastName,
             'login' => "test-$numerified",
             'password' => $this->passwordHasher->hashPassword(new User(), 'test'),
-            'roles' => [],
+            'roles' => [array_rand(array_flip($roles))],
         ];
     }
 
