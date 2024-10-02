@@ -2,17 +2,37 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\YearRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: YearRepository::class)]
+#[ApiResource(
+    operations: [
+        new GetCollection(),
+        new Post(securityPostDenormalize: "is_granted('ROLE_ADMIN')"),
+        new Get(),
+        new Patch(securityPostDenormalize: "is_granted('ROLE_ADMIN')"),
+        new Delete(securityPostDenormalize: "is_granted('ROLE_ADMIN')"),
+    ],
+    normalizationContext: ['groups' => ['year_read']],
+    denormalizationContext: ['groups' => ['year_write']],
+    order: ['name' => 'ASC'],
+)]
 class Year
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['year_read'])]
     private ?int $id = null;
 
     /**
@@ -22,6 +42,7 @@ class Year
     private Collection $externalHourRecords;
 
     #[ORM\Column(length: 9)]
+    #[Groups(['year_read', 'course_read'])]
     private ?string $name = null;
 
     /**
