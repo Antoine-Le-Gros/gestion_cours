@@ -89,6 +89,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['user_read'])]
     private Collection $externalHourRecords;
 
+    #[ORM\Column]
+    private ?int $hoursMax = null;
+
     public function __construct()
     {
         $this->affectations = new ArrayCollection();
@@ -274,6 +277,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $externalHourRecord->setTeacher(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getHoursMax(): ?int
+    {
+        return $this->hoursMax;
+    }
+
+    public function setHoursMax(int $hoursMax): static
+    {
+        $this->hoursMax = $hoursMax;
 
         return $this;
     }
