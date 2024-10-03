@@ -39,20 +39,23 @@ class CourseTitle
     #[Groups(['course_read', 'courseTitle_read', 'courseTitle_write', 'affectation_read'])]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(inversedBy: 'classTitles')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['course_read', 'affectation_read'])]
-    private ?Module $module = null;
-
     /**
      * @var Collection<int, Course>
      */
     #[ORM\OneToMany(targetEntity: Course::class, mappedBy: 'classTitle')]
     private Collection $courses;
 
+    /**
+     * @var Collection<int, Module>
+     */
+    #[ORM\ManyToMany(targetEntity: Module::class, mappedBy: 'courseTitles')]
+    #[Groups(['course_read', 'affectation_read'])]
+    private Collection $modules;
+
     public function __construct()
     {
         $this->courses = new ArrayCollection();
+        $this->modules = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -68,18 +71,6 @@ class CourseTitle
     public function setName(string $name): static
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getModule(): ?Module
-    {
-        return $this->module;
-    }
-
-    public function setModule(?Module $module): static
-    {
-        $this->module = $module;
 
         return $this;
     }
@@ -109,6 +100,33 @@ class CourseTitle
             if ($course->getCourseTitle() === $this) {
                 $course->setCourseTitle(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Module>
+     */
+    public function getModules(): Collection
+    {
+        return $this->modules;
+    }
+
+    public function addModule(Module $module): static
+    {
+        if (!$this->modules->contains($module)) {
+            $this->modules->add($module);
+            $module->addCourseTitle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModule(Module $module): static
+    {
+        if ($this->modules->removeElement($module)) {
+            $module->removeCourseTitle($this);
         }
 
         return $this;
