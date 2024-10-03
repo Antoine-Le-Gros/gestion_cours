@@ -32,7 +32,7 @@ final class CourseTitleFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'module' => ModuleFactory::random(),
+            'modules' => [ModuleFactory::random()],
             'name' => self::faker()->text(255),
         ];
     }
