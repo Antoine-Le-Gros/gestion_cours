@@ -18,7 +18,6 @@ class UserFixtures extends Fixture
             'firstname' => 'Jean',
             'lastname' => 'Dupont',
             'login' => 'jdupont',
-            'password' => 'test',
         ]);
 
         UserFactory::createOne([
@@ -28,7 +27,6 @@ class UserFixtures extends Fixture
             'firstname' => 'Marie',
             'lastname' => 'Durand',
             'login' => 'mdurand',
-            'password' => 'test',
         ]);
 
         UserFactory::createOne([
@@ -38,7 +36,6 @@ class UserFixtures extends Fixture
             'firstname' => 'Pierre',
             'lastname' => 'Martin',
             'login' => 'pmartin',
-            'password' => 'test',
         ]);
 
         UserFactory::createOne([
@@ -48,7 +45,6 @@ class UserFixtures extends Fixture
             'firstname' => 'Pierre',
             'lastname' => 'Martin',
             'login' => 'admin',
-            'password' => 'test',
         ]);
         $manager->flush();
     }
