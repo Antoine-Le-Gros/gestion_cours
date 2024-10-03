@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\UserRepository;
+use App\Validator as CustomAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -88,6 +89,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: ExternalHourRecord::class, mappedBy: 'teacher', orphanRemoval: true)]
     #[Groups(['user_read'])]
     private Collection $externalHourRecords;
+
+    #[ORM\Column]
+    #[CustomAssert\UserHoursMax]
+    private ?int $hoursMax = null;
 
     public function __construct()
     {
@@ -274,6 +279,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $externalHourRecord->setTeacher(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getHoursMax(): ?int
+    {
+        return $this->hoursMax;
+    }
+
+    public function setHoursMax(int $hoursMax): static
+    {
+        $this->hoursMax = $hoursMax;
 
         return $this;
     }
