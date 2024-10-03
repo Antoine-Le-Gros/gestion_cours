@@ -46,7 +46,7 @@ class Module
     /**
      * @var Collection<int, CourseTitle>
      */
-    #[ORM\OneToMany(targetEntity: CourseTitle::class, mappedBy: 'module', orphanRemoval: true)]
+    #[ORM\ManyToMany(targetEntity: CourseTitle::class, inversedBy: 'modules')]
     private Collection $courseTitles;
 
     public function __construct()
@@ -91,24 +91,18 @@ class Module
         return $this->courseTitles;
     }
 
-    public function addClassTitle(CourseTitle $classTitle): static
+    public function addCourseTitle(CourseTitle $courseTitle): static
     {
-        if (!$this->courseTitles->contains($classTitle)) {
-            $this->courseTitles->add($classTitle);
-            $classTitle->setModule($this);
+        if (!$this->courseTitles->contains($courseTitle)) {
+            $this->courseTitles->add($courseTitle);
         }
 
         return $this;
     }
 
-    public function removeClassTitle(CourseTitle $classTitle): static
+    public function removeCourseTitle(CourseTitle $courseTitle): static
     {
-        if ($this->courseTitles->removeElement($classTitle)) {
-            // set the owning side to null (unless already changed)
-            if ($classTitle->getModule() === $this) {
-                $classTitle->setModule(null);
-            }
-        }
+        $this->courseTitles->removeElement($courseTitle);
 
         return $this;
     }
