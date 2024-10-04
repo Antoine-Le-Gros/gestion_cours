@@ -1,7 +1,17 @@
-# SAÉ 5.Real.01 - Développement avanc
+# SAÉ 5.Real.01 - Développement avancé
 
 ## Auteurs : 
-### Dylan Bonnevie, Mathis Claverie, Antoine Le-Gros, Romain Daunat, Louis Rattanavong, Erwan Lecomte
+- Dylan Bonnevie
+- Mathis Claverie
+- Antoine Le Gros
+- Romain Daunat
+- Louis Rattanavong
+- Erwan Lecomte
+
+## Présentation du projet
+
+Notre projet consiste à mettre en place un site internet consacré à l’IUT informatique de Reims.
+Il permet d’un côté à l’administration d’affecter les professeurs du département aux modules de ce dernier, et d’un autre côté aux professeurs de consulter les matières auxquelles ils ont été affectés.
 
 ## Installation du projet
 
@@ -16,8 +26,35 @@ Installer __composer__ est obligatoire si l'on veut installer les différentes b
 ### Docker
 Pour lancer le conteneur docker, lancez la commande :
 ```shell
-docker-compose up -d
+docker compose up -d
 ```
+
+## Base de données
+
+La base de données est disponible à l'URL : http://localhost:7080
+
+### Identifiants
+Voici l'identifiant utilisé dans le projet pour se connecter à la base de données __PostgreSQL__ :
+```
+Serveur : database
+Utilisateur : test
+Mot de passe : test
+Base de données : sae5
+```
+
+## Serveur web local
+
+Lancez le serveur Web local avec cette commande :
+```shell
+composer start
+```
+### Accès au serveur Web
+
+Naviguez alors à partir de cette adresse : <http://127.0.0.1:8000>
+
+### Accès à l'API
+
+Naviguez alors à partir de cette adresse : <http://127.0.0.1:8000/api>
 
 ## Scripts
 ### start
@@ -72,15 +109,3 @@ php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate --no-interaction
 php bin/console doctrine:fixtures:load --no-interaction
 ```
-
-## Identifiants
-### Base de données
-Voici l'identifiants utilisé dans le projet pour se connecter à la base de données __PostgreSQL__ :
-```
-Serveur : database
-Utilisateur : test
-Mot de passe : test
-Base de données : sae5
-```
-La base de données est disponible à l'URL : http://localhost:7080
-
