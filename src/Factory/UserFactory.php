@@ -49,7 +49,7 @@ final class UserFactory extends PersistentProxyObjectFactory
             'lastname' => $lastName,
             'login' => "test-$numerified",
             'password' => $this->passwordHasher->hashPassword(new User(), 'test'),
-            'roles' => $role,
+            'roles' => [$role],
             'hoursMax' => $hoursMax,
         ];
     }
