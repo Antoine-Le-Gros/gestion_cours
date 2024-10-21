@@ -29,7 +29,7 @@ final class HourlyVolumeFactory extends PersistentProxyObjectFactory
     {
         return [
             'course' => CourseFactory::random(),
-            'volume' => self::faker()->numberBetween(1, 10) * 0.5,
+            'volume' => self::faker()->numberBetween(0, 10) * 0.5,
             'week' => WeekFactory::random(),
         ];
     }
