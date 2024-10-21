@@ -11,7 +11,7 @@ class CourseFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        CourseFactory::createMany(50);
+        CourseFactory::createMany(10);
 
         $manager->flush();
     }
