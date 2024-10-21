@@ -10,7 +10,9 @@ class WeekFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        WeekFactory::createMany(52);
+        for ($i = 1; $i <= 53; ++$i) {
+            WeekFactory::createOne(['number' => $i]);
+        }
 
         $manager->flush();
     }
