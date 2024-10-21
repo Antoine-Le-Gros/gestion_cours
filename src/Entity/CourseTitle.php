@@ -52,10 +52,17 @@ class CourseTitle
     #[Groups(['course_read', 'affectation_read'])]
     private Collection $modules;
 
+    /**
+     * @var Collection<int, Tag>
+     */
+    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'courseTitleId')]
+    private Collection $tags;
+
     public function __construct()
     {
         $this->courses = new ArrayCollection();
         $this->modules = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,6 +134,33 @@ class CourseTitle
     {
         if ($this->modules->removeElement($module)) {
             $module->removeCourseTitle($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tag>
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): static
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
+            $tag->addCourseTitleId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): static
+    {
+        if ($this->tags->removeElement($tag)) {
+            $tag->removeCourseTitleId($this);
         }
 
         return $this;
