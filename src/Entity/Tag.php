@@ -2,12 +2,30 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TagRepository::class)]
+#[ApiResource(
+    operations: [
+        new GetCollection(),
+        new Post(securityPostDenormalize: "is_granted('ROLE_ADMIN')"),
+        new Get(),
+        new Patch(securityPostDenormalize: "is_granted('ROLE_ADMIN')"),
+        new Delete(securityPostDenormalize: "is_granted('ROLE_ADMIN')"),
+    ],
+    normalizationContext: ['groups' => ['tag_read']],
+    denormalizationContext: ['groups' => ['tag_write']],
+    order: ['name' => 'ASC'],
+)]
 class Tag
 {
     #[ORM\Id]
