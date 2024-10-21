@@ -33,7 +33,7 @@ final class CourseTitleFactory extends PersistentProxyObjectFactory
     {
         return [
             'modules' => [ModuleFactory::random()],
-            'tags' => [TagFactory::random()],
+            'tags' => array_map(fn () => TagFactory::random(), range(1, rand(1, 6))),
             'name' => self::faker()->text(255),
         ];
     }
