@@ -1,0 +1,13 @@
+test:
+  stage: test
+  tags:
+    - php8.2
+    - composer
+  script:
+    - composer install
+    - composer test
+  artifacts:
+    paths:
+      - test.pdf
+    exclude:
+      - ".gitignore"
