@@ -114,4 +114,36 @@ class FileReadingService
 
         return $firstLineInformation;
     }
+
+    /**
+     * @param string[] $row
+     * @param Module[] $module
+     *
+     * @return Module[]
+     */
+    public function createModuleFromRow(array $row, Semester $semester, array $module): array
+    {
+        if (null == $row[0]) {
+            return $module;
+        }
+
+        $moduleName = $row[0];
+        $modules = [];
+        $moduleNames = $this->parseModuleName($moduleName);
+        $repo = $this->MRepository;
+        foreach ($moduleNames as $moduleName) {
+            if (null === $repo->findOneBy(['name' => $moduleName, 'semester' => $semester])) {
+                $module = new Module();
+                $module->setName($moduleName);
+                $module->setSemester($semester);
+                $this->em->persist($module);
+                $this->em->flush();
+            } else {
+                $module = $repo->findOneBy(['name' => $moduleName, 'semester' => $semester]);
+            }
+            $modules[] = $module;
+        }
+
+        return $modules;
+    }
 }
