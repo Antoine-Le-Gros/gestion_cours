@@ -190,4 +190,15 @@ class FileReadingService
 
         return $course;
     }
+
+    public function addTagToTitle(string $tags, CourseTitle $courseTitle): CourseTitle
+    {
+        $tags = $this->parseModuleName($tags);
+        foreach ($tags as $tag) {
+            $tag = $this->TRepository->findOrCreateOne($tag);
+            $courseTitle->addTag($tag);
+        }
+
+        return $courseTitle;
+    }
 }
