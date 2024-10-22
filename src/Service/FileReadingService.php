@@ -174,4 +174,20 @@ class FileReadingService
 
         return $course;
     }
+
+    /**
+     * @param string[] $row
+     */
+    public function createCourseFromRow(array $row, CourseTitle $courseTitle): Course
+    {
+        $course = new Course();
+        $course->setCourseTitle($courseTitle);
+        $course->setGroupMaxNumber((int) $row[self::GROUP_MAX_NUMBER_COLUMN]);
+        $course->setTypeCourse($this->TCRepository->findOneBy(['name' => $row[self::TYPE_COLUMN]]));
+        $course->setSAESupport($row[self::SAE_SUPPORT_COLUMN]);
+        $this->em->persist($course);
+        $this->em->flush();
+
+        return $course;
+    }
 }
