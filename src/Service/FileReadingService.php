@@ -87,6 +87,21 @@ class FileReadingService
         return true;
     }
 
+    public function useDocument(Spreadsheet $document, Year $year): void
+    {
+        $document = $document->getAllSheets();
+        for ($i = 0; $i < count($document); ++$i) {
+            $semester = new Semester();
+            $semester->setYear($year);
+            $semester->setNumber($i + 1);
+            $this->em->persist($semester);
+            $this->em->flush();
+            $this->usePage($document[$i], $semester);
+            $this->em->persist($semester);
+            $this->em->flush();
+        }
+    }
+
     public function usePage(Worksheet $page, Semester $semester): void
     {
         $page = $page->toArray();
