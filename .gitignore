@@ -36,3 +36,6 @@ phpstan.neon
 ###> vincentlanglet/twig-cs-fixer ###
 /.twig-cs-fixer.cache
 ###< vincentlanglet/twig-cs-fixer ###
+
+/node_modules/
+/assets/build/

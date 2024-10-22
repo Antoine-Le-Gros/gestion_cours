@@ -25,4 +25,25 @@ return [
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],
+    'react' => [
+        'version' => '18.3.1',
+    ],
+    'react-dom' => [
+        'version' => '18.3.1',
+    ],
+    'scheduler' => [
+        'version' => '0.23.2',
+    ],
+    '@symfony/ux-react' => [
+        'path' => './vendor/symfony/ux-react/assets/dist/loader.js',
+    ],
+    'wouter' => [
+        'version' => '3.3.5',
+    ],
+    'regexparam' => [
+        'version' => '3.0.0',
+    ],
+    'use-sync-external-store/shim/index.js' => [
+        'version' => '1.2.2',
+    ],
 ];

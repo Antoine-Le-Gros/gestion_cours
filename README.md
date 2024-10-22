@@ -48,13 +48,24 @@ Lancez le serveur Web local avec cette commande :
 ```shell
 composer start
 ```
-### Accès au serveur Web
+### Accès au serveur Web symfony
 
 Naviguez alors à partir de cette adresse : <http://127.0.0.1:8000>
 
 ### Accès à l'API
 
 Naviguez alors à partir de cette adresse : <http://127.0.0.1:8000/api>
+
+### React
+Transpiler les ressources front avec Babel
+```shell
+npm run build
+```
+
+Transpiler les ressources front avec Babel en mode watch
+```shell
+npm run dev
+```
 
 ## Scripts
 ### start
