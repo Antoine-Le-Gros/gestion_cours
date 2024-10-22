@@ -87,6 +87,21 @@ class FileReadingService
         return true;
     }
 
+    public function usePage(Worksheet $page, Semester $semester): void
+    {
+        $page = $page->toArray();
+        $module = [];
+        $courseTitle = null;
+        $firstRowData = $this->initiateFirstLineInformation($page[0], $semester);
+        $page = array_slice($page, 1);
+        foreach ($page as $row) {
+            $modules = $this->createModuleFromRow($row, $semester, $module);
+            $courseTitle = $this->createCourseTitleFromRow($row, $modules, $courseTitle);
+            $course = $this->createCourseFromRow($row, $courseTitle);
+            $this->createHoursVolumesFromRow($firstRowData['firstWeekNumber'], $firstRowData['firstWeekIndex'], $row, $course, $firstRowData['weeks']);
+        }
+    }
+
     /**
      * @param string[] $row
      *
