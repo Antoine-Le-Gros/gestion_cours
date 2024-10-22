@@ -88,6 +88,7 @@ class Course
     public function setCourseTitle(?CourseTitle $courseTitle): static
     {
         $this->courseTitle = $courseTitle;
+        $courseTitle->addCourse($this);
 
         return $this;
     }
