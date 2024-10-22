@@ -12,9 +12,21 @@ class FileReadingService
     public const GROUP_MAX_NUMBER_COLUMN = 3;
     public const SAE_SUPPORT_COLUMN = 5;
 
-    public function __construct()
+    private EntityManagerInterface $em;
+    private CourseTitleRepository $CTRepository;
+    private ModuleRepository $MRepository;
+    private TypeCourseRepository $TCRepository;
+    private TagRepository $TRepository;
+
+    public function __construct(EntityManagerInterface $em, CourseTitleRepository $CTRepository, ModuleRepository $MRepository, TypeCourseRepository $TCRepository, TagRepository $TRepository)
     {
+        $this->em = $em;
+        $this->CTRepository = $CTRepository;
+        $this->MRepository = $MRepository;
+        $this->TCRepository = $TCRepository;
+        $this->TRepository = $TRepository;
         $this->reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('Xlsx');
+        $this->reader->setReadEmptyCells(false);
     }
 
     public function getReader(): IReader
