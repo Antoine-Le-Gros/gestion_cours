@@ -33,4 +33,17 @@ class FileReadingService
     {
         return $this->reader;
     }
+
+    /**
+     * @return string[]
+     */
+    public function parseModuleName(string $modules): array
+    {
+        $modulesP = preg_split('#([/\-,])#', $modules);
+        $modulesP = array_map(function ($module) {
+            return trim($module);
+        }, $modulesP);
+
+        return $modulesP;
+    }
 }
