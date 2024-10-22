@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\CourseTitle;
+use App\Entity\Module;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -14,6 +15,22 @@ class CourseTitleRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, CourseTitle::class);
+    }
+
+    /**
+     * @param Module[] $modules
+     */
+    public function findOneByNameAndModules(string $name, array $modules): ?CourseTitle
+    {
+        return $this->createQueryBuilder('c')
+            ->leftJoin('c.modules', 'm')
+            ->andWhere('c.name = :name')
+            ->andWhere('m.id IN (:modules)')
+            ->setParameter('name', $name)
+            ->setParameter('modules', $modules)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     //    /**

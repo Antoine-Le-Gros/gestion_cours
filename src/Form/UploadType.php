@@ -13,6 +13,7 @@ class UploadType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('year', YearType::class)
             ->add('excelFile', FileType::class, [
                 'label' => 'Fichier Excel (.xlsx ou .xls)',
                 'constraints' => [
