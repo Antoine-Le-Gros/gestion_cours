@@ -67,21 +67,25 @@ class FileReadingService
      */
     public function createHoursVolumesFromRow(int $firstWeekNumber, int $firstWeekIndex, array $row, Course $course, array $weeks): bool
     {
+        $volumes = [];
         for ($i = 0; $i < count($row) - $firstWeekIndex; ++$i) {
             $weekNumber = $firstWeekNumber + $i;
             if ($weekNumber > 52) {
-                $weekNumber = $weekNumber - 52;
+                $weekNumber -= 52;
             }
             $weekIndex = $firstWeekIndex + $i;
             $hours = (float) $row[$weekIndex];
             if (0 != $hours) {
                 $volume = new HourlyVolume();
-                $volume->setVolume((float) $row[$weekIndex]);
+                $volume->setVolume($hours);
                 $volume->setWeek($weeks[$weekNumber]);
-                $this->em->persist($volume);
+                $volumes[] = $volume;
                 $course->addHourlyVolume($volume);
-                $this->em->persist($course);
             }
+        }
+
+        foreach ($volumes as $volume) {
+            $this->em->persist($volume);
         }
 
         return true;
