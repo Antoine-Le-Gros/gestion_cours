@@ -2,7 +2,21 @@
 
 namespace App\Service;
 
+use App\Entity\Course;
+use App\Entity\CourseTitle;
+use App\Entity\HourlyVolume;
+use App\Entity\Module;
+use App\Entity\Semester;
+use App\Entity\Week;
+use App\Entity\Year;
+use App\Repository\CourseTitleRepository;
+use App\Repository\ModuleRepository;
+use App\Repository\TagRepository;
+use App\Repository\TypeCourseRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\Reader\IReader;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class FileReadingService
 {
@@ -46,4 +60,31 @@ class FileReadingService
 
         return $modulesP;
     }
+
+    /**
+     * @param string[] $row
+     * @param Week[]   $weeks
+     */
+    public function createHoursVolumesFromRow(int $firstWeekNumber, int $firstWeekIndex, array $row, Course $course, array $weeks): bool
+    {
+        for ($i = 0; $i < count($row) - $firstWeekIndex; ++$i) {
+            $weekNumber = $firstWeekNumber + $i;
+            if ($weekNumber > 52) {
+                $weekNumber = $weekNumber - 52;
+            }
+            $weekIndex = $firstWeekIndex + $i;
+            $hours = (float) $row[$weekIndex];
+            if (0 != $hours) {
+                $volume = new HourlyVolume();
+                $volume->setVolume((float) $row[$weekIndex]);
+                $volume->setWeek($weeks[$weekNumber]);
+                $this->em->persist($volume);
+                $course->addHourlyVolume($volume);
+                $this->em->persist($course);
+            }
+        }
+
+        return true;
+    }
+
 }
