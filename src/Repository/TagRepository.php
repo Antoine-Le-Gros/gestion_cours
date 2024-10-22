@@ -16,6 +16,19 @@ class TagRepository extends ServiceEntityRepository
         parent::__construct($registry, Tag::class);
     }
 
+    public function findOrCreateOne(string $name): Tag
+    {
+        $tag = $this->findOneBy(['name' => $name]);
+        if (null == $tag) {
+            $tag = new Tag();
+            $tag->setName($name);
+            $this->getEntityManager()->persist($tag);
+            $this->getEntityManager()->flush();
+        }
+
+        return $tag;
+    }
+
     //    /**
     //     * @return Tag[] Returns an array of Tag objects
     //     */
