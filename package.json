@@ -1,5 +1,9 @@
 {
   "devDependencies": {
     "@babel/preset-react": "^7.25.7"
+  },
+  "scripts": {
+    "dev": "babel assets/react --watch --out-dir assets/build/react --presets=@babel/preset-react",
+    "build": "babel assets/react --out-dir assets/build/react --presets=@babel/preset-react"
   }
 }
