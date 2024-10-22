@@ -4,9 +4,10 @@ namespace App\DataFixtures;
 
 use App\Factory\TypeCourseFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class TypeCourseFixtures extends Fixture
+class TypeCourseFixtures extends Fixture implements FixtureGroupInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -16,5 +17,12 @@ class TypeCourseFixtures extends Fixture
         }
 
         $manager->flush();
+    }
+
+    public static function getGroups(): array
+    {
+        return [
+            'typeCourse',
+        ];
     }
 }
