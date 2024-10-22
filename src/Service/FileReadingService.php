@@ -146,4 +146,32 @@ class FileReadingService
 
         return $modules;
     }
+
+    /**
+     * @param string[] $row
+     * @param Module[] $modules
+     */
+    public function createCourseTitleFromRow(array $row, array $modules, ?CourseTitle $courseTitle): CourseTitle
+    {
+        if (null == $row[1]) {
+            return $courseTitle;
+        }
+
+        $courseName = $row[1];
+        $repo = $this->CTRepository;
+        if (null === $repo->findOneByNameAndModules($courseName, $modules)) {
+            $course = new CourseTitle();
+            $course->setName($courseName);
+            foreach ($modules as $module) {
+                $course->addModule($module);
+            }
+            $this->em->persist($course);
+            $this->em->flush();
+        } else {
+            $course = $repo->findOneByNameAndModules($courseName, $modules);
+        }
+        $this->addTagToTitle($row[self::TAG_COLUMN], $course);
+
+        return $course;
+    }
 }
