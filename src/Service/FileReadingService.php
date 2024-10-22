@@ -157,19 +157,16 @@ class FileReadingService
             return $module;
         }
 
-        $moduleName = $row[0];
+        $moduleNames = $this->parseModuleName($row[0]);
         $modules = [];
-        $moduleNames = $this->parseModuleName($moduleName);
-        $repo = $this->MRepository;
+
         foreach ($moduleNames as $moduleName) {
-            if (null === $repo->findOneBy(['name' => $moduleName, 'semester' => $semester])) {
-                $module = new Module();
+            $module = $this->MRepository->findOneBy(['name' => $moduleName, 'semester' => $semester]) ?? new Module();
+            if (!$module->getId()) {
                 $module->setName($moduleName);
                 $module->setSemester($semester);
                 $this->em->persist($module);
                 $this->em->flush();
-            } else {
-                $module = $repo->findOneBy(['name' => $moduleName, 'semester' => $semester]);
             }
             $modules[] = $module;
         }
@@ -189,17 +186,17 @@ class FileReadingService
 
         $courseName = $row[1];
         $repo = $this->CTRepository;
-        if (null === $repo->findOneByNameAndModules($courseName, $modules)) {
-            $course = new CourseTitle();
+        $course = $repo->findOneByNameAndModules($courseName, $modules) ?? new CourseTitle();
+
+        if (!$course->getId()) {
             $course->setName($courseName);
             foreach ($modules as $module) {
                 $course->addModule($module);
             }
             $this->em->persist($course);
             $this->em->flush();
-        } else {
-            $course = $repo->findOneByNameAndModules($courseName, $modules);
         }
+
         $this->addTagToTitle($row[self::TAG_COLUMN], $course);
 
         return $course;
