@@ -37,4 +37,13 @@ return [
     '@symfony/ux-react' => [
         'path' => './vendor/symfony/ux-react/assets/dist/loader.js',
     ],
+    'wouter' => [
+        'version' => '3.3.5',
+    ],
+    'regexparam' => [
+        'version' => '3.0.0',
+    ],
+    'use-sync-external-store/shim/index.js' => [
+        'version' => '1.2.2',
+    ],
 ];
