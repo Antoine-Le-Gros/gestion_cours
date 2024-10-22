@@ -85,6 +85,7 @@ class HourlyVolume
     public function setWeek(?Week $week): static
     {
         $this->week = $week;
+        $week->addHourlyVolume($this);
 
         return $this;
     }
