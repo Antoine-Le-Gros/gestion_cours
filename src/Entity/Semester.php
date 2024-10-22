@@ -47,7 +47,7 @@ class Semester
     #[ORM\OneToMany(targetEntity: Module::class, mappedBy: 'semester', orphanRemoval: true)]
     private Collection $modules;
 
-    #[ORM\ManyToOne(inversedBy: 'semesters')]
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'semesters')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['course_read'])]
     private ?Year $year = null;
