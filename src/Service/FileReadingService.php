@@ -87,4 +87,31 @@ class FileReadingService
         return true;
     }
 
+    /**
+     * @param string[] $row
+     *
+     * @return mixed[]
+     */
+    public function initiateFirstLineInformation(array $row, Semester $semester): array
+    {
+        $firstLineInformation = [];
+        $j = 0;
+        while (!is_numeric($row[$j]) && $j < count($row) - 1) {
+            ++$j;
+        }
+
+        $firstLineInformation['firstWeekNumber'] = (int) $row[$j];
+        $firstLineInformation['firstWeekIndex'] = $j;
+
+        while ($j < count($row) && is_numeric($row[$j])) {
+            $week = new Week();
+            $week->setNumber((int) $row[$j]);
+            $week->setSemesters($semester);
+            $this->em->persist($week);
+            $firstLineInformation['weeks'][$row[$j]] = $week;
+            ++$j;
+        }
+
+        return $firstLineInformation;
+    }
 }
