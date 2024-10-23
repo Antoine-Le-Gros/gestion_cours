@@ -42,7 +42,7 @@ class CourseTitle
     /**
      * @var Collection<int, Course>
      */
-    #[ORM\OneToMany(targetEntity: Course::class, mappedBy: 'classTitle')]
+    #[ORM\OneToMany(targetEntity: Course::class, mappedBy: 'courseTitle', orphanRemoval: true)]
     private Collection $courses;
 
     /**

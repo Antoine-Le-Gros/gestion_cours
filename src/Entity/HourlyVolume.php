@@ -39,7 +39,7 @@ class HourlyVolume
     #[Groups(['hourlyVolume_read', 'course_read'])]
     private ?float $volume = null;
 
-    #[ORM\ManyToOne(inversedBy: 'hourlyVolumes')]
+    #[ORM\ManyToOne(cascade: ['remove'], inversedBy: 'hourlyVolumes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Course $course = null;
 

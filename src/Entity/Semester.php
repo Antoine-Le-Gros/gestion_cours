@@ -55,7 +55,7 @@ class Semester
     /**
      * @var Collection<int, Week>
      */
-    #[ORM\OneToMany(targetEntity: Week::class, mappedBy: 'semesters')]
+    #[ORM\OneToMany(targetEntity: Week::class, mappedBy: 'semesters', orphanRemoval: true)]
     private Collection $weeks;
 
     public function __construct()
