@@ -120,3 +120,18 @@ php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate --no-interaction
 php bin/console doctrine:fixtures:load --no-interaction
 ```
+
+### db:type
+Ce script lance les commandes suivantes pour forcer la suppression de la base de donnée, créer la base de donnée, applique les migration et charge les données des types :
+```shell
+php bin/console doctrine:database:drop --force --if-exists
+php bin/console doctrine:database:create
+php bin/console doctrine:migrations:migrate --no-interaction
+php bin/console doctrine:fixtures:load --group=typeCourse --no-interaction
+```
+
+### db:user
+Ce script lance la commande suivante. Elle charge les données des utilisateurs sans toucher aux autres données:
+```shell
+php bin/console doctrine:fixtures:load --group=user --append
+```

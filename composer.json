@@ -131,6 +131,15 @@
             "php bin/console doctrine:database:create",
             "php bin/console doctrine:migrations:migrate --no-interaction",
             "php bin/console doctrine:fixtures:load --no-interaction"
+        ],
+        "db:type": [
+            "php bin/console doctrine:database:drop --force --if-exists",
+            "php bin/console doctrine:database:create",
+            "php bin/console doctrine:migrations:migrate --no-interaction",
+            "php bin/console doctrine:fixtures:load --group=typeCourse --no-interaction"
+        ],
+        "db:user": [
+            "php bin/console doctrine:fixtures:load --group=user --no-interaction --append"
         ]
     },
     "scripts-descriptions": {
@@ -141,7 +150,9 @@
         "fix:twig": "Correction des test twig",
         "test:yaml": "Lancenement des tests YAML",
         "test" : "Lancement de tous les tests",
-        "db" : "Détruire, Créer, Ajouter migration, et generer des données factices dans la base de données"
+        "db" : "Détruire, Créer, Ajouter migration, et generer des données factices dans la base de données",
+        "db:type" : "Détruire, Créer, Ajouter migration, et generer des données factices dans la base de données pour les types de cours",
+        "db:user" : "Genere des données factices dans la base de données pour les utilisateurs, ne détruit pas les anciennes"
     },
 
     "conflict": {

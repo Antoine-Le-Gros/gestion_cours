@@ -18,6 +18,14 @@ use PhpOffice\PhpSpreadsheet\Reader\IReader;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
+/**
+ * Class FileReadingService.
+ *
+ * This class is used to read an Excel file and create the database from it. It initiate the whole database using
+ * the data model given in the Excel file.
+ *
+ * It uses the Reader from PHPSpreadshit to read the Excel file, and the EntityManager to persist the data.
+ */
 class FileReadingService
 {
     private IReader $reader;
@@ -49,6 +57,9 @@ class FileReadingService
     }
 
     /**
+     * Method that parses a module (or tags) string into an array of strings.
+     * They split at /, - and ,.
+     *
      * @return string[]
      */
     public function parseModuleName(string $modules): array
@@ -62,20 +73,23 @@ class FileReadingService
     }
 
     /**
+     * Method that creates the hourly volumes from a row of the Excel file.
+     * It requires the first week number and index, the row, the course and the weeks.
+     *
      * @param string[] $row
      * @param Week[]   $weeks
      */
     public function createHoursVolumesFromRow(int $firstWeekNumber, int $firstWeekIndex, array $row, Course $course, array $weeks): bool
     {
         $volumes = [];
-        for ($i = 0; $i < count($row) - $firstWeekIndex; ++$i) {
+        for ($i = 0; $i < count($row) - $firstWeekIndex; ++$i) { // For Each Week
             $weekNumber = $firstWeekNumber + $i;
-            if ($weekNumber > 52) {
+            if ($weekNumber > 52) { // Number can't exceed 52
                 $weekNumber -= 52;
             }
             $weekIndex = $firstWeekIndex + $i;
             $hours = (float) $row[$weekIndex];
-            if (0 != $hours) {
+            if (0 != $hours) { // If the volume is not null and not 0
                 $volume = new HourlyVolume();
                 $volume->setVolume($hours);
                 $volume->setWeek($weeks[$weekNumber]);
@@ -84,17 +98,21 @@ class FileReadingService
             }
         }
 
-        foreach ($volumes as $volume) {
+        foreach ($volumes as $volume) { // Persist as batch to optimize
             $this->em->persist($volume);
         }
 
         return true;
     }
 
+    /**
+     * Method that uses a document to initiate the database.
+     * It requires the document and the year.
+     */
     public function useDocument(Spreadsheet $document, Year $year): void
     {
         $document = $document->getAllSheets();
-        for ($i = 0; $i < count($document); ++$i) {
+        for ($i = 0; $i < count($document); ++$i) { // Do the process for each page
             $semester = new Semester();
             $semester->setYear($year);
             $semester->setNumber($i + 1);
@@ -106,14 +124,19 @@ class FileReadingService
         }
     }
 
+    /**
+     * Method that uses a page to initiate the database.
+     * It requires the page and the semester.
+     * It is called by useDocument.
+     */
     public function usePage(Worksheet $page, Semester $semester): void
     {
-        $page = $page->toArray();
+        $page = $page->toArray(); // Transform the page into an array
         $module = [];
         $courseTitle = null;
         $firstRowData = $this->initiateFirstLineInformation($page[0], $semester);
         $page = array_slice($page, 1);
-        foreach ($page as $row) {
+        foreach ($page as $row) { // Use each Line
             $modules = $this->createModuleFromRow($row, $semester, $module);
             $courseTitle = $this->createCourseTitleFromRow($row, $modules, $courseTitle);
             $course = $this->createCourseFromRow($row, $courseTitle);
@@ -122,6 +145,9 @@ class FileReadingService
     }
 
     /**
+     * Method that initiate first line data, get weeks number and tab size.
+     * It returns an array with the first week number, the first week index and the weeks.
+     *
      * @param string[] $row
      *
      * @return mixed[]
@@ -130,7 +156,7 @@ class FileReadingService
     {
         $firstLineInformation = [];
         $j = 0;
-        while (!is_numeric($row[$j]) && $j < count($row) - 1) {
+        while (!is_numeric($row[$j]) && $j < count($row) - 1) { // check the last line with number as a title
             ++$j;
         }
 
@@ -150,6 +176,8 @@ class FileReadingService
     }
 
     /**
+     * Method that creates a module from a row.
+     *
      * @param string[] $row
      * @param Module[] $module
      *
@@ -157,14 +185,14 @@ class FileReadingService
      */
     public function createModuleFromRow(array $row, Semester $semester, array $module): array
     {
-        if (null == $row[0]) {
+        if (null == $row[0]) { // If the column is empty, it calls to the last module created instead of creating a new one
             return $module;
         }
 
-        $moduleNames = $this->parseModuleName($row[0]);
+        $moduleNames = $this->parseModuleName($row[0]); // Parse the module name
         $modules = [];
 
-        foreach ($moduleNames as $moduleName) {
+        foreach ($moduleNames as $moduleName) { // For each module, a module is created if not already existing
             $module = $this->MRepository->findOneBy(['name' => $moduleName, 'semester' => $semester]) ?? new Module();
             if (!$module->getId()) {
                 $module->setName($moduleName);
@@ -179,12 +207,15 @@ class FileReadingService
     }
 
     /**
+     * Method that creates a course title from a row.
+     * It requires the row, the modules and the course title.
+     *
      * @param string[] $row
      * @param Module[] $modules
      */
     public function createCourseTitleFromRow(array $row, array $modules, ?CourseTitle $courseTitle): CourseTitle
     {
-        if (null == $row[1]) {
+        if (null == $row[1]) { // If the column is empty, it calls to the last course title created instead of creating a new one
             return $courseTitle;
         }
 
@@ -207,6 +238,9 @@ class FileReadingService
     }
 
     /**
+     * Method that creates a course from a row.
+     * It requires the row and the course title.
+     *
      * @param string[] $row
      */
     public function createCourseFromRow(array $row, CourseTitle $courseTitle): Course
@@ -222,11 +256,15 @@ class FileReadingService
         return $course;
     }
 
+    /**
+     * Method that adds tags to a course title.
+     * It requires the tags string (non parsed) and the course title.
+     */
     public function addTagToTitle(string $tags, CourseTitle $courseTitle): CourseTitle
     {
-        $tags = $this->parseModuleName($tags);
+        $tags = $this->parseModuleName($tags); // Parse the tags with the same function as modules
         foreach ($tags as $tag) {
-            $tag = $this->TRepository->findOrCreateOne($tag);
+            $tag = $this->TRepository->findOrCreateOne($tag); // Find or create the tag
             $courseTitle->addTag($tag);
         }
 
