@@ -6,6 +6,7 @@ use App\Entity\Affectation;
 use App\Entity\Course;
 use App\Entity\CourseTitle;
 use App\Entity\ExternalHourRecord;
+use App\Entity\HourlyVolume;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -50,6 +51,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Affectation', 'fas fa-arrow-right', Affectation::class);
         yield MenuItem::linkToCrud('Course', 'fas fa-graduation-cap', Course::class);
         yield MenuItem::linkToCrud('CourseTitle', 'fas fa-font', CourseTitle::class);
+        yield MenuItem::linkToCrud('HourlyVolume', 'fas fa-hourglass-half ', HourlyVolume::class);
+
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 }
