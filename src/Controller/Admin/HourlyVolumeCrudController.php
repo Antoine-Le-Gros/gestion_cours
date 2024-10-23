@@ -2,33 +2,33 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\ExternalHourRecord;
+use App\Entity\HourlyVolume;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 
-class ExternalHourRecordCrudController extends AbstractCrudController
+class HourlyVolumeCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return ExternalHourRecord::class;
+        return HourlyVolume::class;
     }
 
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id')->hideOnForm(),
-            NumberField::new('hours', 'nombre d\'heures'),
-            AssociationField::new('teacher', 'profeseur')
-                ->setFormTypeOption('choice_label', 'login')
+            NumberField::new('volume', 'volume'),
+            AssociationField::new('course', 'cours')
+                ->setFormTypeOption('choice_label', 'courseTitle.name')
                 ->formatValue(function ($entity) {
-                    return isset($entity) ? $entity->getlogin() : 'Pas de professeur';
+                    return isset($entity) ? $entity->getCourseTitle()->getName() : 'Pas de cours';
                 }),
-            AssociationField::new('year', 'Année')
-                ->setFormTypeOption('choice_label', 'name')
+            AssociationField::new('week', 'semaine')
+                ->setFormTypeOption('choice_label', 'number')
                 ->formatValue(function ($entity) {
-                    return isset($entity) ? $entity->getName() : 'Pas d\'année';
+                    return isset($entity) ? $entity->getNumber() : 'Pas de semaine';
                 }),
         ];
     }
