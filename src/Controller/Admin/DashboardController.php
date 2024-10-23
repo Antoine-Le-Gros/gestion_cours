@@ -10,6 +10,7 @@ use App\Entity\HourlyVolume;
 use App\Entity\Module;
 use App\Entity\Semester;
 use App\Entity\Tag;
+use App\Entity\TypeCourse;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -58,6 +59,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Module', 'fas fa-list-alt ', Module::class);
         yield MenuItem::linkToCrud('Semester', 'fas fa-bookmark ', Semester::class);
         yield MenuItem::linkToCrud('Tag', 'fas fa-tag ', Tag::class);
+        yield MenuItem::linkToCrud('TypeCourse', 'fas fa-folder ', TypeCourse::class);
 
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
