@@ -2,3 +2,60 @@ html,body{
     height:100%;
     margin:0;
 }
+
+body {
+    background-color: #353535;
+    color: white;
+}
+
+.vertical_bar {
+    background-color: #5D5D5D;
+}
+
+.nav-item {
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
+}
+
+.text-white {
+    color: white;
+}
+
+.text-decoration-none {
+    text-decoration: none;
+}
+
+.dropdown-menu {
+    background-color: #5D5D5D;
+}
+
+.content {
+    background-color: #353535;
+    color: white;
+}
+
+.container-login {
+    height: 100vh;
+}
+
+
+.toggle-password {
+    cursor: pointer;
+    right: 10px;
+    top: 40%;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+}
