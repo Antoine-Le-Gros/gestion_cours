@@ -4,10 +4,11 @@ namespace App\DataFixtures;
 
 use App\Factory\ExternalHourRecordFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class ExternalHourRecordFixtures extends Fixture implements DependentFixtureInterface
+class ExternalHourRecordFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -21,6 +22,13 @@ class ExternalHourRecordFixtures extends Fixture implements DependentFixtureInte
     {
         return [
             UserFixtures::class,
+        ];
+    }
+
+    public static function getGroups(): array
+    {
+        return [
+            'user',
         ];
     }
 }
