@@ -36,7 +36,7 @@ class Course
     #[Groups(['course_read'])]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'courses')]
+    #[ORM\ManyToOne(cascade: ['remove'], inversedBy: 'courses')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['course_read', 'course_write', 'affectation_read'])]
     private ?CourseTitle $courseTitle = null;
@@ -58,7 +58,7 @@ class Course
     /**
      * @var Collection<int, Affectation>
      */
-    #[ORM\OneToMany(targetEntity: Affectation::class, mappedBy: 'course')]
+    #[ORM\OneToMany(targetEntity: Affectation::class, mappedBy: 'course', orphanRemoval: true)]
     #[Groups(['course_read', 'course_write'])]
     private Collection $affectations;
 
