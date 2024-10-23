@@ -18,6 +18,14 @@ use PhpOffice\PhpSpreadsheet\Reader\IReader;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
+/**
+ * Class FileReadingService.
+ *
+ * This class is used to read an Excel file and create the database from it. It initiate the whole database using
+ * the data model given in the Excel file.
+ *
+ * It uses the Reader from PHPSpreadshit to read the Excel file, and the EntityManager to persist the data.
+ */
 class FileReadingService
 {
     private IReader $reader;
