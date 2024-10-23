@@ -129,3 +129,9 @@ php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate --no-interaction
 php bin/console doctrine:fixtures:load --group=typeCourse --no-interaction
 ```
+
+### db:user
+Ce script lance la commande suivante. Elle charge les données des utilisateurs sans toucher aux autres données:
+```shell
+php bin/console doctrine:fixtures:load --group=user --append
+```
