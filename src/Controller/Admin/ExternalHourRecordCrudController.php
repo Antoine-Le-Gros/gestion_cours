@@ -6,7 +6,7 @@ use App\Entity\ExternalHourRecord;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 
 class ExternalHourRecordCrudController extends AbstractCrudController
 {
@@ -19,7 +19,7 @@ class ExternalHourRecordCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            IntegerField::new('hours', 'nombre d\'heures'),
+            NumberField::new('hours', 'nombre d\'heures'),
             AssociationField::new('teacher', 'profeseur')
                 ->setFormTypeOption('choice_label', 'login')
                 ->formatValue(function ($entity) {

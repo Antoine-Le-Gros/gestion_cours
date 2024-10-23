@@ -51,20 +51,17 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('User', 'fa-solid fa-user', User::class);
-        yield MenuItem::linkToCrud('ExternalHoursRecord', 'fas fa-clock', ExternalHourRecord::class);
         yield MenuItem::linkToCrud('Affectation', 'fas fa-arrow-right', Affectation::class);
         yield MenuItem::linkToCrud('Course', 'fas fa-graduation-cap', Course::class);
         yield MenuItem::linkToCrud('CourseTitle', 'fas fa-font', CourseTitle::class);
+        yield MenuItem::linkToCrud('ExternalHoursRecord', 'fas fa-clock', ExternalHourRecord::class);
         yield MenuItem::linkToCrud('HourlyVolume', 'fas fa-hourglass-half ', HourlyVolume::class);
         yield MenuItem::linkToCrud('Module', 'fas fa-list-alt ', Module::class);
         yield MenuItem::linkToCrud('Semester', 'fas fa-bookmark ', Semester::class);
         yield MenuItem::linkToCrud('Tag', 'fas fa-tag ', Tag::class);
         yield MenuItem::linkToCrud('TypeCourse', 'fas fa-folder ', TypeCourse::class);
+        yield MenuItem::linkToCrud('User', 'fa-solid fa-user', User::class);
         yield MenuItem::linkToCrud('Week', 'fas fa-calendar ', Week::class);
         yield MenuItem::linkToCrud('Year', 'fas fa-calendar-plus', Year::class);
-
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 }

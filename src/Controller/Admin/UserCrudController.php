@@ -30,11 +30,9 @@ class UserCrudController extends AbstractCrudController
             IntegerField::new('hoursMax', 'Volumes d\'heures maximales'),
             ArrayField::new('roles', 'Roles'),
             AssociationField::new('externalHourRecords', 'Heures externes')
-                ->setFormTypeOption('choice_label', 'hours')
-                ->setFormTypeOption('by_reference', false),
+                ->setFormTypeOption('choice_label', 'hours'),
             AssociationField::new('affectations', 'Affectations')
-                ->setFormTypeOption('choice_label', 'course.courseTitle.name')
-                ->setFormTypeOption('by_reference', false),
+                ->setFormTypeOption('choice_label', 'course.courseTitle.name'),
         ];
     }
 }
