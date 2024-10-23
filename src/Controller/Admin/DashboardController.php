@@ -8,6 +8,7 @@ use App\Entity\CourseTitle;
 use App\Entity\ExternalHourRecord;
 use App\Entity\HourlyVolume;
 use App\Entity\Module;
+use App\Entity\Semester;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -54,6 +55,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('CourseTitle', 'fas fa-font', CourseTitle::class);
         yield MenuItem::linkToCrud('HourlyVolume', 'fas fa-hourglass-half ', HourlyVolume::class);
         yield MenuItem::linkToCrud('Module', 'fas fa-list-alt ', Module::class);
+        yield MenuItem::linkToCrud('Semester', 'fas fa-bookmark ', Semester::class);
 
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
