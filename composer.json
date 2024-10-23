@@ -53,6 +53,7 @@
         "symfony/web-link": "7.1.*",
         "symfony/yaml": "7.1.*",
         "symfonycasts/sass-bundle": "^0.8.1",
+        "twbs/bootstrap": "^5.3",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
         "vincentlanglet/twig-cs-fixer": "^3.1"
@@ -141,6 +142,9 @@
         ],
         "db:user": [
             "php bin/console doctrine:fixtures:load --group=user --no-interaction --append"
+        ],
+        "sass": [
+            "php bin/console sass:build --watch"
         ]
     },
     "scripts-descriptions": {
