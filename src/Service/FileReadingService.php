@@ -49,6 +49,9 @@ class FileReadingService
     }
 
     /**
+     * Method that parses a module (or tags) string into an array of strings.
+     * They split at /, - and ,.
+     *
      * @return string[]
      */
     public function parseModuleName(string $modules): array
@@ -94,10 +97,14 @@ class FileReadingService
         return true;
     }
 
+    /**
+     * Method that uses a document to initiate the database.
+     * It requires the document and the year.
+     */
     public function useDocument(Spreadsheet $document, Year $year): void
     {
         $document = $document->getAllSheets();
-        for ($i = 0; $i < count($document); ++$i) {
+        for ($i = 0; $i < count($document); ++$i) { // Do the process for each page
             $semester = new Semester();
             $semester->setYear($year);
             $semester->setNumber($i + 1);
@@ -109,14 +116,19 @@ class FileReadingService
         }
     }
 
+    /**
+     * Method that uses a page to initiate the database.
+     * It requires the page and the semester.
+     * It is called by useDocument.
+     */
     public function usePage(Worksheet $page, Semester $semester): void
     {
-        $page = $page->toArray();
+        $page = $page->toArray(); // Transform the page into an array
         $module = [];
         $courseTitle = null;
         $firstRowData = $this->initiateFirstLineInformation($page[0], $semester);
         $page = array_slice($page, 1);
-        foreach ($page as $row) {
+        foreach ($page as $row) { // Use each Line
             $modules = $this->createModuleFromRow($row, $semester, $module);
             $courseTitle = $this->createCourseTitleFromRow($row, $modules, $courseTitle);
             $course = $this->createCourseFromRow($row, $courseTitle);
@@ -125,6 +137,9 @@ class FileReadingService
     }
 
     /**
+     * Method that initiate first line data, get weeks number and tab size.
+     * It returns an array with the first week number, the first week index and the weeks.
+     *
      * @param string[] $row
      *
      * @return mixed[]
@@ -133,7 +148,7 @@ class FileReadingService
     {
         $firstLineInformation = [];
         $j = 0;
-        while (!is_numeric($row[$j]) && $j < count($row) - 1) {
+        while (!is_numeric($row[$j]) && $j < count($row) - 1) { // check the last line with number as a title
             ++$j;
         }
 
@@ -236,10 +251,6 @@ class FileReadingService
     /**
      * Method that adds tags to a course title.
      * It requires the tags string (non parsed) and the course title.
-     *
-     * @param string $tags
-     * @param CourseTitle $courseTitle
-     * @return CourseTitle
      */
     public function addTagToTitle(string $tags, CourseTitle $courseTitle): CourseTitle
     {
