@@ -39,3 +39,23 @@ body {
     background-color: #353535;
     color: white;
 }
+
+.container-login {
+    height: 100vh;
+}
+
+
+.toggle-password {
+    cursor: pointer;
+    right: 10px;
+    top: 40%;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+}
