@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Affectation;
 use App\Entity\Course;
+use App\Entity\CourseTitle;
 use App\Entity\ExternalHourRecord;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -48,6 +49,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('ExternalHoursRecord', 'fas fa-clock', ExternalHourRecord::class);
         yield MenuItem::linkToCrud('Affectation', 'fas fa-arrow-right', Affectation::class);
         yield MenuItem::linkToCrud('Course', 'fas fa-graduation-cap', Course::class);
+        yield MenuItem::linkToCrud('CourseTitle', 'fas fa-font', CourseTitle::class);
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 }
