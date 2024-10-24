@@ -36,8 +36,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     public const ROLES = [
         'AD' => 'ADMINISTRATION',
-        'AGR' => 'ENSEIGNANT_AGRÉGÉ',
-        'CER' => 'ENSEIGNANT_CERTIFIÉ',
+        'AGR' => 'ENSEIGNANT_AGREGE',
+        'CER' => 'ENSEIGNANT_CERTIFIE',
         'CHE' => 'ENSEIGNANT_CHERCHEUR',
         'VAC' => 'VACATAIRE',
     ];
