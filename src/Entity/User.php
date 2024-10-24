@@ -34,6 +34,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    public const ROLES = [
+        'AD' => 'ADMINISTRATION',
+        'AGR' => 'ENSEIGNANT_AGRÉGÉ',
+        'CER' => 'ENSEIGNANT_CERTIFIÉ',
+        'CHE' => 'ENSEIGNANT_CHERCHEUR',
+        'VAC' => 'VACATAIRE',
+    ];
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

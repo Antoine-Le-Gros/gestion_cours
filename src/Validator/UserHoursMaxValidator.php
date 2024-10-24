@@ -27,14 +27,13 @@ class UserHoursMaxValidator extends ConstraintValidator
         $min = 0;
         $max = PHP_INT_MAX;
 
-        if (in_array('ENSEIGNANT_AGRÉGÉ', $roles) || in_array('ENSEIGNANT_CERTIFIÉ', $roles)) {
+        if (in_array(User::ROLES['AGR'], $roles) || in_array(User::ROLES['CER'], $roles)) {
             $min = 384;
             $max = 768;
-        } elseif (in_array('ENSEIGNANT_CHERCHEUR', $roles)) {
+        } elseif (in_array(User::ROLES['CHE'], $roles)) {
             $min = 192;
             $max = 384;
-        } elseif (in_array('VACATAIRE', $roles)) {
-            $min = 0;
+        } elseif (in_array(User::ROLES['VAC'], $roles)) {
             $max = 192;
         }
         if ($value < $min || $value > $max) {
