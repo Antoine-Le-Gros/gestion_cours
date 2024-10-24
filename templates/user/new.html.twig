@@ -7,7 +7,7 @@
 {% block body %}
     <h1>{{title}}</h1>
 
-    {{ include('user/_form.html.twig') }}
+    {{ include('user/_form.html.twig', {'ad':  ad }) }}
 
     <a class="btn btn-danger" href="{{ path('app_user_index') }}">Annuler</a>
 {% endblock %}

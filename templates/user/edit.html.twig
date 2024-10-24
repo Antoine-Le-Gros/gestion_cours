@@ -6,7 +6,7 @@
 {% block body %}
     <h1>{{ title }}</h1>
 
-    {{ include('user/_form.html.twig', {'button_label': 'Modifier'}) }}
+    {{ include('user/_form.html.twig', {'button_label': 'Modifier', 'ad': ad}) }}
 
     <a class="btn btn-danger" href="{{ path('app_user_index') }}">Annuler</a>
 
