@@ -108,7 +108,11 @@ php bin/console lint:yaml config
 ### test:codecept
 Ce script lance une vérification des fichiers YAML en exécutant la commande :
 ```shell
-php vendor/bin/codecept run
+php vendor/bin/codecept clean,
+APP_ENV=test php bin/console doctrine:database:drop --force,
+APP_ENV=test php bin/console doctrine:database:create,
+APP_ENV=test php bin/console doctrine:schema:create --quiet,
+php vendor/bin/codecept run --no-artifacts
 ```
 
 ### test

@@ -122,7 +122,11 @@
             "php bin/console lint:yaml config"
         ],
         "test:codecept": [
-            "php vendor/bin/codecept run"
+            "php vendor/bin/codecept clean",
+            "APP_ENV=test php bin/console doctrine:database:drop --force",
+            "APP_ENV=test php bin/console doctrine:database:create",
+            "APP_ENV=test php bin/console doctrine:schema:create --quiet",
+            "php vendor/bin/codecept run --no-artifacts"
         ],
         "test": [
             "@test:csfixer",
