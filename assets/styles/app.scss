@@ -1,4 +1,16 @@
-@import '../../vendor/twbs/bootstrap/scss/bootstrap';
-body {
-    background-color: skyblue;
+@import "../../vendor/twbs/bootstrap/scss/bootstrap";
+
+html, body {
+    height: 100%;
+    margin: 0;
+    background-color: #353535;
+    color: white;
 }
+
+$body-bg: #353535;
+$body-color: white;
+$primary: #007bff;
+
+@import "variables";
+@import "layout";
+@import "components";
