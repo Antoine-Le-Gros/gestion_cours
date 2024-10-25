@@ -88,6 +88,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     #[CustomAssert\UserHoursMax]
+    #[Groups(['user_read'])]
     private ?int $hoursMax = null;
 
     public function __construct()
