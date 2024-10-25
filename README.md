@@ -135,3 +135,9 @@ Ce script lance la commande suivante. Elle charge les données des utilisateurs 
 ```shell
 php bin/console doctrine:fixtures:load --group=user --append
 ```
+
+### sass
+Ce script lance la commande suivante.  elle lance la compilation dynamique des fichiers Sass
+```shell
+php bin/console sass:build --watch
+```
