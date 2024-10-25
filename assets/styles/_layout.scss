@@ -1,0 +1,19 @@
+.vertical_bar {
+  background-color: $secondary-color;
+  padding: 10px;
+  .nav-item {
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    &:hover {
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+      transform: scale(1.05);
+    }
+  }
+}
+
+.content {
+  background-color: $background-color;
+  color: $text-color;
+  padding: 1rem;
+}
