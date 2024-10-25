@@ -47,6 +47,12 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword($this->passwordHasher->hashPassword($user, 'test'));
             $user->setIsActive(true);
+            if ($form->get('user_isAdministration')->getData()) {
+                $userRoles = $user->getRoles();
+                $userRoles[] = User::ROLES['AD'];
+                $userRoles = array_values(array_unique($userRoles));
+                $user->setRoles($userRoles);
+            }
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -56,7 +62,6 @@ class UserController extends AbstractController
         return $this->render('user/new.html.twig', [
             'user' => $user,
             'form' => $form,
-            'ad' => User::ROLES['AD'],
         ]);
     }
 
@@ -67,6 +72,12 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('isAdministration')->getData()) {
+                $userRoles = $user->getRoles();
+                $userRoles[] = User::ROLES['AD'];
+                $userRoles = array_values(array_unique($userRoles));
+                $user->setRoles($userRoles);
+            }
             $entityManager->flush();
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
@@ -75,7 +86,6 @@ class UserController extends AbstractController
         return $this->render('user/edit.html.twig', [
             'user' => $user,
             'form' => $form,
-            'ad' => User::ROLES['AD'],
         ]);
     }
 }

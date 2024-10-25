@@ -3,6 +3,7 @@
     {{ form_row(form.login, {'label' : 'Login' }) }}
     {{ form_row(form.firstname, {'label' : 'Prénom' }) }}
     {{ form_row(form.lastname, {'label' : 'Nom' }) }}
+    {{ form_row(form.isAdministration, {'label' : "Administration"}) }}
     {{ form_row(form.roles, {'label' : "Roles"}) }}
     <div id="hour">
         {{ form_row(form.hoursMax, {'label' : "Nombre d'heures maximal" }) }}
@@ -13,9 +14,10 @@
 <script>
     // hide or show hoursMax field according to user roles selection
     function toggleHourVisibility() {
+        const isAdministration = document.getElementById('user_isAdministration');
         const roles = document.getElementById('user_roles');
         const hour = document.getElementById('hour');
-        if (roles.selectedOptions.length === 1 && roles.value ===  '{{ ad }}') {
+        if (isAdministration.checked && !roles.selectedOptions.length) {
             hour.style.visibility = 'hidden';
             document.getElementById('user_hoursMax').value = 0;
         } else {
@@ -23,6 +25,7 @@
         }
     }
     toggleHourVisibility();
+    document.getElementById('user_isAdministration').addEventListener('change', toggleHourVisibility);
     document.getElementById('user_roles').addEventListener('change', toggleHourVisibility);
 </script>
 
