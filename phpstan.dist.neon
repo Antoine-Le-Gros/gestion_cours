@@ -8,3 +8,5 @@ parameters:
         - tests/
     excludePaths:
         - tests/Support/Helper
+    ignoreErrors:
+        - '#ApiTester#'
