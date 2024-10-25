@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "af444cda5f791b1436ea0774de10f14e",
+    "content-hash": "ffa197cfc1c5479d926c3f53b287b1c1",
     "packages": [
         {
             "name": "api-platform/core",
@@ -7874,16 +7874,16 @@
         },
         {
             "name": "symfony/ux-react",
-            "version": "v2.20.0",
+            "version": "v2.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/ux-react.git",
-                "reference": "81e00db0f59010ad0dbc088a595e7813d483b0a6"
+                "reference": "1e8f097e73f6d561272b044cb3a7b5ab84eda3ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ux-react/zipball/81e00db0f59010ad0dbc088a595e7813d483b0a6",
-                "reference": "81e00db0f59010ad0dbc088a595e7813d483b0a6",
+                "url": "https://api.github.com/repos/symfony/ux-react/zipball/1e8f097e73f6d561272b044cb3a7b5ab84eda3ce",
+                "reference": "1e8f097e73f6d561272b044cb3a7b5ab84eda3ce",
                 "shasum": ""
             },
             "require": {
@@ -7930,7 +7930,7 @@
                 "symfony-ux"
             ],
             "support": {
-                "source": "https://github.com/symfony/ux-react/tree/v2.20.0"
+                "source": "https://github.com/symfony/ux-react/tree/v2.21.0"
             },
             "funding": [
                 {
@@ -7946,7 +7946,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-24T09:27:42+00:00"
+            "time": "2024-10-22T14:52:13+00:00"
         },
         {
             "name": "symfony/ux-turbo",
@@ -8509,56 +8509,6 @@
                 "source": "https://github.com/SymfonyCasts/sass-bundle/tree/v0.8.1"
             },
             "time": "2024-10-17T10:46:06+00:00"
-        },
-        {
-            "name": "twbs/bootstrap",
-            "version": "v5.3.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "6e1f75f420f68e1d52733b8e407fc7c3766c9dba"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/6e1f75f420f68e1d52733b8e407fc7c3766c9dba",
-                "reference": "6e1f75f420f68e1d52733b8e407fc7c3766c9dba",
-                "shasum": ""
-            },
-            "replace": {
-                "twitter/bootstrap": "self.version"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mark Otto",
-                    "email": "markdotto@gmail.com"
-                },
-                {
-                    "name": "Jacob Thornton",
-                    "email": "jacobthornton@gmail.com"
-                }
-            ],
-            "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
-            "homepage": "https://getbootstrap.com/",
-            "keywords": [
-                "JS",
-                "css",
-                "framework",
-                "front-end",
-                "mobile-first",
-                "responsive",
-                "sass",
-                "web"
-            ],
-            "support": {
-                "issues": "https://github.com/twbs/bootstrap/issues",
-                "source": "https://github.com/twbs/bootstrap/tree/v5.3.3"
-            },
-            "time": "2024-02-20T15:14:29+00:00"
         },
         {
             "name": "twig/extra-bundle",
@@ -14186,5 +14136,5 @@
         "ext-intl": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.2.0"
 }
