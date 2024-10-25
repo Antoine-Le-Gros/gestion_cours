@@ -10,9 +10,12 @@ modules:
         - Doctrine2:
               depends: Symfony
               cleanup: true # All doctrine queries will be wrapped in a transaction, which will be rolled back at the end of each test
-        - REST:
-            url: '/api'
-            depends: PhpBrowser
+        - \App\Tests\Support\Helper\ApiPlatform:
+              url: ''
+              base_path: '/api'
+              depends: Symfony
+        - \App\Tests\Support\Helper\EntityManagerReset:
+              depends: Symfony
 
 
 
