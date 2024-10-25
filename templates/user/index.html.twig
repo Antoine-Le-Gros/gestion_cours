@@ -25,11 +25,22 @@
             <tr>
                 <td>{{ user.firstname }} {{ user.lastname }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>
+                    <ul>
+                        {% for role in user.roles | filter(r => r != 'ROLE_USER') %}
+                            <li class="list-group-item">{{ role }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
                 <td>{{ user.isActive ? 'Oui' : 'Non' }}</td>
                 <td>{{ user.login }}</td>
                 <td>{{ user.hoursMax }}</td>
                 <td>
+                    {% if user.isActive %}
+                        <a class="btn btn-danger" href="{{ path('app_user_deactivate', {'id': user.id}) }}">Désactiver</a>
+                    {% else %}
+                        <a class="btn btn-success" href="{{ path('app_user_activate', {'id': user.id}) }}">Activer</a>
+                    {% endif %}
                     <a class="btn btn-primary" href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
                 </td>
             </tr>

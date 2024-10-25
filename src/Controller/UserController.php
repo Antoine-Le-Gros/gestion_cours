@@ -7,6 +7,7 @@ use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -91,5 +92,23 @@ class UserController extends AbstractController
             'user' => $user,
             'form' => $form,
         ]);
+    }
+
+    #[Route('user/{id}/deactivate', name: 'app_user_deactivate', methods: ['GET'])]
+    public function deactivate(User $user, EntityManagerInterface $entityManager): RedirectResponse
+    {
+        $user->setIsActive(false);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('user/{id}/activate', name: 'app_user_activate', methods: ['GET'])]
+    public function activate(User $user, EntityManagerInterface $entityManager): RedirectResponse
+    {
+        $user->setIsActive(true);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
 }
