@@ -1,0 +1,29 @@
+.container-login {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  label {
+    color: $text-color;
+  }
+  .form-control {
+    background-color: $background-color;
+    border: 2px solid $text-color;
+    color: $text-color;
+    &:focus {
+      background-color: $background-color;
+    }
+  }
+}
+
+.btn-primary {
+  background-color: $primary-color;
+  border: none;
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
