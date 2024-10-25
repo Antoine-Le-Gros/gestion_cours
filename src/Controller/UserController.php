@@ -49,7 +49,9 @@ class UserController extends AbstractController
             $user->setIsActive(true);
             if ($form->get('user_isAdministration')->getData()) {
                 $userRoles = $user->getRoles();
-                $userRoles[] = User::ROLES['AD'];
+                if (!in_array(User::ADMINISTRATION, $userRoles, true)) {
+                    $userRoles[] = User::ADMINISTRATION;
+                }
                 $userRoles = array_values(array_unique($userRoles));
                 $user->setRoles($userRoles);
             }
@@ -74,7 +76,9 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('isAdministration')->getData()) {
                 $userRoles = $user->getRoles();
-                $userRoles[] = User::ROLES['AD'];
+                if (!in_array(User::ADMINISTRATION, $userRoles, true)) {
+                    $userRoles[] = User::ADMINISTRATION;
+                }
                 $userRoles = array_values(array_unique($userRoles));
                 $user->setRoles($userRoles);
             }

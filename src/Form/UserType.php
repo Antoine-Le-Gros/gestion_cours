@@ -16,7 +16,7 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $roles = User::ROLES;
+        $roles = User::TYPE_USER;
         array_splice($roles, 0, 1);
         $roleChoices = [];
         foreach ($roles as $role) {

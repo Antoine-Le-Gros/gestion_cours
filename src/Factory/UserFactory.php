@@ -32,7 +32,7 @@ final class UserFactory extends PersistentProxyObjectFactory
         $lastName = $this->normalizeName(self::faker()->lastName());
         $numerified = self::faker()->unique()->numerify('###');
         $email = "user-$numerified@example.com";
-        $role = array_rand(array_flip(User::ROLES));
+        $role = array_rand(array_flip(User::TYPE_USER));
         $hoursMax = $this->getRandomHoursMaxForRole($role);
 
         return [
@@ -50,12 +50,12 @@ final class UserFactory extends PersistentProxyObjectFactory
     protected function getRandomHoursMaxForRole(string $role): int
     {
         switch ($role) {
-            case User::ROLES['AGR']:
-            case User::ROLES['CER']:
+            case User::AGGREGATED:
+            case User::CERTIFIED:
                 return self::faker()->numberBetween(384, 768);
-            case User::ROLES['CHE']:
+            case User::RESEARCHER:
                 return self::faker()->numberBetween(192, 384);
-            case User::ROLES['VAC']:
+            case User::EXTERNAL:
                 return self::faker()->numberBetween(0, 192);
             default:
                 return 0;

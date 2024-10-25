@@ -34,12 +34,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    public const ROLES = [
-        'AD' => 'ADMINISTRATION',
-        'AGR' => 'ENSEIGNANT_AGREGE',
-        'CER' => 'ENSEIGNANT_CERTIFIE',
-        'CHE' => 'ENSEIGNANT_CHERCHEUR',
-        'VAC' => 'VACATAIRE',
+    public const ADMINISTRATION = 'administration';
+    public const AGGREGATED = 'enseignant agrege';
+    public const CERTIFIED = 'enseignant certifie';
+    public const RESEARCHER = 'enseignant chercheur';
+    public const EXTERNAL = 'vacataire';
+    public const TYPE_USER = [
+        self::ADMINISTRATION,
+        self::AGGREGATED,
+        self::CERTIFIED,
+        self::RESEARCHER,
+        self::EXTERNAL,
     ];
     #[ORM\Id]
     #[ORM\GeneratedValue]
