@@ -23,7 +23,7 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
         UserFactory::createMany(4);
         UserFactory::createOne([
             'email' => 'agregate@example.com',
-            'roles' => ['ENSEIGNANT_AGRÉGÉ'],
+            'roles' => [User::AGGREGATED],
             'password' => $this->passwordHasher->hashPassword(new User(), 'test'),
             'hoursMax' => 500,
             'firstname' => 'Jean',
@@ -33,7 +33,7 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
 
         UserFactory::createOne([
             'email' => 'vacataire@example.com',
-            'roles' => ['VACATAIRE'],
+            'roles' => [User::EXTERNAL],
             'password' => $this->passwordHasher->hashPassword(new User(), 'test'),
             'hoursMax' => 150,
             'firstname' => 'Marie',
@@ -43,7 +43,7 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
 
         UserFactory::createOne([
             'email' => 'chercheur@example.com',
-            'roles' => ['ENSEIGNANT_CHERCHEUR'],
+            'roles' => [User::RESEARCHER],
             'password' => $this->passwordHasher->hashPassword(new User(), 'test'),
             'hoursMax' => 250,
             'firstname' => 'Pierre',
@@ -53,7 +53,7 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
 
         UserFactory::createOne([
             'email' => 'admin@example.com',
-            'roles' => ['ADMINISTRATION'],
+            'roles' => [User::ADMINISTRATION],
             'password' => $this->passwordHasher->hashPassword(new User(), 'test'),
             'hoursMax' => 0,
             'firstname' => 'Pierre',

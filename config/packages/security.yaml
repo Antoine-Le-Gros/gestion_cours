@@ -39,11 +39,11 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     role_hierarchy:
-        VACATAIRE : ROLE_USER
-        ENSEIGNANT_AGRÉGÉ : ROLE_USER
-        ENSEIGNANT_CHERCHEUR : ROLE_USER
-        ENSEIGNANT_CERTIFIÉ : ROLE_USER
-        ADMINISTRATION : ROLE_ADMIN
+        vacataire : ROLE_USER
+        enseignant_agrege : ROLE_USER
+        enseignant_chercheur : ROLE_USER
+        enseignant_certifie : ROLE_USER
+        administration : ROLE_ADMIN
 
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
