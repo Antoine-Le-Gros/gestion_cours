@@ -60,6 +60,16 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
             'lastname' => 'Martin',
             'login' => 'admin',
         ]);
+
+        UserFactory::createOne([
+            'email' => 'superadmin@example.com',
+            'roles' => ['ROLE_SUPER_ADMIN'],
+            'password' => $this->passwordHasher->hashPassword(new User(), 'pass'),
+            'hoursMax' => 0,
+            'firstname' => 'Alice',
+            'lastname' => 'SuperAdmin',
+            'login' => 'superadmin',
+        ]);
         $manager->flush();
     }
 
