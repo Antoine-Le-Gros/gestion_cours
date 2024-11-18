@@ -52,6 +52,7 @@ class Year
     private Collection $semesters;
 
     #[ORM\Column]
+    #[Groups(['year_read', 'course_read'])]
     private ?bool $isCurrent = null;
 
     public function __construct()
@@ -142,7 +143,7 @@ class Year
         return $this->isCurrent;
     }
 
-    public function setCurrent(bool $isCurrent): static
+    public function setIsCurrent(bool $isCurrent): static
     {
         $this->isCurrent = $isCurrent;
 
