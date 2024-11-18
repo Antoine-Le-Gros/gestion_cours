@@ -23,6 +23,7 @@ final class YearFactory extends PersistentProxyObjectFactory
     {
         return [
             'name' => '2024/2025',
+            'isCurrent' => false,
         ];
     }
 
