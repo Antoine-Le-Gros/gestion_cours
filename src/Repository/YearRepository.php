@@ -23,6 +23,13 @@ class YearRepository extends ServiceEntityRepository
             ->setParameter('id', $id)
             ->getQuery()->getResult()[0];
     }
+
+    public function findCurrent(): Year
+    {
+        return $this->createQueryBuilder('y')
+            ->where('y.isCurrent = TRUE')
+            ->getQuery()->getResult()[0];
+    }
     //    /**
     //     * @return Year[] Returns an array of Year objects
     //     */
