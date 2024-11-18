@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\UserRepository;
+use App\State\MeProvider;
 use App\Validator as CustomAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -24,6 +25,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
         new GetCollection(),
         new Post(),
         new Get(),
+        new Get(
+            uriTemplate: '/me',
+            openapiContext: ['summary' => 'Get the current user'],
+            normalizationContext: ['groups' => ['user_read']],
+            security: "is_granted('ROLE_USER')",
+            provider: MeProvider::class,
+        ),
         new Patch(
             security: "is_granted('ROLE_USER') and object.getUserIdentifier() == user.getUserIdentifier()",
         ),
