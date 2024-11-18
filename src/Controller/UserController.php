@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class UserController extends AbstractController
 {
@@ -23,6 +24,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/home_admin', name: 'app_home_admin')]
+    #[IsGranted('ROLE_ADMIN')]
     public function home_admin(): Response
     {
         return $this->render('user/index.html.twig', [
@@ -31,6 +33,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/user', name: 'app_user_index', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function index(UserRepository $userRepository): Response
     {
         return $this->render('user/index.html.twig', [
@@ -39,6 +42,7 @@ class UserController extends AbstractController
     }
 
     #[Route('user/new', name: 'app_user_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
@@ -69,6 +73,7 @@ class UserController extends AbstractController
     }
 
     #[Route('user/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(UserType::class, $user);
@@ -95,6 +100,7 @@ class UserController extends AbstractController
     }
 
     #[Route('user/{id}/deactivate', name: 'app_user_deactivate', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function deactivate(User $user, EntityManagerInterface $entityManager): RedirectResponse
     {
         $user->setIsActive(false);
@@ -104,6 +110,7 @@ class UserController extends AbstractController
     }
 
     #[Route('user/{id}/activate', name: 'app_user_activate', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function activate(User $user, EntityManagerInterface $entityManager): RedirectResponse
     {
         $user->setIsActive(true);

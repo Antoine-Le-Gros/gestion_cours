@@ -10,10 +10,12 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class UploadController extends AbstractController
 {
     #[Route('/upload', name: 'app_upload')]
+    #[IsGranted('ROLE_ADMIN')]
     public function index(Request $request, FileReadingService $reader, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(UploadType::class);
