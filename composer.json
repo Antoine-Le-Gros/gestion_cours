@@ -1,6 +1,6 @@
 {
     "name": "ratt0008/sae5-01",
-    "description": "SAÉ 5.Real.01 - Développement avancé",
+    "description": "SA\u00c9 5.Real.01 - D\u00e9veloppement avanc\u00e9",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
@@ -13,6 +13,7 @@
         "api-platform/core": "^3.2",
         "api-platform/doctrine-orm": "*",
         "api-platform/symfony": "*",
+        "codeception/module-doctrine": "^3.1",
         "doctrine/dbal": "^3",
         "doctrine/doctrine-bundle": "^2.13",
         "doctrine/doctrine-migrations-bundle": "^3.3",
@@ -99,17 +100,18 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
-        "start" : [
+        "start": [
             "Composer\\Config::disableProcessTimeout",
             "symfony serve"
         ],
-        "test:csfixer" : [
+        "test:csfixer": [
             "php-cs-fixer fix --dry-run"
         ],
         "fix:csfixer": [
             "php-cs-fixer fix"
         ],
         "test:phpstan": [
+            "php vendor/bin/codecept build",
             "php vendor/bin/phpstan analyse src tests"
         ],
         "test:twig": [
@@ -117,16 +119,24 @@
         ],
         "fix:twig": [
             "php vendor/bin/twig-cs-fixer lint --fix src/"
-
         ],
         "test:yaml": [
             "php bin/console lint:yaml config"
         ],
-        "test" : [
+        "test:codecept": [
+            "php vendor/bin/codecept clean",
+            "APP_ENV=test php bin/console doctrine:database:drop --force",
+            "APP_ENV=test php bin/console doctrine:database:create",
+            "APP_ENV=test php bin/console doctrine:schema:create --quiet",
+            "php vendor/bin/codecept run --no-artifacts"
+        ],
+        "test": [
+
             "@test:csfixer",
             "@test:phpstan",
             "@test:twig",
-            "@test:yaml"
+            "@test:yaml",
+            "@test:codecept"
         ],
         "db": [
             "php bin/console doctrine:database:drop --force --if-exists",
@@ -148,18 +158,18 @@
         ]
     },
     "scripts-descriptions": {
-        "test:csfixer": "Lancement des test php cs fixer",
-        "fix:csfixer": "Correction des test php cs fixer",
-        "test:phpstan": "lancement des test php stan",
+        "test:csfixer": "Lancement des tests php cs fixer",
+        "fix:csfixer": "Correction des tests php cs fixer",
+        "test:phpstan": "lancement des tests php stan",
         "test:twig": "Lancement des tests twig",
-        "fix:twig": "Correction des test twig",
+        "fix:twig": "Correction des tests twig",
         "test:yaml": "Lancenement des tests YAML",
-        "test" : "Lancement de tous les tests",
-        "db" : "Détruire, Créer, Ajouter migration, et generer des données factices dans la base de données",
-        "db:type" : "Détruire, Créer, Ajouter migration, et generer des données factices dans la base de données pour les types de cours",
-        "db:user" : "Genere des données factices dans la base de données pour les utilisateurs, ne détruit pas les anciennes"
+        "test:codecept": "Lancement des tests Codeception",
+        "test": "Lancement de tous les tests",
+        "db": "D\u00e9truire, Cr\u00e9er, Ajouter migration, et generer des donn\u00e9es factices dans la base de donn\u00e9es",
+        "db:type": "D\u00e9truire, Cr\u00e9er, Ajouter migration, et generer des donn\u00e9es factices dans la base de donn\u00e9es pour les types de cours",
+        "db:user": "Genere des donn\u00e9es factices dans la base de donn\u00e9es pour les utilisateurs, ne d\u00e9truit pas les anciennes"
     },
-
     "conflict": {
         "symfony/symfony": "*"
     },
@@ -170,11 +180,16 @@
         }
     },
     "require-dev": {
+        "codeception/codeception": "^5.1",
+        "codeception/module-asserts": "^3.0",
+        "codeception/module-phpbrowser": "^3.0",
+        "codeception/module-rest": "^3.4",
+        "codeception/module-symfony": "^3.4",
         "doctrine/doctrine-fixtures-bundle": "^3.6",
         "friendsofphp/php-cs-fixer": "^3.64",
         "phpro/grumphp": "^2.8",
         "phpstan/phpstan": "^1.12",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^10.5",
         "symfony/browser-kit": "7.1.*",
         "symfony/css-selector": "7.1.*",
         "symfony/debug-bundle": "7.1.*",

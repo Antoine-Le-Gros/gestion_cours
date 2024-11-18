@@ -37,3 +37,4 @@ grumphp:
         phpstan:
     fixer:
         enabled: false
+

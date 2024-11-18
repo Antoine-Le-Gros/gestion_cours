@@ -85,8 +85,9 @@ Ce script lance une correction du code par PHP CS Fixer en exécutant la command
 php-cs-fixer fix
 ```
 ### test:phpstan
-Ce script lance une vérification du code par PHPStan en exécutant la commande :
+Ce script lance une vérification du code par PHPStan en exécutant les commandes :
 ```shell
+php vendor/bin/codecept build,
 phpstan analyse src --level=max
 ```
 ### test:twig
@@ -100,10 +101,21 @@ Ce script lance une correction du code par Twig CS Fixer en exécutant la comman
 vendor/bin/twig-cs-fixer lint --fix
 ```
 ### test:yaml
-Ce script lance une vérification des fichiers YAML en exécutant la commande :
+Ce script lance une vérification des tests YAML en exécutant la commande :
 ```shell
 php bin/console lint:yaml config
 ```
+
+### test:codecept
+Ce script lance une vérification des fichiers codeception en exécutant la commande :
+```shell
+php vendor/bin/codecept clean,
+APP_ENV=test php bin/console doctrine:database:drop --force,
+APP_ENV=test php bin/console doctrine:database:create,
+APP_ENV=test php bin/console doctrine:schema:create --quiet,
+php vendor/bin/codecept run --no-artifacts
+```
+
 ### test
 Ce script lance l'ensemble des scripts de vérification :
 ```shell
@@ -111,6 +123,7 @@ Ce script lance l'ensemble des scripts de vérification :
 @test:phpstan
 @test:twig
 @test:yaml
+@test:codecept
 ```
 ### db
 Ce script lance les commandes suivantes pour forcer la suppression de la base de donnée, créer la base de donnée, applique les migration et charge les données factices :
