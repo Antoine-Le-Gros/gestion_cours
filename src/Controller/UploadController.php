@@ -32,7 +32,7 @@ class UploadController extends AbstractController
                         $this->getParameter('uploads_directory'),
                         $newFilename
                     );
-                    $year = $form->get('year')->getData();
+                    $year = $form->get('year')->getData()->setIsCurrent(true);
                     $file = $reader->getReader()->load($this->getParameter('uploads_directory').'/'.$newFilename);
                     $reader->useDocument($file, $year);
                 } catch (FileException $e) {
