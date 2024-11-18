@@ -49,6 +49,13 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/upload, roles: ROLE_ADMIN }
+        - { path: ^/home_admin, roles: ROLE_ADMIN }
+        - { path: ^/user$, roles: ROLE_ADMIN }
+        - { path: ^/user/new$, roles: ROLE_ADMIN }
+        - { path: ^/user/\d+/edit$, roles: ROLE_ADMIN }
+        - { path: ^/user/\d+/deactivate$, roles: ROLE_ADMIN }
+        - { path: ^/user/\d+/activate$, roles: ROLE_ADMIN }
+
 
 when@test:
     security:
