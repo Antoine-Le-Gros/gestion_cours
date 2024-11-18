@@ -16,6 +16,13 @@ class YearRepository extends ServiceEntityRepository
         parent::__construct($registry, Year::class);
     }
 
+    public function findById(int $id): Year
+    {
+        return $this->createQueryBuilder('y')
+            ->where('y.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()->getResult()[0];
+    }
     //    /**
     //     * @return Year[] Returns an array of Year objects
     //     */
