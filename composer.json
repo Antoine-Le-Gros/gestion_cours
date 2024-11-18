@@ -13,6 +13,7 @@
         "api-platform/core": "^3.2",
         "api-platform/doctrine-orm": "*",
         "api-platform/symfony": "*",
+        "codeception/module-doctrine": "^3.1",
         "doctrine/dbal": "^3",
         "doctrine/doctrine-bundle": "^2.13",
         "doctrine/doctrine-migrations-bundle": "^3.3",
@@ -110,6 +111,7 @@
             "php-cs-fixer fix"
         ],
         "test:phpstan": [
+            "php vendor/bin/codecept build",
             "php vendor/bin/phpstan analyse src tests"
         ],
         "test:twig": [
@@ -129,6 +131,7 @@
             "php vendor/bin/codecept run --no-artifacts"
         ],
         "test": [
+
             "@test:csfixer",
             "@test:phpstan",
             "@test:twig",
@@ -179,7 +182,6 @@
     "require-dev": {
         "codeception/codeception": "^5.1",
         "codeception/module-asserts": "^3.0",
-        "codeception/module-doctrine2": "^3.0",
         "codeception/module-phpbrowser": "^3.0",
         "codeception/module-rest": "^3.4",
         "codeception/module-symfony": "^3.4",

@@ -7,6 +7,7 @@ parameters:
         - src/
         - tests/
     excludePaths:
-        - tests/Support/Helper
-    ignoreErrors:
-        - '#ApiTester#'
+        - tests/Support/Helper/ApiPlatform
+        - tests/Support/_generated
+    scanFiles:
+        - tests/Support/_generated/ApiTesterActions.php
