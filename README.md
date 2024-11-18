@@ -85,8 +85,9 @@ Ce script lance une correction du code par PHP CS Fixer en exécutant la command
 php-cs-fixer fix
 ```
 ### test:phpstan
-Ce script lance une vérification du code par PHPStan en exécutant la commande :
+Ce script lance une vérification du code par PHPStan en exécutant les commandes :
 ```shell
+php vendor/bin/codecept build,
 phpstan analyse src --level=max
 ```
 ### test:twig
@@ -100,13 +101,13 @@ Ce script lance une correction du code par Twig CS Fixer en exécutant la comman
 vendor/bin/twig-cs-fixer lint --fix
 ```
 ### test:yaml
-Ce script lance une vérification des tests codeception en exécutant la commande :
+Ce script lance une vérification des tests YAML en exécutant la commande :
 ```shell
 php bin/console lint:yaml config
 ```
 
 ### test:codecept
-Ce script lance une vérification des fichiers YAML en exécutant la commande :
+Ce script lance une vérification des fichiers codeception en exécutant la commande :
 ```shell
 php vendor/bin/codecept clean,
 APP_ENV=test php bin/console doctrine:database:drop --force,
