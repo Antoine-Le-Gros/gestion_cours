@@ -51,7 +51,9 @@
                 <td>{{ user.hoursMax }}</td>
                 <td>
                     {% for role in user.roles %}
-                        <span class="badge bg-secondary">{{ role }}</span>
+                        {% if role != 'ROLE_USER' %}
+                            <span class="badge bg-secondary">{{ role }}</span>
+                        {% endif %}
                     {% endfor %}
                 </td>
                 <td>
