@@ -53,6 +53,7 @@ export default function UserProfile() {
                             </span>
                         </div>
                         <div className="col-md-6 text-end">
+                            <h5 className="text-secondary">Mot de passe :</h5>
                             <button className="btn btn-dark text-white">
                                 Changer de mot de passe
                             </button>
