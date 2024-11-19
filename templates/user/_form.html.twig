@@ -57,7 +57,7 @@
 
 <div class="d-flex justify-content-end mt-4">
     <button class="btn btn-primary me-2">{{ button_label|default('Enregistrer') }}</button>
-    <button class="btn btn-secondary" type="button">Annuler</button>
+    <button class="btn btn-danger me-2" type="button"><a href="{{ path('app_user_index') }}" style="text-decoration:none; color: white">Annuler</a></button>
 </div>
 
 {{ form_end(form) }}
