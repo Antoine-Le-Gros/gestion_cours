@@ -154,6 +154,7 @@
             "php bin/console doctrine:fixtures:load --group=user --no-interaction --append"
         ],
         "sass": [
+            "Composer\\Config::disableProcessTimeout",
             "php bin/console sass:build --watch"
         ]
     },
