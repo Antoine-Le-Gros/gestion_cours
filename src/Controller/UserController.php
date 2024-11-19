@@ -25,10 +25,10 @@ class UserController extends AbstractController
 
     #[Route('/home_admin', name: 'app_home_admin')]
     #[IsGranted('ROLE_ADMIN')]
-    public function home_admin(): Response
+    public function home_admin(UserRepository $userRepository): Response
     {
         return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
+            'users' => $userRepository->findAll(),
         ]);
     }
 
