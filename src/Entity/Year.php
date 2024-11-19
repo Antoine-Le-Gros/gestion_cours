@@ -51,6 +51,10 @@ class Year
     #[ORM\OneToMany(targetEntity: Semester::class, mappedBy: 'year', orphanRemoval: true)]
     private Collection $semesters;
 
+    #[ORM\Column]
+    #[Groups(['year_read', 'course_read'])]
+    private ?bool $isCurrent = null;
+
     public function __construct()
     {
         $this->externalHourRecords = new ArrayCollection();
@@ -130,6 +134,18 @@ class Year
                 $semester->setYear(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isCurrent(): ?bool
+    {
+        return $this->isCurrent;
+    }
+
+    public function setIsCurrent(bool $isCurrent): static
+    {
+        $this->isCurrent = $isCurrent;
 
         return $this;
     }

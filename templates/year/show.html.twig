@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Année {{ year.name }}{% endblock %}
+
+{% block body %}
+    <div class="container text-center mt-5">
+        <h1 class="mb-4 text-white">Année {{ year.name }}</h1>
+
+        <div class="d-flex flex-column align-items-center gap-4">
+            <div class="d-flex justify-content-center gap-4">
+                {% for semester in year.semesters[0:3] %}
+                <a href="#" class="text-decoration-none text-black">
+                    <div class="card border-0 bg-white position-relative"
+                         style="width: 100px; height: 60px; border-radius: 10px;">
+                            <div class="d-flex justify-content-center align-items-center h-100 fw-bold"
+                                 style="font-size: 1.2rem;">
+                                S{{ semester.number }}
+                            </div>
+                        <span class="position-absolute top-50 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"></span>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+
+            <div class="d-flex justify-content-center gap-4">
+                {% for semester in year.semesters[3:6] %}
+                    <a href="#" class="text-decoration-none text-black">
+                    <div class="card border-0 bg-white position-relative"
+                         style="width: 100px; height: 60px; border-radius: 10px;">
+                            <div class="d-flex justify-content-center align-items-center h-100 fw-bold"
+                                 style="font-size: 1.2rem;">
+                                S{{ semester.number }}
+                            </div>
+
+                        <span class="position-absolute top-50 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"></span>
+                    </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="mt-4 d-flex justify-content-center gap-3">
+            <button class="btn btn-primary px-4">Archiver</button>
+            <button class="btn btn-secondary px-4">Annuler</button>
+        </div>
+    </div>
+{% endblock %}

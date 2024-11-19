@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\UploadType;
+use App\Repository\YearRepository;
 use App\Service\FileReadingService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,7 +33,7 @@ class UploadController extends AbstractController
                         $this->getParameter('uploads_directory'),
                         $newFilename
                     );
-                    $year = $form->get('year')->getData();
+                    $year = $form->get('year')->getData()->setIsCurrent(true);
                     $file = $reader->getReader()->load($this->getParameter('uploads_directory').'/'.$newFilename);
                     $reader->useDocument($file, $year);
                 } catch (FileException $e) {
@@ -52,8 +53,10 @@ class UploadController extends AbstractController
     }
 
     #[Route('/upload/success', name: 'upload_success')]
-    public function success(): Response
+    public function success(YearRepository $yearRepository): Response
     {
-        return $this->render('upload/success.html.twig');
+        $currentYear = $yearRepository->findCurrent();
+
+        return $this->redirectToRoute('app_year_show', ['id' => $currentYear->getId()]);
     }
 }
