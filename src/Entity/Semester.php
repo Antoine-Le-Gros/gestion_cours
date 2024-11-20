@@ -38,7 +38,7 @@ class Semester
 
     #[ORM\Column]
     #[Assert\Range(min: 1, max: 6)]
-    #[Groups(['semester_read', 'week_read'])]
+    #[Groups(['semester_read', 'week_read', 'affectation_read_graph'])]
     private ?int $number = null;
 
     /**
