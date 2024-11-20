@@ -40,3 +40,42 @@ export function fromHourlyVolumesToWeeks(volumes) {
     });
     return Object.values(weeks);
 }
+
+export function fromWeeksToData(weeks) {
+    let data = [];
+    const semesters = [];
+    weeks.forEach((week) => {
+        if (!semesters.includes(week.semester)) {
+            semesters.push(week.semester);
+        }
+    })
+
+    data.push(["Nombre d'heures", ...semesters.map((semester) => `Semestre ${semester}`)]);
+
+    weeks.forEach((week) => {
+        let find = false
+        data.forEach((element) => {
+            if (element[0] === week.week.toString()) {
+                if (element[week.semester] === undefined) {
+                    element[week.semester] = week.volumes;
+                } else {
+                    element[week.semester] += week.volumes;
+                }
+                find = true;
+            }
+        });
+        if (find === false) {
+            const line = [week.week.toString()];
+            line[week.semester] = week.volumes;
+            data.push(line);
+        }
+    });
+
+
+    data = fillMissingWeeks(sortDataByWeeksNumber(data));
+    console.log(data);
+
+    fillEmptySemester(data, semesters);
+
+    return sortDataByWeeksNumber(data);
+}
