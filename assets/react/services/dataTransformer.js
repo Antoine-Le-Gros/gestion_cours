@@ -1,3 +1,9 @@
+/**
+ * Transform affectations in hourly volumes of structure : {week: week, semester: semester, volume: number}
+ * @param affectations
+ * @returns {*[]}
+ */
+
 export function fromAffectationToHourlyVolumes(affectations) {
     const volumes = [];
     affectations.forEach((affectation) => {
@@ -15,6 +21,14 @@ export function fromAffectationToHourlyVolumes(affectations) {
     return volumes;
 }
 
+
+/**
+ * Transform hourly volumes in weeks of structure : {week: number, semester: number, volumes: number}
+ * It also permits to sum volumes of the same week and semester into only one object
+ *
+ * @param volumes
+ * @returns {*[]}
+ */
 export function fromHourlyVolumesToWeeks(volumes) {
     const weeks = [];
     volumes.forEach((volume) => {
@@ -41,6 +55,14 @@ export function fromHourlyVolumesToWeeks(volumes) {
     return Object.values(weeks);
 }
 
+
+/**
+ * Transform weeks in data of structure : [week, semester1, semester2, ...]
+ * Also add a header row containg informations of the Graph
+ *
+ * @param weeks
+ * @returns {*}
+ */
 export function fromWeeksToData(weeks) {
     let data = [];
     const semesters = [];
