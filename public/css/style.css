@@ -137,6 +137,11 @@ a.sidebar-link:hover {
     padding: 1rem 1.5rem;
 }
 
+.sidebar-nav .sidebar-item:last-child .sidebar-link {
+    background-color: #d9534f;
+    border-left: 3px solid transparent;
+}
+
 #toggle-btn i {
     font-size: 1.5rem;
     color: #FFF;
