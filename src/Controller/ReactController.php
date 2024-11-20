@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class ReactController extends AbstractController
 {
     #[Route('/react', name: 'app_react')]
+    #[Route('/me', name: 'app_me')]
     public function index(): Response
     {
         return $this->render('react/index.html.twig', [
