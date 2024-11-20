@@ -58,6 +58,10 @@ class CourseTitle
     #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'courseTitleId')]
     private Collection $tags;
 
+    #[ORM\Column(length: 500, nullable: true)]
+    #[Groups(['course_read', 'courseTitle_read', 'courseTitle_write', 'affectation_read'])]
+    private ?string $description = null;
+
     public function __construct()
     {
         $this->courses = new ArrayCollection();
@@ -162,6 +166,18 @@ class CourseTitle
         if ($this->tags->removeElement($tag)) {
             $tag->removeCourseTitleId($this);
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }

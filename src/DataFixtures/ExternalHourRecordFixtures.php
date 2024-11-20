@@ -28,7 +28,6 @@ class ExternalHourRecordFixtures extends Fixture implements DependentFixtureInte
     public static function getGroups(): array
     {
         return [
-            'user',
         ];
     }
 }
