@@ -22,8 +22,8 @@ export const options = {
 };
 
 export default function BarStacked() {
-
     const [data, setData] = useState([]);
+    const [isLoaded, setLoaded] = useState(false);
 
     useEffect(() => {
         fetchAffecationByUserAndYear(8, 1).then((response) => {
@@ -34,11 +34,13 @@ export default function BarStacked() {
                     )
                 )
             );
+            setLoaded(true);
         });
     }, []);
 
     return (
         <div>
+            {isLoaded ?
             <Chart
                 chartType="ColumnChart"
                 width="100%"
@@ -46,7 +48,7 @@ export default function BarStacked() {
                 data={data}
                 options={options}
                 legendToggle
-            />
+            /> : <p>Loading...</p>}
         </div>
     );
 };
