@@ -20,7 +20,6 @@ export default function PasswordChangeModal({ onClose, onPasswordChange }) {
         >
             <div className="modal-dialog">
                 <div className="modal-content">
-                    {/* Header avec un style adapté */}
                     <div className="modal-header bg-black text-white">
                         <h5 className="modal-title">Changer de mot de passe</h5>
                         <button
@@ -29,7 +28,6 @@ export default function PasswordChangeModal({ onClose, onPasswordChange }) {
                             onClick={onClose}
                         ></button>
                     </div>
-                    {/* Body avec un fond clair et texte sombre */}
                     <div className="modal-body bg-light text-dark">
                         <label htmlFor="newPassword" className="form-label">
                             Nouveau mot de passe :
@@ -42,7 +40,6 @@ export default function PasswordChangeModal({ onClose, onPasswordChange }) {
                             onChange={(e) => setNewPassword(e.target.value)}
                         />
                     </div>
-                    {/* Footer adapté */}
                     <div className="modal-footer bg-light">
                         <button className="btn btn-secondary" onClick={onClose}>
                             Annuler

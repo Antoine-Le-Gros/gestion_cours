@@ -7,8 +7,8 @@ import Toast from "../Molecule/Toast.js";
 export default function UserProfile() {
     const [user, setUser] = useState({});
     const [isPopupOpen, setIsPopupOpen] = useState(false);
-    const [toastMessage, setToastMessage] = useState(null); // État pour gérer le message Toast
-    const [toastType, setToastType] = useState("success"); // success ou error
+    const [toastMessage, setToastMessage] = useState(null);
+    const [toastType, setToastType] = useState("success");
 
     useEffect(() => {
         fetchMe().then((data) => {
@@ -35,7 +35,7 @@ export default function UserProfile() {
             setToastMessage("Une erreur est survenue.");
         }
 
-        // Affiche le toast pendant 3 secondes, puis le masque
+
         setTimeout(() => setToastMessage(null), 3000);
     };
 
@@ -72,7 +72,7 @@ export default function UserProfile() {
                             <h5 className="text-secondary">Statut du compte :</h5>
                             <span
                                 className={`badge ${
-                                    user.isActive ? "bg-success" : "bg-danger"
+                                    user.isActive ? "bg-success" : "bg-danger-subtle"
                                 } fs-6`}
                             >
                                 {user.isActive ? "Actif" : "Inactif"}
@@ -91,7 +91,7 @@ export default function UserProfile() {
                 </div>
             </div>
 
-            {/* Modal pour changer le mot de passe */}
+
             {isPopupOpen && (
                 <PasswordChangeModal
                     onClose={() => setIsPopupOpen(false)}
@@ -99,7 +99,7 @@ export default function UserProfile() {
                 />
             )}
 
-            {/* Toast pour les messages */}
+
             {toastMessage && (
                 <Toast
                     message={toastMessage}
