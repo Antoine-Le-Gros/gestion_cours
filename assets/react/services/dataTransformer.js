@@ -102,6 +102,12 @@ export function fromWeeksToData(weeks) {
     return sortDataByWeeksNumber(data);
 }
 
+/**
+ * Function that Fill the table with missing weeks to avoid holes in the graph
+ *
+ * @param sortedData
+ * @returns {*}
+ */
 function fillMissingWeeks(sortedData) {
     const min = sortedData[1][0];
     const max = sortedData[sortedData.length - 1][0];
@@ -121,6 +127,14 @@ function fillMissingWeeks(sortedData) {
     return sortDataByWeeksNumber(sortedData);
 }
 
+
+/**
+ * Function that Fill the table with 0 for the weeks, where no hours are affected
+ *
+ * @param data
+ * @param semesters
+ * @returns {*}
+ */
 function fillEmptySemester(data, semesters) {
     data.forEach((element) => {
         for (let i = 1; i <= semesters.length; i++) {
@@ -133,6 +147,12 @@ function fillEmptySemester(data, semesters) {
     return data;
 }
 
+/**
+ * Function that sort the data by weeks number, starting by 35 and ending at 34 with a maximum of 52
+ *
+ * @param data
+ * @returns {*[]}
+ */
 function sortDataByWeeksNumber(data) {
     const firstElement = data[0];
     const restOfArray = data.slice(1);
