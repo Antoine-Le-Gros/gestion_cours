@@ -14,3 +14,29 @@ export function fromAffectationToHourlyVolumes(affectations) {
     })
     return volumes;
 }
+
+export function fromHourlyVolumesToWeeks(volumes) {
+    const weeks = [];
+    volumes.forEach((volume) => {
+        const week = volume.week.number;
+        const semester = volume.week.semesters.number;
+        let find = false;
+
+        weeks.forEach((element) => {
+            if (element.week === week && element.semester === semester) {
+                element.volumes += volume.volume;
+                find = true;
+            }
+        });
+
+        if (find === false) {
+            weeks.push({
+                week: week,
+                semester: semester,
+                volumes: volume.volume
+            });
+        }
+
+    });
+    return Object.values(weeks);
+}
