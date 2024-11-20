@@ -11,3 +11,16 @@ export function fetchMe() {
     );
 
 }
+export function updatePassword(id, newPassword) {
+    return fetch(`${BASE_URL}/users/${id}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/merge-patch+json", // Type de contenu envoyé
+            "Accept": "*/*", // Accepte tous les types de contenu en réponse
+        },
+        body: JSON.stringify({ password: newPassword }),
+    });
+}
+
+
+
