@@ -16,6 +16,27 @@ class AffectationRepository extends ServiceEntityRepository
         parent::__construct($registry, Affectation::class);
     }
 
+    /**
+     * @return Affectation[]
+     */
+    public function findAffectationByUserAndYear(int $userId, int $yearId): array
+    {
+        return $this->createQueryBuilder('a')
+            ->join('a.teacher', 't')
+            ->join('a.course', 'c')
+            ->join('c.hourlyVolumes', 'h')
+            ->join('h.week', 'w')
+            ->join('w.semesters', 's')
+            ->join('s.year', 'y')
+            ->andWhere('t.id = :userId')
+            ->andWhere('y.id = :yearId')
+            ->setParameter('userId', $userId)
+            ->setParameter('yearId', $yearId)
+            ->orderBy('s.number', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Affectation[] Returns an array of Affectation objects
     //     */
