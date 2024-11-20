@@ -79,6 +79,25 @@ export function fromWeeksToData(weeks) {
 
     return sortDataByWeeksNumber(data);
 }
+
+function fillMissingWeeks(sortedData) {
+    const min = sortedData[1][0];
+    const max = sortedData[sortedData.length - 1][0];
+
+    for (let i = min; i <= 52; i++) {
+        if (sortedData.find((element) => element[0] === i.toString()) === undefined) {
+            sortedData.push([i.toString()]);
+        }
+    }
+
+    for (let i = 1; i <= max; i++) {
+        if (sortedData.find((element) => element[0] === i.toString()) === undefined) {
+            sortedData.push([i.toString()]);
+        }
+    }
+
+    return sortDataByWeeksNumber(sortedData);
+}
 function sortDataByWeeksNumber(data) {
     const firstElement = data[0];
     const restOfArray = data.slice(1);
