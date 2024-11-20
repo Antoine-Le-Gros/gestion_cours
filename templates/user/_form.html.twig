@@ -39,9 +39,10 @@
     </div>
 
     <div class="col-md-6">
-        <div class="form-group">
-            {{ form_label(form.hoursMax, "Nombre d'heures en dehors du département *", {'label_attr': {'class': 'form-label text-white'}}) }}
+        <div id="hour" class="form-group">
+            {{ form_label(form.hoursMax, "Nombre d'heures maximal *", {'label_attr': {'class': 'form-label text-white'}}) }}
             {{ form_widget(form.hoursMax, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.hoursMax, {'attr': {'style': 'form-control'}}) }}
         </div>
     </div>
 </div>
@@ -49,7 +50,7 @@
 <div class="row mb-3">
     <div class="col-md-6">
         <div class="form-group">
-            {{ form_label(form.isAdministration, 'Activité *', {'label_attr': {'class': 'form-label text-white'}}) }}
+            {{ form_label(form.isAdministration, 'Administration *', {'label_attr': {'class': 'form-label text-white'}}) }}
             {{ form_widget(form.isAdministration, {'attr': {'class': 'form-check-input'}}) }}
         </div>
     </div>
