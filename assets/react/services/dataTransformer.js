@@ -7,8 +7,10 @@
 export function fromAffectationToHourlyVolumes(affectations) {
     const volumes = [];
     affectations.forEach((affectation) => {
+        // Multiply entry for multiple group assignations
         for (let i = 0; i < affectation.numberGroupTaken; i++) {
             const hourlyVolumes = affectation.course.hourlyVolumes;
+            // Then Push the hourly volumes in the volumes array
             hourlyVolumes.forEach((hourlyVolume) => {
                 volumes.push({
                     week: hourlyVolume.week,
@@ -37,12 +39,14 @@ export function fromHourlyVolumesToWeeks(volumes) {
         let find = false;
 
         weeks.forEach((element) => {
+            // Check if the week and semester already exists
             if (element.week === week && element.semester === semester) {
                 element.volumes += volume.volume;
                 find = true;
             }
         });
 
+        // If not, create a new object and push it
         if (find === false) {
             weeks.push({
                 week: week,
@@ -72,10 +76,13 @@ export function fromWeeksToData(weeks) {
         }
     })
 
+    // Initialisation of the data with the header row
     data.push(["Nombre d'heures", ...semesters.map((semester) => `Semestre ${semester}`)]);
 
+    // Fill the data with the weeks and the volumes
     weeks.forEach((week) => {
         let find = false
+        // Check if the week already exists
         data.forEach((element) => {
             if (element[0] === week.week.toString()) {
                 if (element[week.semester] === undefined) {
@@ -86,6 +93,7 @@ export function fromWeeksToData(weeks) {
                 find = true;
             }
         });
+        // If not, create a new line and push it
         if (find === false) {
             const line = [week.week.toString()];
             line[week.semester] = week.volumes;
@@ -93,12 +101,12 @@ export function fromWeeksToData(weeks) {
         }
     });
 
-
+    // Add missing weeks and fill empty semesters after sorting
+    //  permit to find the min and max for the next function
     data = fillMissingWeeks(sortDataByWeeksNumber(data));
-    console.log(data);
-
     fillEmptySemester(data, semesters);
 
+    // Sort again to send the data
     return sortDataByWeeksNumber(data);
 }
 
@@ -109,21 +117,25 @@ export function fromWeeksToData(weeks) {
  * @returns {*}
  */
 function fillMissingWeeks(sortedData) {
+    // Find the min and max weeks
     const min = sortedData[1][0];
     const max = sortedData[sortedData.length - 1][0];
 
+    // Fill the table with missing weeks from min to 52
     for (let i = min; i <= 52; i++) {
         if (sortedData.find((element) => element[0] === i.toString()) === undefined) {
             sortedData.push([i.toString()]);
         }
     }
 
+    // Fill the table with missing weeks from 1 to max
     for (let i = 1; i <= max; i++) {
         if (sortedData.find((element) => element[0] === i.toString()) === undefined) {
             sortedData.push([i.toString()]);
         }
     }
 
+    // Sort the data again
     return sortDataByWeeksNumber(sortedData);
 }
 
@@ -138,6 +150,7 @@ function fillMissingWeeks(sortedData) {
 function fillEmptySemester(data, semesters) {
     data.forEach((element) => {
         for (let i = 1; i <= semesters.length; i++) {
+            // Fill the table with 0 for the weeks, where no hours are affected
             if (element[i] === undefined) {
                 element[i] = 0;
             }
@@ -154,9 +167,11 @@ function fillEmptySemester(data, semesters) {
  * @returns {*[]}
  */
 function sortDataByWeeksNumber(data) {
+    // Ignore the First Row to let the Header at the top
     const firstElement = data[0];
     const restOfArray = data.slice(1);
 
+    // Sort the array by weeks number
     restOfArray.sort((a, b) => {
         if (a[0] >= 35 && b[0] >= 35) return a[0] - b[0];
         if (a[0] >= 35) return -1;
@@ -164,5 +179,6 @@ function sortDataByWeeksNumber(data) {
         return a[0] - b[0];
     });
 
+    // Return the sorted array with the header at the top
     return [firstElement, ...restOfArray];
 }
