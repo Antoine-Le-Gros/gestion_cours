@@ -98,6 +98,19 @@ function fillMissingWeeks(sortedData) {
 
     return sortDataByWeeksNumber(sortedData);
 }
+
+function fillEmptySemester(data, semesters) {
+    data.forEach((element) => {
+        for (let i = 1; i <= semesters.length; i++) {
+            if (element[i] === undefined) {
+                element[i] = 0;
+            }
+        }
+    })
+
+    return data;
+}
+
 function sortDataByWeeksNumber(data) {
     const firstElement = data[0];
     const restOfArray = data.slice(1);
