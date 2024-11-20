@@ -79,3 +79,16 @@ export function fromWeeksToData(weeks) {
 
     return sortDataByWeeksNumber(data);
 }
+function sortDataByWeeksNumber(data) {
+    const firstElement = data[0];
+    const restOfArray = data.slice(1);
+
+    restOfArray.sort((a, b) => {
+        if (a[0] >= 35 && b[0] >= 35) return a[0] - b[0];
+        if (a[0] >= 35) return -1;
+        if (b[0] >= 35) return 1;
+        return a[0] - b[0];
+    });
+
+    return [firstElement, ...restOfArray];
+}
