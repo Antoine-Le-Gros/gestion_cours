@@ -20,6 +20,7 @@ class CourseTitleCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('name', 'titre'),
+            TextField::new('description', 'description'),
             AssociationField::new('modules', 'modules')
                 ->setFormTypeOption('choice_label', 'name'),
             AssociationField::new('tags', 'tags')
