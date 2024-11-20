@@ -6,8 +6,19 @@
 
 {% block body %}
 
-    <div class="d-flex justify-content-between align-items-center mb-3 mt-2">
+    <div class="d-flex justify-content-between align-items-center mb-3">
         <h1>{{ title }}</h1>
+        <form method="GET" action="{{ path('app_user_index') }}" class="mb-2">
+            <div class="input-group col-md-6 d-flex form-group justify-content-end mt-4 ">
+                <label>
+                    <input type="text" name="query" class="form-control rounded-start-pill" value="{{ app.request.query.get('query') }}">
+                </label>
+                <button type="submit" class="btn btn-primary rounded-end-pill">Rechercher</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="d-flex justify-content-end mb-3">
         <a class="btn btn-primary rounded-pill p-2" href="{{ path('app_user_new') }}">Ajouter</a>
     </div>
 
