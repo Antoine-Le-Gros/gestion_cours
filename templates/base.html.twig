@@ -5,46 +5,57 @@
         <title>{% block title %}{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+            <link rel="stylesheet" href="https://cdn.lineicons.com/5.0/lineicons.css" />
         {% endblock %}
         {% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
+            <script src="{{ asset('js/menu.js') }}"></script>
         {% endblock %}
 
     </head>
     <body class=" d-flex flex-row flex-grow-1 ">
     {% if show_navbar is not defined or show_navbar %}
-        <div class="vertical_bar d-flex flex-column">
-            <a href="/"><img src="#" ></a>
-            <div class="navbar navbar-expand-lg d-flex flex-column flex-grow-1">
-                <div class="container-fluid flex-grow-1">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
+        <div class="wrapper">
+            <aside id="sidebar">
+                <div class="d-flex">
+                    <button id="toggle-btn" type="button" aria-expanded="false">
+                        <i class="lni lni-menu-hamburger-1"></i>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul class="navbar-nav d-flex flex-column justify-content-around">
-                            <li class="nav-item d-flex flex-row">
-                                <a class="nav-link text-white" href="/upload">Années <img src="img/plus-circle.svg"></a>
-                            </li>
-                            <li class="nav-item d-flex flex-row">
-                                <a class="nav-link text-white" href="/user">Enseignants <img src="img/plus-circle.svg"></a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    GESTION
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item  text-primary" href="#">ENSEIGNANTS</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item text-primary" href="#">ANNEES</a></li>
-                                </ul>
-
-                            </li>
-                        </ul>
-                    </div>
                 </div>
-                <a href="/" class="nav-item text-decoration-none text-white m-1"> Historique</a>
-            </div>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-item d-flex flex-row">
+                        <a class="sidebar-link text-white text-decoration-none" href="/upload">
+                            <i class="lni lni-user-4"></i>
+                            <span>Profil</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item d-flex flex-row">
+                        <a class="sidebar-link text-white text-decoration-none" href="/upload">
+                            <i class="lni lni-calendar-days"></i>
+                            <span>Année</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item d-flex flex-row">
+                        <a class="sidebar-link text-white text-decoration-none" href="/user">
+                            <i class="lni lni-briefcase-2"></i>
+                            <span>Enseignants</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item d-flex flex-row">
+                        <a class="sidebar-link text-white text-decoration-none" href="/">
+                            <i class="lni lni-box-archive-1"></i>
+                            <span>Historique</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item d-flex flex-row">
+                        <a class="sidebar-link text-white text-decoration-none" href="{{ path('app_logout') }}">
+                            <i class="lni lni-exit"></i>
+                            <span>Déconnexion</span>
+                        </a>
+                    </li>
+                </ul>
+            </aside>
         </div>
     {% endif %}
     <div class="content d-flex flex-column flex-grow-1">
