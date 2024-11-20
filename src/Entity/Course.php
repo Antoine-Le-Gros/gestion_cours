@@ -66,7 +66,7 @@ class Course
      * @var Collection<int, HourlyVolume>
      */
     #[ORM\OneToMany(targetEntity: HourlyVolume::class, mappedBy: 'course', orphanRemoval: true)]
-    #[Groups(['course_read'])]
+    #[Groups(['course_read', 'affectation_read_graph'])]
     private Collection $hourlyVolumes;
 
     public function __construct()

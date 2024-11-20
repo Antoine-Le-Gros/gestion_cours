@@ -56,4 +56,7 @@ return [
         'version' => '5.3.3',
         'type' => 'css',
     ],
+    'react-google-charts' => [
+        'version' => '5.2.1',
+    ],
 ];

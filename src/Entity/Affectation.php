@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\DataProvider\AffectationProvider;
 use App\Repository\AffectationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -21,6 +22,12 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Get(),
         new Patch(security: "is_granted('ROLE_ADMIN')"),
         new Delete(security: "is_granted('ROLE_ADMIN')"),
+        new GetCollection(
+            uriTemplate: '/users/{userId}/{yearId}/affectations',
+            normalizationContext: ['groups' => ['affectation_read_graph']],
+            security: "is_granted('ROLE_USER')",
+            provider: AffectationProvider::class
+        ),
     ],
     normalizationContext: ['groups' => ['affectation_read']],
     denormalizationContext: ['groups' => ['affectation_write']],
@@ -35,7 +42,7 @@ class Affectation
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'affectations')]
-    #[Groups(['affectation_read'])]
+    #[Groups(['affectation_read', 'affectation_read_graph'])]
     private ?Course $course = null;
 
     #[ORM\ManyToOne(inversedBy: 'affectations')]
@@ -44,7 +51,7 @@ class Affectation
 
     #[ORM\Column]
     #[Assert\GreaterThan(0)]
-    #[Groups(['affectation_read', 'affectation_write'])]
+    #[Groups(['affectation_read', 'affectation_write', 'affectation_read_graph'])]
     private ?int $numberGroupTaken = null;
 
     public function getId(): ?int

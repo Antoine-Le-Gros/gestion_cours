@@ -24,3 +24,9 @@ export function updatePassword(id, newPassword) {
 
 
 
+
+export function fetchAffecationByUserAndYear(userId, yearId) {
+    return fetch(`${BASE_URL}/users/${userId}/${yearId}/affectations`).then((response) =>
+        response.ok ? response.json() : Promise.resolve(null),
+    );
+}
