@@ -11,18 +11,27 @@
         <form method="GET" action="{{ path('app_user_index') }}" class="mb-2">
             <div class="input-group col-md-6 d-flex form-group justify-content-end mt-4 ">
                 <label>
-                    <input type="text" name="query" class="form-control rounded-start-pill" value="{{ app.request.query.get('query') }}">
+                    <input type="text" name="query" class="form-control text-white rounded-start-pill" value="{{ app.request.query.get('query') }}">
                 </label>
 
                 <label>
-                    <select name="isActive" class="form-select">
+                    <select name="isActive" class="form-select text-white rounded-0 form-control">
                         <option value="">Tous</option>
                         <option value="1" {% if app.request.query.get('isActive') == '1' %}selected{% endif %}>Actif</option>
                         <option value="0" {% if app.request.query.get('isActive') == '0' %}selected{% endif %}>Inactif</option>
                     </select>
                 </label>
 
-                <button type="submit" class="btn btn-primary rounded-end-pill">Rechercher</button>
+                <label>
+                    <select name="role" class="form-select text-white rounded-0 form-control">
+                        <option value="">Tous les rôles</option>
+                        {% for role in userRoles %}
+                            <option value="{{role}}" {% if app.request.query.get('role') == role %}selected{% endif %}>{{ role }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+
+                <button type="submit" class=" btn btn-primary bg-primary rounded-end-pill form-control">Rechercher</button>
             </div>
         </form>
     </div>
