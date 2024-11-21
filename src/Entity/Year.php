@@ -25,7 +25,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
     ],
     normalizationContext: ['groups' => ['year_read']],
     denormalizationContext: ['groups' => ['year_write']],
-    order: ['name' => 'ASC'],
+    filters: ['year.name_search'],
+    order: ['name' => 'ASC']
 )]
 class Year
 {
@@ -49,6 +50,7 @@ class Year
      * @var Collection<int, Semester>
      */
     #[ORM\OneToMany(targetEntity: Semester::class, mappedBy: 'year', orphanRemoval: true)]
+    #[Groups(['year_read'])]
     private Collection $semesters;
 
     #[ORM\Column]
