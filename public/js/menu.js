@@ -1,21 +1,23 @@
 function initializeSidebarToggle() {
     const hamBurger = document.querySelector("#toggle-btn");
     const sidebar = document.querySelector("#sidebar");
+    const content = document.querySelector(".content");
 
-    if (hamBurger && sidebar) {
-        hamBurger.removeEventListener("click", toggleSidebar);
-        hamBurger.addEventListener("click", toggleSidebar);
+    if (hamBurger && sidebar && content) {
+        hamBurger.addEventListener("click", function() {
+            toggleSidebar(sidebar, content, hamBurger);
+        });
     } else {
         console.error("Éléments #toggle-btn ou #sidebar introuvables");
     }
 }
-function toggleSidebar() {
-    const sidebar = document.querySelector("#sidebar");
-    const hamBurger = document.querySelector("#toggle-btn");
-
-    if (sidebar && hamBurger) {
-        const isExpanded = sidebar.classList.toggle("expand");
-        hamBurger.setAttribute("aria-expanded", isExpanded);
+function toggleSidebar(sidebar, content, hamBurger) {
+    if (sidebar.classList.contains("expand")) {
+        sidebar.classList.remove("expand");
+        content.style.marginLeft = "70px";
+    } else {
+        sidebar.classList.add("expand");
+        content.style.marginLeft = "180px";
     }
 }
 
