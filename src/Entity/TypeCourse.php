@@ -38,7 +38,7 @@ class TypeCourse
 
     #[ORM\Column(length: 50)]
     #[Assert\Choice(choices: ['CM', 'TP', 'TD', 'TDM'])]
-    #[Groups(['typeCourse_read', 'course_read'])]
+    #[Groups(['typeCourse_read', 'course_read', 'courseTitle_info'])]
     private ?string $name = null;
 
     /**
