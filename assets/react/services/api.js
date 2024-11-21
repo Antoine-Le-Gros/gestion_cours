@@ -22,6 +22,14 @@ export function updatePassword(id, newPassword) {
     });
 }
 
+export function fetchAllYears() {
+    return fetch(`${BASE_URL}/years`)
+        .then((response) => response.json())
+        .then((data) => {
+
+            return data["hydra:member"] || [];
+        });
+}
 
 
 
