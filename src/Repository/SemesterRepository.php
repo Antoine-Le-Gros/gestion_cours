@@ -16,6 +16,19 @@ class SemesterRepository extends ServiceEntityRepository
         parent::__construct($registry, Semester::class);
     }
 
+    /**
+     * @return Semester[]
+     */
+    public function findByYearId(int $yearId): array
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.year = :yearId')
+            ->setParameter('yearId', $yearId)
+            ->orderBy('s.number', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Semester[] Returns an array of Semester objects
     //     */
