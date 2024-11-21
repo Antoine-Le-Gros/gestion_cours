@@ -37,9 +37,11 @@ class UserController extends AbstractController
     public function index(Request $request, UserRepository $userRepository): Response
     {
         $query = $request->query->get('query', '');
-        $users = $query
-            ? $userRepository->findBySearchQuery($query)
-            : $userRepository->findAll();
+        $isActive = $request->query->get('isActive', null);
+
+        $isActive = null !== $isActive && '' !== $isActive ? (bool) $isActive : null;
+
+        $users = $userRepository->findBySearchQuery($query, $isActive);
 
         return $this->render('user/index.html.twig', [
             'users' => $users,

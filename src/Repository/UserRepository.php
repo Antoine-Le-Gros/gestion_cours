@@ -45,16 +45,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     /**
      * @return User[]
      */
-    public function findBySearchQuery(string $query): array
+    public function findBySearchQuery(string $query, ?bool $isActive = null): array
     {
         $qb = $this->createQueryBuilder('u');
 
-        return $qb->where('u.lastname LIKE :query')
+        $qb->where('u.lastname LIKE :query')
             ->orWhere('u.firstname LIKE :query')
             ->orWhere('u.email LIKE :query')
             ->orWhere('u.login LIKE :query')
-            ->setParameter('query', '%'.$query.'%')
-            ->orderBy('u.lastname', 'ASC')
+            ->setParameter('query', '%'.$query.'%');
+
+        if (null !== $isActive) {
+            $qb->andWhere('u.isActive = :isActive')
+                ->setParameter('isActive', $isActive);
+        }
+
+        return $qb->orderBy('u.lastname', 'ASC')
             ->getQuery()
             ->getResult();
     }

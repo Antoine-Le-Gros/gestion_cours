@@ -13,6 +13,15 @@
                 <label>
                     <input type="text" name="query" class="form-control rounded-start-pill" value="{{ app.request.query.get('query') }}">
                 </label>
+
+                <label>
+                    <select name="isActive" class="form-select">
+                        <option value="">Tous</option>
+                        <option value="1" {% if app.request.query.get('isActive') == '1' %}selected{% endif %}>Actif</option>
+                        <option value="0" {% if app.request.query.get('isActive') == '0' %}selected{% endif %}>Inactif</option>
+                    </select>
+                </label>
+
                 <button type="submit" class="btn btn-primary rounded-end-pill">Rechercher</button>
             </div>
         </form>
