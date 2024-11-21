@@ -59,4 +59,7 @@ return [
     'react-google-charts' => [
         'version' => '5.2.1',
     ],
+    'prop-types' => [
+        'version' => '15.8.1',
+    ],
 ];

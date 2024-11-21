@@ -9,6 +9,7 @@
     "build": "babel assets/react --out-dir assets/build/react --presets=@babel/preset-react"
   },
   "dependencies": {
+    "prop-types": "^15.8.1",
     "react-google-charts": "^5.2.1"
   }
 }
