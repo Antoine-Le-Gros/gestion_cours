@@ -33,28 +33,42 @@ class CourseTitleRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    //    /**
-    //     * @return CourseTitle[] Returns an array of CourseTitle objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * @return CourseTitle[]
+     */
+    public function findForSemesterFromCurrentYearAndTag(string $search, int $tag, int $semester): array
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.tags', 't')
+            ->join('c.modules', 'm')
+            ->join('m.semester', 's')
+            ->join('s.year', 'y')
+            ->andWhere('UPPER(c.name) LIKE UPPER(:search)')
+            ->andWhere('t.id = :tag')
+            ->andWhere('y.isCurrent = TRUE ')
+            ->andWhere('s.number = :semester')
+            ->setParameter('search', '%'.$search.'%')
+            ->setParameter('tag', $tag)
+            ->setParameter('semester', $semester)
+            ->getQuery()
+            ->getResult();
+    }
 
-    //    public function findOneBySomeField($value): ?CourseTitle
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    /**
+     * @return CourseTitle[]
+     */
+    public function findForSemesterFromCurrentYear(string $search, int $semester): array
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.modules', 'm')
+            ->join('m.semester', 's')
+            ->join('s.year', 'y')
+            ->andWhere('UPPER(c.name) LIKE UPPER(:search)')
+            ->andWhere('y.isCurrent = TRUE')
+            ->andWhere('s.number = :semester')
+            ->setParameter('search', '%'.$search.'%')
+            ->setParameter('semester', $semester)
+            ->getQuery()
+            ->getResult();
+    }
 }
