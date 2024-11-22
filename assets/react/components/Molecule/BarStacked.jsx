@@ -21,12 +21,13 @@ export const options = {
     isStacked: true,
 };
 
-export default function BarStacked() {
+export default function BarStacked({ userId, yearId}) {
     const [data, setData] = useState([]);
     const [isLoaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        fetchAffecationByUserAndYear(8, 1).then((response) => {
+        fetchAffecationByUserAndYear(userId, yearId).then((response) => {
+            console.log(response)
             setData(
                 fromWeeksToData(
                     fromHourlyVolumesToWeeks(
