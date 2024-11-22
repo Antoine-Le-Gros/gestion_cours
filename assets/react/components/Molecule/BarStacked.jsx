@@ -6,6 +6,8 @@ import {
     fromHourlyVolumesToWeeks,
     fromWeeksToData
 } from "../../services/dataTransformer.js";
+import Loading from "../Atomic/Loading.js";
+import PropTypes from "prop-types";
 
 export const options = {
     title: "Répartition des heures de cours par semestre",
@@ -49,9 +51,16 @@ export default function BarStacked({ userId, yearId}) {
                 data={data}
                 options={options}
                 legendToggle
-            /> : <p>Loading...</p>}
+            /> : <Loading />}
         </div>
     );
+};
+
+BarStacked.propTypes = {
+    data: PropTypes.shape({
+        userId: PropTypes.number.isRequired,
+        yearId: PropTypes.number.isRequired,
+    }).isRequired
 };
 
 
