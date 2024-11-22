@@ -10,6 +10,7 @@ use ApiPlatform\Metadata\Post;
 use App\Repository\UserRepository;
 use App\State\MeProvider;
 use App\State\UserPasswordHasher;
+use App\State\UserRoleProvider;
 use App\Validator as CustomAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -24,6 +25,20 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     operations: [
         new GetCollection(),
+        new GetCollection(
+            uriTemplate: '/roles',
+            openapiContext: [
+                'summary' => 'Get all user roles',
+                'description' => 'Get all user roles',
+                'responses' => [
+                    '200' => [
+                        'description' => 'user roles',
+                    ],
+                ],
+            ],
+            normalizationContext: ['groups' => ['user_read']],
+            provider: UserRoleProvider::class,
+        ),
         new Post(),
         new Get(),
         new Get(
