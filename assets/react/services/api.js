@@ -30,3 +30,20 @@ export function fetchAffecationByUserAndYear(userId, yearId) {
         response.ok ? response.json() : Promise.resolve(null),
     );
 }
+
+export function fetchCourseTitleInformation(search = "", semester, tag = 0) {
+    if(!tag){
+        return fetch(`${BASE_URL}/course_titles_information?search=${search}&semester=${semester}`).then((response) =>
+            response.ok ? response.json() : Promise.resolve(null)
+        );
+    } else {
+        return fetch(`${BASE_URL}/course_titles_information?search=${search}&tag=${tag}&semester=${semester}`).then((response) =>
+            response.ok ? response.json() : Promise.resolve(null)
+        );
+    }
+}
+export function fetchTags() {
+    return fetch(`${BASE_URL}/tags`).then((response) =>
+        response.ok ? response.json() : Promise.resolve(null)
+    );
+}

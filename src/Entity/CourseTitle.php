@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\CourseTitleRepository;
+use App\State\CourseTitleDiscoveryProvider;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,6 +23,43 @@ use Symfony\Component\Serializer\Annotation\Groups;
         new Get(),
         new Patch(securityPostDenormalize: "is_granted('ROLE_ADMIN')"),
         new Delete(securityPostDenormalize: "is_granted('ROLE_ADMIN')"),
+        new GetCollection(
+            uriTemplate: '/course_titles_information',
+            openapiContext: [
+                'parameters' => [
+                    [
+                        'name' => 'search',
+                        'in' => 'query',
+                        'required' => false,
+                        'description' => 'Search value for filtering',
+                        'schema' => ['type' => 'string'],
+                    ],
+                    [
+                        'name' => 'tag',
+                        'in' => 'query',
+                        'required' => false,
+                        'description' => 'Tag id for filtering',
+                        'schema' => ['type' => 'integer'],
+                    ],
+                    [
+                        'name' => 'semester',
+                        'in' => 'query',
+                        'required' => true,
+                        'description' => 'Semester number for filtering',
+                        'schema' => ['type' => 'integer'],
+                    ],
+                ],
+                'responses' => [
+                    '200' => [
+                        'description' => 'course title resources',
+                    ],
+                ],
+                'summary' => 'Retrieves the CourseTitle with the tag  and all linked informations',
+                'description' => 'Retrieves the CourseTitle with the tag  and all linked informations',
+            ],
+            normalizationContext: ['groups' => ['courseTitle_read', 'courseTitle_info']],
+            provider: CourseTitleDiscoveryProvider::class,
+        ),
     ],
     normalizationContext: ['groups' => ['courseTitle_read']],
     denormalizationContext: ['groups' => ['courseTitle_write']],
@@ -36,13 +74,14 @@ class CourseTitle
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['course_read', 'courseTitle_read', 'courseTitle_write', 'affectation_read'])]
+    #[Groups(['course_read', 'courseTitle_read', 'courseTitle_write', 'affectation_read', 'courseTitle_info'])]
     private ?string $name = null;
 
     /**
      * @var Collection<int, Course>
      */
     #[ORM\OneToMany(targetEntity: Course::class, mappedBy: 'courseTitle', orphanRemoval: true)]
+    #[Groups(['courseTitle_info'])]
     private Collection $courses;
 
     /**
@@ -56,6 +95,7 @@ class CourseTitle
      * @var Collection<int, Tag>
      */
     #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'courseTitleId')]
+    #[Groups(['courseTitle_info'])]
     private Collection $tags;
 
     #[ORM\Column(length: 500, nullable: true)]

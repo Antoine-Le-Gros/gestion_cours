@@ -36,7 +36,7 @@ class HourlyVolume
 
     #[ORM\Column]
     #[Assert\GreaterThanOrEqual(0)]
-    #[Groups(['hourlyVolume_read', 'course_read', 'affectation_read_graph'])]
+    #[Groups(['hourlyVolume_read', 'course_read', 'affectation_read_graph', 'courseTitle_info'])]
     private ?float $volume = null;
 
     #[ORM\ManyToOne(cascade: ['remove'], inversedBy: 'hourlyVolumes')]
