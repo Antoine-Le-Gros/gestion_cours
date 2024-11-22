@@ -29,7 +29,6 @@ export default function BarStacked({ userId, yearId}) {
 
     useEffect(() => {
         fetchAffecationByUserAndYear(userId, yearId).then((response) => {
-            console.log(response)
             setData(
                 fromWeeksToData(
                     fromHourlyVolumesToWeeks(
@@ -57,10 +56,8 @@ export default function BarStacked({ userId, yearId}) {
 };
 
 BarStacked.propTypes = {
-    data: PropTypes.shape({
-        userId: PropTypes.number.isRequired,
-        yearId: PropTypes.number.isRequired,
-    }).isRequired
+    userId: PropTypes.number.isRequired,
+    yearId: PropTypes.number.isRequired,
 };
 
 
