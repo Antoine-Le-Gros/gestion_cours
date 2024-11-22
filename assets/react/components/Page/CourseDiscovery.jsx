@@ -10,9 +10,11 @@ export default function CourseDiscovery() {
     const [search, setSearch] = useState('');
     const [semester, setSemester] = useState(1);
 
-    fetchTags().then((data) => {
-        setTags(data['hydra:member']);
-    });
+    useEffect(() => {
+        fetchTags().then((data) => {
+            setTags(data['hydra:member']);
+        });
+    }, []);
     useEffect(() => {
         fetchCourseTitleInformation(search,semester, selectedTag ?? 0).then((data) => {
             setCourseData(data['hydra:member']);
