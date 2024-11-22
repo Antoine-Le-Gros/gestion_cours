@@ -82,13 +82,14 @@ export function fromWeeksToData(weeks) {
     // Fill the data with the weeks and the volumes
     weeks.forEach((week) => {
         let find = false
+        const semesterNumber = data[0].indexOf(`Semestre ${week.semester}`);
         // Check if the week already exists
         data.forEach((element) => {
             if (element[0] === week.week.toString()) {
-                if (element[week.semester] === undefined) {
-                    element[week.semester] = week.volumes;
+                if (element[semesterNumber] === undefined) {
+                    element[semesterNumber] = week.volumes;
                 } else {
-                    element[week.semester] += week.volumes;
+                    element[semesterNumber] += week.volumes;
                 }
                 find = true;
             }
@@ -96,7 +97,7 @@ export function fromWeeksToData(weeks) {
         // If not, create a new line and push it
         if (find === false) {
             const line = [week.week.toString()];
-            line[week.semester] = week.volumes;
+            line[semesterNumber] = week.volumes;
             data.push(line);
         }
     });
@@ -109,8 +110,11 @@ export function fromWeeksToData(weeks) {
 
     // Add missing weeks and fill empty semesters after sorting
     //  permit to find the min and max for the next function
+    console.log(data);
     data = fillMissingWeeks(sortDataByWeeksNumber(data));
+
     fillEmptySemester(data, semesters);
+
 
     // Sort again to send the data
     return sortDataByWeeksNumber(data);
