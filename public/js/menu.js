@@ -4,6 +4,7 @@ function initializeSidebarToggle() {
     const content = document.querySelector(".content");
 
     if (hamBurger && sidebar && content) {
+        hamBurger.removeEventListener("click", toggleSidebar);
         hamBurger.addEventListener("click", function() {
             toggleSidebar(sidebar, content, hamBurger);
         });
@@ -12,12 +13,10 @@ function initializeSidebarToggle() {
     }
 }
 function toggleSidebar(sidebar, content, hamBurger) {
-    if (sidebar.classList.contains("expand")) {
-        sidebar.classList.remove("expand");
-        content.style.marginLeft = "70px";
-    } else {
-        sidebar.classList.add("expand");
-        content.style.marginLeft = "180px";
+    if (sidebar && content && hamBurger) {
+        const isExpanded = sidebar.classList.toggle("expand");
+        content.style.marginLeft = isExpanded ? "180px" :"70px";
+        hamBurger.setAttribute("aria-expanded", isExpanded);
     }
 }
 
