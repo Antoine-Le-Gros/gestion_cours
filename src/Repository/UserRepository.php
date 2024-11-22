@@ -45,7 +45,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     /**
      * @return User[]
      */
-    public function findBySearchQuery(string $query, ?bool $isActive = null): array
+    public function findBySearchQuery(string $query, ?bool $isActive = null, ?string $role = null): array
     {
         $qb = $this->createQueryBuilder('u');
 
@@ -58,6 +58,11 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         if (null !== $isActive) {
             $qb->andWhere('u.isActive = :isActive')
                 ->setParameter('isActive', $isActive);
+        }
+
+        if ($role) {
+            $qb->andWhere('JSONB_CONTAINS(u.roles,:role) = true')
+                ->setParameter('role', $role);
         }
 
         return $qb->orderBy('u.lastname', 'ASC')

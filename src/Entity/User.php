@@ -49,12 +49,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public const CERTIFIED = 'enseignant certifie';
     public const RESEARCHER = 'enseignant chercheur';
     public const EXTERNAL = 'vacataire';
+    public const SUPER_ADMINISTRATION = 'ROLE_SUPER_ADMIN';
+
     public const TYPE_USER = [
         self::ADMINISTRATION,
         self::AGGREGATED,
         self::CERTIFIED,
         self::RESEARCHER,
         self::EXTERNAL,
+        self::SUPER_ADMINISTRATION,
     ];
     #[ORM\Id]
     #[ORM\GeneratedValue]
