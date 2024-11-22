@@ -101,6 +101,12 @@ export function fromWeeksToData(weeks) {
         }
     });
 
+    // If no affectation, add a line with "Aucune Affectation"
+    if (semesters.length === 0) {
+        data[0].push("Aucune Affectation");
+        semesters.push("Aucune Affectation ");
+    }
+
     // Add missing weeks and fill empty semesters after sorting
     //  permit to find the min and max for the next function
     data = fillMissingWeeks(sortDataByWeeksNumber(data));
@@ -117,9 +123,21 @@ export function fromWeeksToData(weeks) {
  * @returns {*}
  */
 function fillMissingWeeks(sortedData) {
+    let min = 35;
+    let max = 10;
+    if (sortedData.length === 2) {
+        if (sortedData[1][0] >= 35) {
+            min = sortedData[1][0];
+        } else {
+            max = sortedData[1][0];
+        }
+    }
+    if (!(sortedData.length <= 2)) {
+        min = sortedData[1][0];
+        max = sortedData[sortedData.length - 1][0];
+    }
+
     // Find the min and max weeks
-    const min = sortedData[1][0];
-    const max = sortedData[sortedData.length - 1][0];
 
     // Fill the table with missing weeks from min to 52
     for (let i = min; i <= 52; i++) {
@@ -167,6 +185,7 @@ function fillEmptySemester(data, semesters) {
  * @returns {*[]}
  */
 function sortDataByWeeksNumber(data) {
+    if (data.length <= 2) return data;
     // Ignore the First Row to let the Header at the top
     const firstElement = data[0];
     const restOfArray = data.slice(1);
