@@ -11,16 +11,24 @@ import PropTypes from "prop-types";
 
 export const options = {
     title: "Répartition des heures de cours par semaine",
+    titleTextStyle: {color: '#ffffff'},
     chartArea: { width: "70%" },
     hAxis: {
         title: "Semaines",
+        titleTextStyle: {color: '#ffffff'},
+        textStyle: {color: '#ffffff'},
 
     },
     vAxis: {
         title: "Nombre d'heures de cours",
+        titleTextStyle: {color: '#ffffff'},
+        textStyle: {color: '#ffffff'},
         minValue: 0,
+        format: '0',
     },
     isStacked: true,
+    backgroundColor: { fill:'transparent' },
+    legendTextStyle: { color: '#ffffff' },
 };
 
 export default function BarStacked({ userId, yearId}) {
