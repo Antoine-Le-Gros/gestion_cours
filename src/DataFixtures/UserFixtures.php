@@ -20,7 +20,7 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
 
     public function load(ObjectManager $manager): void
     {
-        UserFactory::createMany(4);
+        UserFactory::createMany(30);
         UserFactory::createOne([
             'email' => 'agregate@example.com',
             'roles' => [User::AGGREGATED],

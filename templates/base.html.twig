@@ -17,7 +17,7 @@
     <body class=" d-flex flex-row flex-grow-1 ">
     {% if show_navbar is not defined or show_navbar %}
         <div class="wrapper">
-            <aside id="sidebar">
+            <aside class="position-fixed" id="sidebar">
                 <div class="d-flex">
                     <button id="toggle-btn" type="button" aria-expanded="false">
                         <i class="lni lni-menu-hamburger-1"></i>
@@ -48,7 +48,7 @@
                             <span>Historique</span>
                         </a>
                     </li>
-                    <li class="sidebar-item d-flex flex-row">
+                    <li class="sidebar-item logout d-flex flex-row">
                         <a class="sidebar-link text-white text-decoration-none" href="{{ path('app_logout') }}">
                             <i class="lni lni-exit"></i>
                             <span>Déconnexion</span>
