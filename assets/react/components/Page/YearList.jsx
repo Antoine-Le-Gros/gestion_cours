@@ -1,11 +1,10 @@
 import React,{ useEffect, useState } from "react";
-import { fetchAllYears, fetchSemestersByYear } from "../../services/api.js";
+import { fetchAllYears } from "../../services/api.js";
 
 export default function YearList() {
     const [years, setYears] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedYear, setSelectedYear] = useState(null);
-    const [semesters, setSemesters] = useState({});
 
 
     useEffect(() => {
@@ -14,16 +13,6 @@ export default function YearList() {
             setYears(data || []);
         });
     }, []);
-
-
-    const fetchYearSemesters = (yearId) => {
-        fetchSemestersByYear(yearId).then((data) => {
-            setSemesters((prevState) => ({
-                ...prevState,
-                [yearId]: data || [],
-            }));
-        });
-    };
 
 
     const handleSearchChange = (event) => {
@@ -44,16 +33,8 @@ export default function YearList() {
 
     const handleYearClick = (year) => {
         setSelectedYear(year === selectedYear ? null : year);
-        if (year !== selectedYear) {
-            fetchYearSemesters(year.id);
-        } else {
-            setSemesters((prevState) => ({
-                ...prevState,
-                [year.id]: [],
-            }));
-        }
     };
-
+    console.log(years);
     return (
         <div className="container bg-dark text-light py-4 rounded">
             <div className="mb-4">
@@ -77,9 +58,9 @@ export default function YearList() {
                             style={{ cursor: "pointer" }}
                         >
                             <h5>{year.name}</h5>
-                            {selectedYear === year && semesters[year.id] && (
+                            {selectedYear === year && year.semesters && (
                                 <div className="mt-2">
-                                    {semesters[year.id].map((semester) => (
+                                    {year.semesters.map((semester) => (
                                         <a
                                             key={semester.id}
                                             href={`/history/${year.id}/${semester.id}`}

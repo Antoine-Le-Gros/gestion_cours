@@ -33,12 +33,12 @@ class Semester
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['semester_read'])]
+    #[Groups(['semester_read', 'year_read'])]
     private ?int $id = null;
 
     #[ORM\Column]
     #[Assert\Range(min: 1, max: 6)]
-    #[Groups(['semester_read', 'week_read', 'affectation_read_graph'])]
+    #[Groups(['semester_read', 'week_read', 'affectation_read_graph', 'year_read'])]
     private ?int $number = null;
 
     /**

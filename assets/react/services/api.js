@@ -31,27 +31,6 @@ export function fetchAllYears() {
         });
 }
 
-export function fetchYearsByName(searchTerm) {
-    return fetch(`${BASE_URL}/years?name=${encodeURIComponent(searchTerm)}`)
-        .then((response) => response.json())
-        .then((data) => {
-
-            return data["hydra:member"] || [];
-        });
-}
-
-export function fetchSemestersByYear(yearId) {
-    return fetch(`${BASE_URL}/semesters?year=${yearId}`)
-        .then((response) => response.json())
-        .then((data) => {
-            if (data["hydra:member"]) {
-
-                return data["hydra:member"];
-            }
-            return [];
-        })
-        .catch(() => []);
-}
 
 export function fetchAffecationByUserAndYear(userId, yearId) {
     return fetch(`${BASE_URL}/users/${userId}/${yearId}/affectations`).then((response) =>
