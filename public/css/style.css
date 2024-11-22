@@ -32,8 +32,20 @@ li {
 }
 
 .sidebar-nav {
+    display: flex;
     padding: 2rem 0;
-    flex: 1 1 auto;
+    flex-direction: column;
+    height: 100%;
+}
+.sidebar-item.logout {
+    margin-top: auto;
+}
+.sidebar-item.logout .sidebar-link {
+    background-color: #d9534f;
+    border-left: 3px solid transparent;
+}
+.sidebar-item.logout .sidebar-link:hover {
+    background-color: #c9302c;
 }
 
 .sidebar-item {
@@ -139,7 +151,6 @@ a.sidebar-link:hover {
 }
 
 .sidebar-nav .sidebar-item:last-child .sidebar-link {
-    background-color: #d9534f;
     border-left: 3px solid transparent;
 }
 
