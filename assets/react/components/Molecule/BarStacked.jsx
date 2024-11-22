@@ -10,14 +10,14 @@ import Loading from "../Atomic/Loading.js";
 import PropTypes from "prop-types";
 
 export const options = {
-    title: "Répartition des heures de cours par semestre",
+    title: "Répartition des heures de cours par semaine",
     chartArea: { width: "70%" },
     hAxis: {
-        title: "Nombre d'heures",
+        title: "Semaines",
 
     },
     vAxis: {
-        title: "Cours",
+        title: "Nombre d'heures de cours",
         minValue: 0,
     },
     isStacked: true,
