@@ -61,8 +61,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }
 
         if ($role) {
-            $qb->andWhere('JSONB_CONTAINS(u.roles,:role) = true')
-                ->setParameter('role', $role);
+            $qb->andWhere('CONTAINS(TO_JSONB(u.roles), :role) = TRUE')
+                ->setParameter('role', json_encode([$role]));
         }
 
         return $qb->orderBy('u.lastname', 'ASC')
