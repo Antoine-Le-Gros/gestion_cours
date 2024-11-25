@@ -15,14 +15,21 @@ export function updatePassword(id, newPassword) {
     return fetch(`${BASE_URL}/users/${id}`, {
         method: "PATCH",
         headers: {
-            "Content-Type": "application/merge-patch+json", // Type de contenu envoyé
-            "Accept": "*/*", // Accepte tous les types de contenu en réponse
+            "Content-Type": "application/merge-patch+json",
+            "Accept": "*/*",
         },
         body: JSON.stringify({ password: newPassword }),
     });
 }
 
+export function fetchAllYears() {
+    return fetch(`${BASE_URL}/years`)
+        .then((response) => response.json())
+        .then((data) => {
 
+            return data["hydra:member"] || [];
+        });
+}
 
 
 export function fetchAffecationByUserAndYear(userId, yearId) {

@@ -24,6 +24,19 @@ class YearRepository extends ServiceEntityRepository
             ->getQuery()->getResult()[0];
     }
 
+    /**
+     * @return Year[]
+     */
+    public function findByName(string $name): array
+    {
+        return $this->createQueryBuilder('y')
+            ->where('y.name LIKE :name')
+            ->setParameter('name', '%'.$name.'%')
+            ->orderBy('y.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findCurrent(): Year
     {
         return $this->createQueryBuilder('y')

@@ -2,6 +2,7 @@ import React from 'react';
 import {Route, Router} from 'wouter';
 import Home from "../components/Home.js";
 import UserProfile from "../components/Page/UserProfile.js";
+import YearList from "../components/Page/YearList.js";
 import CourseDiscovery from "../components/Page/CourseDiscovery.js";
 
 console.log("App component loaded");
@@ -14,6 +15,9 @@ function App() {
                 </Route>
                 <Route path="/me">
                     <UserProfile/>
+                </Route>
+                <Route path="/history">
+                    <YearList/>
                 </Route>
                 <Route path="/discover">
                     <CourseDiscovery/>
