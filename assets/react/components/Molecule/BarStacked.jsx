@@ -36,6 +36,7 @@ export default function BarStacked({ userId, yearId}) {
     const [isLoaded, setLoaded] = useState(false);
 
     useEffect(() => {
+        setLoaded(false);
         fetchAffecationByUserAndYear(userId, yearId).then((response) => {
             setData(
                 fromWeeksToData(
@@ -46,7 +47,7 @@ export default function BarStacked({ userId, yearId}) {
             );
             setLoaded(true);
         });
-    }, []);
+    }, [yearId]);
 
     return (
         <div>
