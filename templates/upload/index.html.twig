@@ -1,11 +1,34 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Uploader un fichier Excel</h1>
-
-    {{ form_start(form) }}
-    {{ form_row(form.excelFile) }}
-    <button class="btn">Envoyer</button>
-    {{ form_end(form) }}
+<div class="container d-flex flex-column justify-content-center align-items-center vh-100">
+    <div class="text-center mb-4">
+        <h1>Importer un fichier Excel</h1>
+    </div>
+    <div class="d-flex align-items-center">
+        {{ form_start(form, {'attr': {'class': 'd-flex align-items-center'}}) }}
+        <div class="me-3 d-flex flex-column">
+            {{ form_row(form.year.name, {
+                'label': "Nom de l'année",
+                'label_attr': {'class': 'text-white mb-1'},
+                'attr': {
+                    'class': 'form-control mb-2 bg-transparent text-white border-white'
+                }
+            }) }}
+            <button type="submit" class="btn btn-primary mt-2">Envoyer</button>
+        </div>
+        <div class="d-flex flex-column">
+            <div>
+                {{ form_label(form.excelFile, null, {'label_attr': {'class': 'text-white'}}) }}
+            </div>
+            <div>
+                {{ form_widget(form.excelFile, {
+                    'attr': {'class': 'form-control-file btn btn-outline-secondary'}
+                }) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>
 {% endblock %}
 
