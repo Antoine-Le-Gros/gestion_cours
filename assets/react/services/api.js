@@ -22,7 +22,7 @@ export function updatePassword(id, newPassword) {
     });
 }
 export function fetchUsersByRole(search, role){
-    return fetch(`${BASE_URL}/users?search=${search}&role=${role}`).then((response) =>
+    return fetch(`${BASE_URL}/users_teacher_list?search=${search}&role=${role}`).then((response) =>
         response.ok ? response.json() : Promise.resolve(null),
     );
 }
