@@ -8,8 +8,10 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\UserRepository;
+use App\State\HistoryUserProvider;
 use App\State\MeProvider;
 use App\State\UserPasswordHasher;
+use App\State\UserRoleProvider;
 use App\Validator as CustomAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -24,6 +26,50 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     operations: [
         new GetCollection(),
+        new GetCollection(
+            uriTemplate: '/roles',
+            openapiContext: [
+                'summary' => 'Get all user roles',
+                'description' => 'Get all user roles',
+                'responses' => [
+                    '200' => [
+                        'description' => 'user roles',
+                    ],
+                ],
+            ],
+            normalizationContext: ['groups' => ['user_read']],
+            provider: UserRoleProvider::class,
+        ),
+        new GetCollection(
+            uriTemplate: '/users_teacher_list',
+            openapiContext: [
+                'parameters' => [
+                    [
+                        'name' => 'search',
+                        'in' => 'query',
+                        'required' => false,
+                        'description' => 'Search value for filtering',
+                        'schema' => ['type' => 'string'],
+                    ],
+                    [
+                        'name' => 'role',
+                        'in' => 'query',
+                        'required' => false,
+                        'description' => 'role for filtering',
+                        'schema' => ['type' => 'string'],
+                    ],
+                ],
+                'summary' => 'Get all user from a search and role',
+                'description' => 'Get all user from a search and role',
+                'responses' => [
+                    '200' => [
+                        'description' => 'user',
+                    ],
+                ],
+            ],
+            normalizationContext: ['groups' => ['user_read', 'user_history']],
+            provider: HistoryUserProvider::class,
+        ),
         new Post(),
         new Get(),
         new Get(
@@ -59,6 +105,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         self::EXTERNAL,
         self::SUPER_ADMINISTRATION,
     ];
+    public const TYPE_TEACHER = [
+        self::AGGREGATED,
+        self::CERTIFIED,
+        self::RESEARCHER,
+        self::EXTERNAL,
+    ];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -73,6 +126,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var list<string> The user roles
      */
     #[ORM\Column]
+    #[Groups(['user_history'])]
     private array $roles = [];
 
     /**

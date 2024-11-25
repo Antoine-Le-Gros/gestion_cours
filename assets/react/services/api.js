@@ -21,6 +21,16 @@ export function updatePassword(id, newPassword) {
         body: JSON.stringify({ password: newPassword }),
     });
 }
+export function fetchUsersByRole(search, role){
+    return fetch(`${BASE_URL}/users_teacher_list?search=${search}&role=${role}`).then((response) =>
+        response.ok ? response.json() : Promise.resolve(null),
+    );
+}
+export function fetchRoles(){
+    return fetch(`${BASE_URL}/roles`).then((response) =>
+        response.ok ? response.json() : Promise.resolve(null),
+    );
+}
 
 export function fetchAllYears() {
     return fetch(`${BASE_URL}/years`)
@@ -31,13 +41,11 @@ export function fetchAllYears() {
         });
 }
 
-
 export function fetchAffecationByUserAndYear(userId, yearId) {
     return fetch(`${BASE_URL}/users/${userId}/${yearId}/affectations`).then((response) =>
         response.ok ? response.json() : Promise.resolve(null),
     );
 }
-
 export function fetchCourseTitleInformation(search = "", semester, tag = 0) {
     if(!tag){
         return fetch(`${BASE_URL}/course_titles_information?search=${search}&semester=${semester}`).then((response) =>
