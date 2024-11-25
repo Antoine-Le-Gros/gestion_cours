@@ -12,6 +12,7 @@ class ReactController extends AbstractController
     #[Route('/me', name: 'app_me')]
     #[Route('/history', name: 'app_history')]
     #[Route('/discover', name: 'app_discover')]
+    #[Route('/history/teacher/{id}', name: 'app_history_teacher')]
     public function index(): Response
     {
         return $this->render('react/index.html.twig', [
