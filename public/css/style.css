@@ -207,7 +207,18 @@ a.sidebar-link:hover {
 }
 
 /* media queries pour format mobile */
-@media (min-width: 390px) {
+@media (max-width: 767px) {
+    .wrapper {
+        display: none;
+    }
+
+    .content {
+        margin-left: 0 !important;
+    }
+
+    body {
+        overflow-x: hidden;
+    }
     .container-login {
         margin-left: 0;
         padding: 20px;
