@@ -17,12 +17,17 @@
             }) }}
             <button type="submit" class="btn btn-primary mt-2">Envoyer</button>
         </div>
-        <div>
-            {{ form_row(form.excelFile, {
-                'attr': {'class': 'form-control-file btn btn-outline-secondary'}
-            }) }}
-            {{ form_end(form) }}
+        <div class="d-flex flex-column">
+            <div>
+                {{ form_label(form.excelFile, null, {'label_attr': {'class': 'text-white'}}) }}
+            </div>
+            <div>
+                {{ form_widget(form.excelFile, {
+                    'attr': {'class': 'form-control-file btn btn-outline-secondary'}
+                }) }}
+            </div>
         </div>
+        {{ form_end(form) }}
     </div>
 </div>
 {% endblock %}
