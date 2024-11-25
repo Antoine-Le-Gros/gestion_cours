@@ -6,27 +6,37 @@ import {
     fromHourlyVolumesToWeeks,
     fromWeeksToData
 } from "../../services/dataTransformer.js";
+import Loading from "../Atomic/Loading.js";
+import PropTypes from "prop-types";
 
 export const options = {
-    title: "Répartition des heures de cours par semestre",
+    title: "Répartition des heures de cours par semaine",
+    titleTextStyle: {color: '#ffffff'},
     chartArea: { width: "70%" },
     hAxis: {
-        title: "Nombre d'heures",
+        title: "Semaines",
+        titleTextStyle: {color: '#ffffff'},
+        textStyle: {color: '#ffffff'},
 
     },
     vAxis: {
-        title: "Cours",
+        title: "Nombre d'heures de cours",
+        titleTextStyle: {color: '#ffffff'},
+        textStyle: {color: '#ffffff'},
         minValue: 0,
+        format: '0',
     },
     isStacked: true,
+    backgroundColor: { fill:'transparent' },
+    legendTextStyle: { color: '#ffffff' },
 };
 
-export default function BarStacked() {
+export default function BarStacked({ userId, yearId}) {
     const [data, setData] = useState([]);
     const [isLoaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        fetchAffecationByUserAndYear(8, 1).then((response) => {
+        fetchAffecationByUserAndYear(userId, yearId).then((response) => {
             setData(
                 fromWeeksToData(
                     fromHourlyVolumesToWeeks(
@@ -48,9 +58,14 @@ export default function BarStacked() {
                 data={data}
                 options={options}
                 legendToggle
-            /> : <p>Loading...</p>}
+            /> : <Loading />}
         </div>
     );
+};
+
+BarStacked.propTypes = {
+    userId: PropTypes.number.isRequired,
+    yearId: PropTypes.number.isRequired,
 };
 
 
