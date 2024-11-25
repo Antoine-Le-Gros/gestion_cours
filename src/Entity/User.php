@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\UserRepository;
+use App\State\HistoryUserProvider;
 use App\State\MeProvider;
 use App\State\UserPasswordHasher;
 use App\State\UserRoleProvider;
@@ -38,6 +39,36 @@ use Symfony\Component\Serializer\Annotation\Groups;
             ],
             normalizationContext: ['groups' => ['user_read']],
             provider: UserRoleProvider::class,
+        ),
+        new GetCollection(
+            uriTemplate: '/users_teacher_list',
+            openapiContext: [
+                'parameters' => [
+                    [
+                        'name' => 'search',
+                        'in' => 'query',
+                        'required' => false,
+                        'description' => 'Search value for filtering',
+                        'schema' => ['type' => 'string'],
+                    ],
+                    [
+                        'name' => 'role',
+                        'in' => 'query',
+                        'required' => false,
+                        'description' => 'role for filtering',
+                        'schema' => ['type' => 'string'],
+                    ],
+                ],
+                'summary' => 'Get all user from a search and role',
+                'description' => 'Get all user from a search and role',
+                'responses' => [
+                    '200' => [
+                        'description' => 'user',
+                    ],
+                ],
+            ],
+            normalizationContext: ['groups' => ['user_read', 'user_history']],
+            provider: HistoryUserProvider::class,
         ),
         new Post(),
         new Get(),
@@ -88,6 +119,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var list<string> The user roles
      */
     #[ORM\Column]
+    #[Groups(['user_history'])]
     private array $roles = [];
 
     /**
