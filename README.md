@@ -154,3 +154,15 @@ Ce script lance la commande suivante.  elle lance la compilation dynamique des f
 ```shell
 php bin/console sass:build --watch
 ```
+
+## Rôles
+### Super administrateur
+Ce rôle est réservé uniquement aux développeurs de l'application. Il permet d'accèder à toutes les pages de l'application
+sans exception, en plus de pouvoir accéder à la page située à la route __/admin__. Cette route est uniquement accèssible
+en passant par l'URL, et si vous ne possèdez pas ce rôle, l'accès a cette route vous sera refusé.
+
+Les identifiants et mot de passe du super administrateur sont les suivants :
+```
+Identifiant : superadmin
+Mot de passe : pass
+```
