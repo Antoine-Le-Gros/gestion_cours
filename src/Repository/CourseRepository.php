@@ -16,6 +16,19 @@ class CourseRepository extends ServiceEntityRepository
         parent::__construct($registry, Course::class);
     }
 
+    public function getNumberOfGroupsPerSemester(int $semesterId): int
+    {
+        return $this->createQueryBuilder('c')
+            ->select('SUM(c.groupMaxNumber) as nbGroups')
+            ->join('c.courseTitle', 'ct')
+            ->join('ct.modules', 'm')
+            ->join('m.semester', 's')
+            ->where('s.id = :semesterId')
+            ->setParameter('semesterId', $semesterId)
+            ->getQuery()
+            ->getResult()[0]['nbGroups'];
+    }
+
     //    /**
     //     * @return Course[] Returns an array of Course objects
     //     */
