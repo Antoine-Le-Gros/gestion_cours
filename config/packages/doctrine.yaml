@@ -26,7 +26,9 @@ doctrine:
             auto_mapping: false
         dql:
             string_functions:
-                JSONB_CONTAINS: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Postgresql\JsonbContains
+                CONTAINS: MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\Contains # @>
+                TO_JSONB: MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\ToJsonb
+                TO_JSON: MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\ToJson
 
 when@test:
     doctrine:
