@@ -191,3 +191,37 @@ a.sidebar-link:hover {
 .container {
     text-align: center;
 }
+
+.mobile-page .content {
+    margin-left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.mobile-page .container-login {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+/* media queries pour format mobile */
+@media (min-width: 390px) {
+    .container-login {
+        margin-left: 0;
+        padding: 20px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .form-group label,
+    .form-control,
+    .btn {
+        font-size: 1rem;
+    }
+
+    .h1 {
+        font-size: 1.5rem;
+    }
+}
