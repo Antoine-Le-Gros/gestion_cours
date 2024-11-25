@@ -20,6 +20,6 @@ class UserRoleProvider implements ProviderInterface
      */
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): array|object|null
     {
-        return User::TYPE_USER;
+        return User::TYPE_TEACHER;
     }
 }

@@ -105,6 +105,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         self::EXTERNAL,
         self::SUPER_ADMINISTRATION,
     ];
+    public const TYPE_TEACHER = [
+        self::AGGREGATED,
+        self::CERTIFIED,
+        self::RESEARCHER,
+        self::EXTERNAL,
+    ];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
