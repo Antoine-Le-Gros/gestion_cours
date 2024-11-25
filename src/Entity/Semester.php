@@ -58,6 +58,8 @@ class Semester
     #[ORM\OneToMany(targetEntity: Week::class, mappedBy: 'semesters', orphanRemoval: true)]
     private Collection $weeks;
 
+    private float $completion = 0.;
+
     public function __construct()
     {
         $this->modules = new ArrayCollection();
@@ -137,5 +139,15 @@ class Semester
     public function setWeeks(Collection $weeks): void
     {
         $this->weeks = $weeks;
+    }
+
+    public function getCompletion(): float
+    {
+        return $this->completion;
+    }
+
+    public function setCompletion(float $completion): void
+    {
+        $this->completion = $completion;
     }
 }
