@@ -83,6 +83,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         if ($role) {
             $query->andWhere('CONTAINS(TO_JSONB(u.roles), :role) = TRUE')
                 ->setParameter('role', json_encode([$role]));
+        } else {
+            //            $query->orWhere('CONTAINS(TO_JSONB(u.roles), :role1) = TRUE')
+            //                ->orWhere('CONTAINS(TO_JSONB(u.roles), :role2) = TRUE')
+            //                ->orWhere('CONTAINS(TO_JSONB(u.roles), :role3) = TRUE')
+            //                ->orWhere('CONTAINS(TO_JSONB(u.roles), :role4) = TRUE')
+            $query->andWhere('NOT CONTAINS(TO_JSONB(u.roles), :role) = TRUE')
+            //                ->setParameter('role1', json_encode(User::AGGREGATED))
+            //                ->setParameter('role2', json_encode(User::EXTERNAL))
+            //                ->setParameter('role3', json_encode(User::CERTIFIED))
+            //                ->setParameter('role4', json_encode(User::RESEARCHER))
+            ->setParameter('role', json_encode(User::SUPER_ADMINISTRATION));
         }
 
         return $query->getQuery()
