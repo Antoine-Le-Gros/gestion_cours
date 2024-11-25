@@ -1,54 +1,50 @@
-import React,{ useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { fetchAllYears } from "../../services/api.js";
 
 export default function YearList() {
     const [years, setYears] = useState([]);
+    const [filteredYears, setFilteredYears] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedYear, setSelectedYear] = useState(null);
 
-
     useEffect(() => {
         fetchAllYears().then((data) => {
-            console.log("Fetched years:", data);
             setYears(data || []);
+            setFilteredYears(data || []);
         });
     }, []);
 
-
-    const handleSearchChange = (event) => {
-        const term = event.target.value;
-        setSearchTerm(term);
-
-
-        if (term.trim() === "") {
-            fetchAllYears().then((data) => setYears(data || []));
+    useEffect(() => {
+        if (searchTerm.trim() === "") {
+            setFilteredYears(years);
         } else {
-            const filteredYears = years.filter((year) =>
-                year.name.toLowerCase().includes(term.toLowerCase())
+            const filtered = years.filter((year) =>
+                year.name.toLowerCase().includes(searchTerm.toLowerCase())
             );
-            setYears(filteredYears);
+            setFilteredYears(filtered);
         }
-    };
-
+    }, [searchTerm, years]);
 
     const handleYearClick = (year) => {
         setSelectedYear(year === selectedYear ? null : year);
     };
-    console.log(years);
+
     return (
         <div className="container bg-dark text-light py-4 rounded">
-            <div className="mb-4">
+            <div className="input-group mb-4">
                 <input
                     type="text"
+                    className="form-control bg-dark text-white"
                     placeholder="Rechercher une année..."
-                    className="form-control"
-                    value={searchTerm}
-                    onChange={handleSearchChange}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                 />
+                <button className="btn btn-outline-light">
+                    Rechercher
+                </button>
             </div>
 
             <div className="row g-3">
-                {Array.isArray(years) && years.map((year) => (
+                {Array.isArray(filteredYears) && filteredYears.map((year) => (
                     <div key={year.id} className="col-4 p-2">
                         <div
                             className={`card text-center p-3 ${
