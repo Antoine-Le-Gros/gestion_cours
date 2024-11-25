@@ -1,7 +1,7 @@
 import React from "react";
+import CourseDiscovery from "./Page/CourseDiscovery.jsx";
 
 function Home() {
-    return <h1>HOME CONTROLLER REACT</h1>
+    return <CourseDiscovery/>
 }
-
 export default Home;
