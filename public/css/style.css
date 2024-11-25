@@ -208,6 +208,7 @@ a.sidebar-link:hover {
 
 /* media queries pour format mobile */
 @media (max-width: 767px) {
+    /* sidebar */
     .wrapper {
         display: none;
     }
@@ -219,6 +220,7 @@ a.sidebar-link:hover {
     body {
         overflow-x: hidden;
     }
+    /* login */
     .container-login {
         margin-left: 0;
         padding: 20px;
@@ -234,5 +236,22 @@ a.sidebar-link:hover {
 
     .h1 {
         font-size: 1.5rem;
+    }
+    /* offcanvas */
+    .offcanvas {
+        background-color: #5D5D5D;
+        width: 180px;
+    }
+
+    .offcanvas-body .nav-link {
+        color: white;
+        display: flex;
+        align-items: center;
+        padding: 0.625rem 1rem;
+    }
+
+    .offcanvas-body .nav-link i {
+        font-size: 1.5rem;
+        margin-right: 0.75rem;
     }
 }
