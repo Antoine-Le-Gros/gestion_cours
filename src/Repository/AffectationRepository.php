@@ -37,6 +37,20 @@ class AffectationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getAllAffectationGroupsTakenBySemester(int $semesterId): float
+    {
+        return $this->createQueryBuilder('a')
+            ->select('SUM(a.numberGroupTaken) as nbGroups')
+            ->join('a.course', 'c')
+            ->join('c.courseTitle', 'ct')
+            ->join('ct.modules', 'm')
+            ->join('m.semester', 's')
+            ->where('s.id = :semesterId')
+            ->setParameter('semesterId', $semesterId)
+            ->getQuery()
+            ->getResult()[0]['nbGroups'];
+    }
+
     //    /**
     //     * @return Affectation[] Returns an array of Affectation objects
     //     */
