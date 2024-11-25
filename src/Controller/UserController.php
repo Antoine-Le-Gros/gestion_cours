@@ -29,15 +29,25 @@ class UserController extends AbstractController
     {
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
+            'userRoles' => User::TYPE_USER,
         ]);
     }
 
     #[Route('/user', name: 'app_user_index', methods: ['GET'])]
     #[IsGranted('ROLE_ADMIN')]
-    public function index(UserRepository $userRepository): Response
+    public function index(Request $request, UserRepository $userRepository): Response
     {
+        $query = $request->query->get('query', '');
+        $isActive = $request->query->get('isActive', null);
+        $role = $request->query->get('role', '');
+
+        $isActive = null !== $isActive && '' !== $isActive ? (bool) $isActive : null;
+
+        $users = $userRepository->findBySearchQuery($query, $isActive, $role);
+
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $users,
+            'userRoles' => User::TYPE_USER,
         ]);
     }
 
