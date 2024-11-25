@@ -35,10 +35,12 @@ export default function TeacherList() {
                     Rechercher
                 </button>
             </div>
-            <div className="d-flex justify-content-center mt-5">
-                <div className="d-flex flex-column align-items-center">
+            <div className="container mt-4">
+                <div className="row">
                     {teacherData.map((teacher) => (
-                        <TeacherItem data={teacher}/>
+                        <div className="col-12 col-md-3 mb-3">
+                            <TeacherItem data={teacher}/>
+                        </div>
                     ))}
                 </div>
             </div>
