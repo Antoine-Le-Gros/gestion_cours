@@ -16,7 +16,7 @@
                                  style="font-size: 1.2rem;">
                                 S{{ semester.number }}
                             </div>
-                        <span class="position-absolute top-50 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"></span>
+                        <span class="position-absolute top-50 start-100 translate-middle p-2 {% if semester.completion == 0 %}bg-danger{% elseif semester.completion >= 1 %} bg-success {% else%} bg-warning {% endif %} border border-light rounded-circle"></span>
                     </div>
                 </a>
                 {% endfor %}
