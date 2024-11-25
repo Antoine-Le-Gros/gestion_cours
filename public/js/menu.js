@@ -20,5 +20,4 @@ function toggleSidebar(sidebar, content, hamBurger) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", initializeSidebarToggle);
 document.addEventListener("turbo:load", initializeSidebarToggle);
