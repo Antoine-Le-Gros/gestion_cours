@@ -10,7 +10,7 @@ class ReactController extends AbstractController
 {
     #[Route('/react', name: 'app_react')]
     #[Route('/me', name: 'app_me')]
-    #[Route('/history', name: 'app_history')]
+    #[Route('/history/year', name: 'app_history_year')]
     #[Route('/discover', name: 'app_discover')]
     #[Route('/history/teacher/{id}', name: 'app_history_teacher')]
     public function index(): Response
