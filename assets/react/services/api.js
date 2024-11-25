@@ -54,3 +54,11 @@ export function fetchTags() {
         response.ok ? response.json() : Promise.resolve(null)
     );
 }
+
+export const fetchUserById = async (id) => {
+    const response = await fetch(`/api/users/${id}`);
+    if (!response.ok) {
+        throw new Error(`Erreur lors de la récupération de l'utilisateur ${id}`);
+    }
+    return response.json();
+};
