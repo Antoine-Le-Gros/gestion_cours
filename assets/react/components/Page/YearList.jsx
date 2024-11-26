@@ -50,7 +50,7 @@ export default function YearList() {
                 {isLoading ? (
                     <Loading/>
                 ) : filteredYears.length === 0 ?  (
-                    <div>Aucune année à consulter</div>
+                    <h1 className="d-flex justify-content-center">Aucune année à consulter</h1>
                 ) : Array.isArray(filteredYears) && filteredYears.map((year) => (
                     <div key={year.id} className="col-4 p-2">
                         <div

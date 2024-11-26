@@ -60,7 +60,7 @@ export default function CourseDiscovery() {
             {isLoading ? (
                 <Loading />
             ) : courseData.length === 0 ? (
-                <div>Aucun cours à découvrir</div>
+                <h1 className="d-flex justify-content-center">Aucun cours à découvrir</h1>
             ) :
                 (
                 <section className="d-flex flex-column align-items-center">

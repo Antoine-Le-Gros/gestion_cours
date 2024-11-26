@@ -44,7 +44,7 @@ export default function TeacherList() {
                     { isLoading ? (
                         <Loading/>
                     ) : teacherData.length === 0 ? (
-                            <div>Aucun professeur</div>
+                            <h1 className="d-flex justify-content-center">Aucun professeur à consulter</h1>
                         ) : (teacherData.map((teacher) => (
                         <div className="col-12 col-md-3 mb-3">
                             <TeacherItem data={teacher}/>
