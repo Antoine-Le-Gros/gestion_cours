@@ -30,7 +30,7 @@ export default function HistoryTeacher({ params }) {
         return <Loading/>
     }
     if (!professor || !years.length) {
-        return <h1 className="d-flex justify-content-center">Aucun information pour ce professeur</h1>;
+        return <h1 className="d-flex justify-content-center">Aucune information pour ce professeur</h1>;
     }
 
     return (
