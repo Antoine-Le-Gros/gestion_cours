@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% set title = "Création d'un cours" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    <h1>{{title}}</h1>
+
+    {{ include('courses/_form.html.twig') }}
+
+{% endblock %}
