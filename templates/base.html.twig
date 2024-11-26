@@ -18,15 +18,15 @@
     <body class="{% if show_navbar is not defined or show_navbar %}
  d-flex flex-row flex-grow-1 {% else %} mobile-page {%  endif %}">
     {% if show_offcanvas is not defined or show_offcanvas %}
-        <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
-            <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler d-md-none" id="menuToggle">
+            <span class="menu-icon">☰</span>
         </button>
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="mobileMenuLabel">Menu</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <div class="custom-offcanvas d-md-none" id="mobileMenu">
+            <div class="custom-offcanvas-header">
+                <h5 class="custom-offcanvas-title" id="mobileMenuLabel">Menu</h5>
+                <button id="menuClose" class="btn-close">✖</button>
             </div>
-            <div class="offcanvas-body">
+            <div class="custom-offcanvas-body">
                 <ul class="sidebar-nav">
                     <li class="sidebar-item d-flex flex-row">
                         <a class="sidebar-link text-white text-decoration-none" href="/me">
