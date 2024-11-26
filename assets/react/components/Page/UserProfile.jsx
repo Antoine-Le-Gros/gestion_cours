@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { fetchMe, updatePassword } from "../../services/api.js";
+import {BASE_URL, fetchMe, updatePassword} from "../../services/api.js";
 import PasswordChangeModal from "../Molecule/PassWordChangeModal.js";
 import Toast from "../Molecule/Toast.js";
 
@@ -18,8 +18,6 @@ export default function UserProfile() {
 
     const handlePasswordChange = async (newPassword) => {
         try {
-            if (!user.id) return;
-
             const response = await updatePassword(user.id, newPassword);
             if (response.ok) {
                 setToastType("success");
@@ -35,8 +33,28 @@ export default function UserProfile() {
             setToastMessage("Une erreur est survenue.");
         }
 
-
         setTimeout(() => setToastMessage(null), 3000);
+    };
+
+    const validateOldPassword = async (oldPassword) => {
+        try {
+            const response = await fetch(`${BASE_URL}/users/${user.id}/validate-password`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/ld+json",
+                },
+                body: JSON.stringify({ password: oldPassword }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                return data.valid;
+            }
+        } catch (error) {
+            console.error("Erreur lors de la validation de l'ancien mot de passe:", error);
+        }
+
+        return false;
     };
 
     return (
@@ -91,14 +109,13 @@ export default function UserProfile() {
                 </div>
             </div>
 
-
             {isPopupOpen && (
                 <PasswordChangeModal
                     onClose={() => setIsPopupOpen(false)}
                     onPasswordChange={handlePasswordChange}
+                    onValidateOldPassword={validateOldPassword}
                 />
             )}
-
 
             {toastMessage && (
                 <Toast

@@ -7,6 +7,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\Controller\ValidatePasswordController;
 use App\Repository\UserRepository;
 use App\State\HistoryUserProvider;
 use App\State\MeProvider;
@@ -71,6 +72,28 @@ use Symfony\Component\Serializer\Annotation\Groups;
             provider: HistoryUserProvider::class,
         ),
         new Post(),
+        new Post(
+            uriTemplate: '/users/{id}/validate-password',
+            controller: ValidatePasswordController::class,
+            openapiContext: [
+                'summary' => 'Valider l\'ancien mot de passe d\'un utilisateur',
+                'requestBody' => [
+                    'content' => [
+                        'application/json' => [
+                            'schema' => [
+                                'type' => 'object',
+                                'properties' => [
+                                    'password' => ['type' => 'string'],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            denormalizationContext: ['groups' => ['validate_password']],
+            output: false,
+            name: 'validate_password',
+        ),
         new Get(),
         new Get(
             uriTemplate: '/me',

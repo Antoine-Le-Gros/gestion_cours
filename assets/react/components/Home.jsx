@@ -1,5 +1,5 @@
 import React from "react";
-import CourseDiscovery from "./Page/CourseDiscovery.jsx";
+import CourseDiscovery from "./Page/CourseDiscovery.js";
 
 function Home() {
     return <CourseDiscovery/>
