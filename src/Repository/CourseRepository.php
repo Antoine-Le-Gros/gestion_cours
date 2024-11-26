@@ -29,6 +29,28 @@ class CourseRepository extends ServiceEntityRepository
             ->getResult()[0]['nbGroups'];
     }
 
+    /**
+     * @return Course[]
+     */
+    public function findBySearchQuery(string $query, ?string $type = null): array
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->join('c.courseTitle', 'ct')
+            ->join('c.typeCourse', 't');
+
+        $qb->orWhere('LOWER(ct.name) LIKE LOWER(:query)')
+            ->setParameter('query', '%'.$query.'%');
+
+        if ($type) {
+            $qb->andWhere('t.name LIKE :type')
+                ->setParameter('type', $type);
+        }
+
+        return $qb->orderBy('c.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Course[] Returns an array of Course objects
     //     */

@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{%  set title = "Liste des cours" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    <h1>{{ title }}</h1>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <form method="GET" action="{{ path('app_course_index') }}" class="mb-2">
+            <div class="input-group col-md-6 d-flex form-group justify-content-center mt-4 ">
+                <label>
+                    <input type="text" name="query" class="form-control text-white rounded-start-pill" value="{{ app.request.query.get('query') }}">
+                </label>
+
+                <label>
+                    <select name="type" class="form-select text-white rounded-0 form-control">
+                        <option value="">Tous les rôles</option>
+                        {% for type in ['CM','TP','TD','TDM'] %}
+                            <option value="{{type}}" {% if app.request.query.get('type') == type %}selected{% endif %}>{{ type }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+
+                <button type="submit" class=" btn btn-primary bg-primary rounded-end-pill form-control">Rechercher</button>
+            </div>
+        </form>
+        <div>
+            <a class="btn btn-primary rounded-pill p-2 px-4" href="{{ path('app_course_new') }}">Ajouter</a>
+        </div>
+    </div>
+
+    <table class="table table-dark table-striped">
+        <thead>
+        <tr>
+            <th class="bg-black">ID</th>
+            <th class="bg-black">Titre</th>
+            <th class="bg-black">Type</th>
+            <th class="bg-black">Support de SAE</th>
+            <th class="bg-black">Nombre de groupes</th>
+            <th class="bg-black"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for course in courses %}
+            <tr>
+                <td>{{ course.id }}</td>
+                <td>{{ course.courseTitle.name }}</td>
+                <td>{{ course.typeCourse.name }}</td>
+                <td>{{ course.SAESupport }}</td>
+                <td>{{ course.groupMaxNumber }}</td>
+                <td>
+                    <div class="btn-group">
+                        <a class="btn btn-primary btn-sm rounded-pill" href="{{ path('app_course_edit', {'id': course.id}) }}">Modifier</a>
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11" class="text-center">Pas de cours trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
