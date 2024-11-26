@@ -9,6 +9,7 @@ export default function CourseDiscovery() {
     const [tags, setTags] = useState([]);
     const [search, setSearch] = useState('');
     const [semester, setSemester] = useState(1);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         fetchTags().then((data) => {
@@ -16,9 +17,10 @@ export default function CourseDiscovery() {
         });
     }, []);
     useEffect(() => {
+        setIsLoading(true);
         fetchCourseTitleInformation(search,semester, selectedTag ?? 0).then((data) => {
             setCourseData(data['hydra:member']);
-        });
+        }).finally(() => setIsLoading(false));
     }, [selectedTag, search, semester]);
     return (
         <div>
@@ -55,9 +57,12 @@ export default function CourseDiscovery() {
                     Rechercher
                 </button>
             </div>
-            {courseData.length === 0 ? (
-                <Loading/>
-            ) : (
+            {isLoading ? (
+                <Loading />
+            ) : courseData.length === 0 ? (
+                <div>Aucun cours à découvrir</div>
+            ) :
+                (
                 <section className="d-flex flex-column align-items-center">
                     {courseData?.map((course) => (
                         <CourseTitleItem key={course.id} data={course}>{course.name} </CourseTitleItem>
