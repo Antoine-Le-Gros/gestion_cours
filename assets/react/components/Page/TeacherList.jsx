@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from "react";
 import TeacherItem from "../Molecule/TeacherItem.js";
 import {fetchRoles, fetchUsersByRole} from "../../services/api.js";
+import Loading from "../Atomic/Loading.js";
 
 export default function TeacherList() {
     const [teacherData, setTeacherData] = useState([]);
     const [search, setSearch] = useState('');
     const [roles, setRoles] = useState([]);
     const [selectedRole, setSelectedRole] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
     useEffect(() => {
         fetchRoles().then((data) => {
             setRoles(data['hydra:member'])
         });
+        setIsLoading(true);
         fetchUsersByRole(search, selectedRole).then((data) => {
             setTeacherData(data['hydra:member'])
-        });
+        }).finally(() => setIsLoading(false));
     }, [selectedRole, search]);
     return (
         <div>
@@ -37,11 +41,15 @@ export default function TeacherList() {
             </div>
             <div className="container mt-4">
                 <div className="row">
-                    {teacherData.map((teacher) => (
+                    { isLoading ? (
+                        <Loading/>
+                    ) : teacherData.length === 0 ? (
+                            <div>Aucun professeur</div>
+                        ) : (teacherData.map((teacher) => (
                         <div className="col-12 col-md-3 mb-3">
                             <TeacherItem data={teacher}/>
                         </div>
-                    ))}
+                    )))}
                 </div>
             </div>
         </div>
