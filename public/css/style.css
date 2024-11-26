@@ -206,6 +206,63 @@ a.sidebar-link:hover {
     padding: 20px;
 }
 
+.navbar-toggler {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1051;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.custom-offcanvas {
+    position: fixed;
+    top: 0;
+    left: -100%; /* Caché en dehors de l’écran */
+    width: 70%;
+    max-width: 300px;
+    height: 100vh;
+    background-color: #5D5D5D;
+    z-index: 1050;
+    transition: transform 0.3s ease-in-out;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-offcanvas.show {
+    transform: translateX(100%); /* Glisse dans l’écran */
+}
+
+.custom-offcanvas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #3b3b3b;
+    color: white;
+}
+
+.custom-offcanvas-title {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.custom-offcanvas-body {
+    padding: 1rem;
+    flex-grow: 1;
+}
 /* media queries pour format mobile */
 @media (max-width: 767px) {
     /* sidebar */
