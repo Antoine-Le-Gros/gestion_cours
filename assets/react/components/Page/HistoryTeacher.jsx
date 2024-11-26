@@ -30,7 +30,7 @@ export default function HistoryTeacher({ params }) {
         return <Loading/>
     }
     if (!professor || !years.length) {
-        return <h1 className="d-flex justify-content-center">Aucun information pour ce prof</h1>;
+        return <h1 className="d-flex justify-content-center">Aucun information pour ce professeur</h1>;
     }
 
     return (
@@ -52,7 +52,7 @@ export default function HistoryTeacher({ params }) {
             </div>
 
             <h3 className="text-white">
-                {professor.lastname} {professor.firstname}
+                {String(professor.firstname).charAt(0).toUpperCase() + String(professor.firstname).slice(1)} {String(professor.lastname).toUpperCase()}
             </h3>
 
             {selectedYearId && (
