@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { fetchAllYears } from "../../services/api.js";
+import Loading from "../Atomic/Loading.js";
 
 export default function YearList() {
     const [years, setYears] = useState([]);
     const [filteredYears, setFilteredYears] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedYear, setSelectedYear] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        setIsLoading(true);
         fetchAllYears().then((data) => {
             setYears(data || []);
             setFilteredYears(data || []);
-        });
+        }).finally(() => setIsLoading(false));
     }, []);
 
     useEffect(() => {
@@ -30,7 +33,7 @@ export default function YearList() {
     };
 
     return (
-        <div className="container bg-dark text-light py-4 rounded">
+        <div className="container text-light py-4 rounded">
             <div className="input-group mb-4">
                 <input
                     type="text"
@@ -44,7 +47,11 @@ export default function YearList() {
             </div>
 
             <div className="row g-3">
-                {Array.isArray(filteredYears) && filteredYears.map((year) => (
+                {isLoading ? (
+                    <Loading/>
+                ) : filteredYears.length === 0 ?  (
+                    <h1 className="d-flex justify-content-center">Aucune année à consulter</h1>
+                ) : Array.isArray(filteredYears) && filteredYears.map((year) => (
                     <div key={year.id} className="col-4 p-2">
                         <div
                             className={`card text-center p-3 ${

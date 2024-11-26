@@ -9,9 +9,11 @@ export default function HistoryTeacher({ params }) {
     const [professor, setProfessor] = useState(null);
     const [years, setYears] = useState([]);
     const [selectedYearId, setSelectedYearId] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        fetchUserById(professorId).then((data) => setProfessor(data));
+        setIsLoading(true);
+        fetchUserById(professorId).then((data) => setProfessor(data)).finally(() => setIsLoading(false));
     }, [professorId]);
 
     useEffect(() => {
@@ -24,8 +26,11 @@ export default function HistoryTeacher({ params }) {
         }
     }, [selectedYearId]);
 
+    if(isLoading){
+        return <Loading/>
+    }
     if (!professor || !years.length) {
-        return <Loading />;
+        return <h1 className="d-flex justify-content-center">Aucune information pour ce professeur</h1>;
     }
 
     return (
@@ -47,7 +52,7 @@ export default function HistoryTeacher({ params }) {
             </div>
 
             <h3 className="text-white">
-                {professor.lastname} {professor.firstname}
+                {String(professor.firstname).charAt(0).toUpperCase() + String(professor.firstname).slice(1)} {String(professor.lastname).toUpperCase()}
             </h3>
 
             {selectedYearId && (
