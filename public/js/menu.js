@@ -20,4 +20,57 @@ function toggleSidebar(sidebar, content, hamBurger) {
     }
 }
 
-document.addEventListener("turbo:load", initializeSidebarToggle);
+function initializeOffcanvasToggle() {
+    const menuToggle = document.querySelector("#menuToggle");
+    const menuClose = document.querySelector("#menuClose");
+    const offcanvas = document.querySelector("#mobileMenu");
+
+    if (menuToggle && menuClose && offcanvas) {
+        menuToggle.removeEventListener("click", openOffcanvas);
+        menuClose.removeEventListener("click", closeOffcanvas);
+
+        menuToggle.addEventListener("click", function () {
+            openOffcanvas(offcanvas);
+        });
+
+        menuClose.addEventListener("click", function () {
+            closeOffcanvas(offcanvas);
+        });
+
+        document.removeEventListener("click", handleOutsideClick);
+        document.addEventListener("click", function (e) {
+            handleOutsideClick(e, offcanvas, menuToggle);
+        });
+    } else {
+        console.error("Éléments pour le offcanvas introuvables");
+    }
+}
+
+function openOffcanvas(offcanvas) {
+    if (offcanvas) {
+        offcanvas.classList.add("show");
+    }
+}
+
+function closeOffcanvas(offcanvas) {
+    if (offcanvas) {
+        offcanvas.classList.remove("show");
+    }
+}
+
+function handleOutsideClick(event, offcanvas, toggleButton) {
+    if (
+        offcanvas.classList.contains("show") &&
+        !offcanvas.contains(event.target) &&
+        event.target !== toggleButton
+    ) {
+        closeOffcanvas(offcanvas);
+    }
+}
+
+function initializeMenu() {
+    initializeSidebarToggle();
+    initializeOffcanvasToggle();
+}
+
+document.addEventListener("turbo:load", initializeMenu);
