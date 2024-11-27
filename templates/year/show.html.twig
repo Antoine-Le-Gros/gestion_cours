@@ -9,7 +9,7 @@
         <div class="d-flex flex-column align-items-center gap-4">
             <div class="d-flex justify-content-center gap-4">
                 {% for semester in year.semesters[0:3] %}
-                <a href="#" class="text-decoration-none text-black">
+                <a href="{{ path('app_affectation', {'id': semester.id}) }}" class="text-decoration-none text-black">
                     <div class="card border-0 bg-white position-relative"
                          style="width: 100px; height: 60px; border-radius: 10px;">
                             <div class="d-flex justify-content-center align-items-center h-100 fw-bold"
@@ -24,7 +24,7 @@
 
             <div class="d-flex justify-content-center gap-4">
                 {% for semester in year.semesters[3:6] %}
-                    <a href="#" class="text-decoration-none text-black">
+                    <a href="{{ path('app_affectation', {'id': semester.id}) }}" class="text-decoration-none text-black">
                     <div class="card border-0 bg-white position-relative"
                          style="width: 100px; height: 60px; border-radius: 10px;">
                             <div class="d-flex justify-content-center align-items-center h-100 fw-bold"

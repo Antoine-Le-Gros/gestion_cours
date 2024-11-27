@@ -46,6 +46,7 @@ class AffectationController extends AbstractController
         return $this->render('affectation/index.html.twig', [
             'courseTitles' => $courseTitles,
             'form' => $form->createView(),
+            'semester' => $semester,
         ]);
     }
 }
