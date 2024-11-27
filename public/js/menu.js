@@ -34,13 +34,11 @@ function initializeOffcanvasToggle() {
 
     if (menuToggle && menuClose && offcanvas) {
         menuToggle.addEventListener("click", function () {
-            offcanvas.classList.add("show");
-            document.body.classList.add("offcanvas-open");
+            openOffcanvas(offcanvas);
         });
 
         menuClose.addEventListener("click", function () {
-            offcanvas.classList.remove("show");
-            document.body.classList.remove("offcanvas-open");
+            closeOffcanvas(offcanvas);
         });
 
         document.addEventListener("click", function (e) {
@@ -56,9 +54,8 @@ function initializeOffcanvasToggle() {
 }
 
 function openOffcanvas(offcanvas) {
-    if (offcanvas) {
-        offcanvas.classList.add("show");
-    }
+    offcanvas.classList.add("show");
+    document.body.classList.add("offcanvas-open");
 }
 
 function closeOffcanvas(offcanvas) {
@@ -66,19 +63,5 @@ function closeOffcanvas(offcanvas) {
     document.body.classList.remove("offcanvas-open");
 }
 
-function handleOutsideClick(event, offcanvas, toggleButton) {
-    if (
-        offcanvas.classList.contains("show") &&
-        !offcanvas.contains(event.target) &&
-        event.target !== toggleButton
-    ) {
-        closeOffcanvas(offcanvas);
-    }
-}
 
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    initializeMenu();
-});
 
