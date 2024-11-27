@@ -234,7 +234,7 @@ a.sidebar-link:hover {
 }
 
 .custom-offcanvas.show {
-    left: 0;
+    left: 0 !important;
 }
 
 .custom-offcanvas-header {
