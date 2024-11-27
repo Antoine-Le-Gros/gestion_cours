@@ -18,7 +18,7 @@
     <body class="{% if show_navbar is not defined or show_navbar %}
  d-flex flex-row flex-grow-1 {% else %} mobile-page {%  endif %}">
     {% if show_offcanvas is not defined or show_offcanvas %}
-        <button class="navbar-toggler d-md-none" id="menuToggle">
+        <button class="navbar-toggler custom-offcanvas-toggler d-md-none" id="menuToggle">
             <span class="menu-icon text-white">☰</span>
         </button>
         <div class="custom-offcanvas d-md-none" id="mobileMenu">
