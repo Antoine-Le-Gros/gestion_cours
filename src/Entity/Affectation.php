@@ -10,6 +10,7 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\DataProvider\AffectationProvider;
 use App\Repository\AffectationRepository;
+use App\State\UserYearAffectationProvider;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -27,6 +28,8 @@ use Symfony\Component\Validator\Constraints as Assert;
             normalizationContext: ['groups' => ['affectation_read_graph']],
             security: "is_granted('ROLE_USER')",
             provider: AffectationProvider::class
+            provider: UserYearAffectationProvider::class
+        ),
         ),
     ],
     normalizationContext: ['groups' => ['affectation_read']],

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataProvider;
+namespace App\State;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
@@ -13,7 +13,7 @@ use Symfony\Bundle\SecurityBundle\Security;
  *
  * @implements ProviderInterface<Affectation>
  */
-class AffectationProvider implements ProviderInterface
+class UserYearAffectationProvider implements ProviderInterface
 {
     private AffectationRepository $repository;
     private Security $security;
