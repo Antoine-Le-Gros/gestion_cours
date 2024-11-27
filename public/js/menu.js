@@ -1,3 +1,10 @@
+document.addEventListener("DOMContentLoaded", initializeMenu);
+
+function initializeMenu() {
+    initializeSidebarToggle();
+    initializeOffcanvasToggle();
+}
+
 function initializeSidebarToggle() {
     const hamBurger = document.querySelector("#toggle-btn");
     const sidebar = document.querySelector("#sidebar");
@@ -26,20 +33,22 @@ function initializeOffcanvasToggle() {
     const offcanvas = document.querySelector("#mobileMenu");
 
     if (menuToggle && menuClose && offcanvas) {
-        menuToggle.removeEventListener("click", openOffcanvas);
-        menuClose.removeEventListener("click", closeOffcanvas);
-
         menuToggle.addEventListener("click", function () {
-            openOffcanvas(offcanvas);
+            offcanvas.classList.add("show");
+            document.body.classList.add("offcanvas-open");
         });
 
         menuClose.addEventListener("click", function () {
-            closeOffcanvas(offcanvas);
+            offcanvas.classList.remove("show");
+            document.body.classList.remove("offcanvas-open");
         });
 
-        document.removeEventListener("click", handleOutsideClick);
         document.addEventListener("click", function (e) {
-            handleOutsideClick(e, offcanvas, menuToggle);
+            if (offcanvas.classList.contains("show") &&
+                !offcanvas.contains(e.target) &&
+                !menuToggle.contains(e.target)) {
+                closeOffcanvas(offcanvas);
+            }
         });
     } else {
         console.error("Éléments pour le offcanvas introuvables");
@@ -53,9 +62,8 @@ function openOffcanvas(offcanvas) {
 }
 
 function closeOffcanvas(offcanvas) {
-    if (offcanvas) {
-        offcanvas.classList.remove("show");
-    }
+    offcanvas.classList.remove("show");
+    document.body.classList.remove("offcanvas-open");
 }
 
 function handleOutsideClick(event, offcanvas, toggleButton) {
@@ -68,9 +76,9 @@ function handleOutsideClick(event, offcanvas, toggleButton) {
     }
 }
 
-function initializeMenu() {
-    initializeSidebarToggle();
-    initializeOffcanvasToggle();
-}
 
-document.addEventListener("turbo:load", initializeMenu);
+
+document.addEventListener("DOMContentLoaded", function() {
+    initializeMenu();
+});
+
