@@ -33,6 +33,13 @@ class YearController extends AbstractController
             return $this->redirectToRoute('app_year_show', ['id' => $year->getId()], Response::HTTP_SEE_OTHER);
         }
 
+        if ($this->isCsrfTokenValid('delete'.$year->getId(), $request->get('_token'))) {
+            $entityManager->remove($year);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_upload', [], 301);
+        }
+
         return $this->render('year/show.html.twig', [
             'year' => $year,
             'form' => $form,
