@@ -49,6 +49,7 @@
 
     <!-- Modal -->
     <div class="modal fade text-black" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        {{ form_start(form) }}
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -56,14 +57,20 @@
                     <button type="reset" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_widget(form.name) }}
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Supprimer</button>
-                    <button type="button" class="btn btn-primary">Sauvegarder</button>
+                    <button type="reset" class="btn btn-danger" data-bs-dismiss="modal">Supprimer</button>
+                    <button type="submit" class="btn btn-primary">Sauvegarder</button>
                 </div>
             </div>
         </div>
+        {{ form_end(form) }}
     </div>
 
 
