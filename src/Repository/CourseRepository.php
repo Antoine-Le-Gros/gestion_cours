@@ -29,6 +29,23 @@ class CourseRepository extends ServiceEntityRepository
             ->getResult()[0]['nbGroups'];
     }
 
+    /**
+     * @return Course[]
+     */
+    public function findBySemesterId(int $semesterId): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c', 'ct', 'hv', 'm', 's')
+            ->join('c.courseTitle', 'ct')
+            ->join('ct.modules', 'm')
+            ->join('m.semester', 's')
+            ->join('c.hourlyVolumes', 'hv')
+            ->where('s.id = :semesterId')
+            ->setParameter('semesterId', $semesterId)
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Course[] Returns an array of Course objects
     //     */

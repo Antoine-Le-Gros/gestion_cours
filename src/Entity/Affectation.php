@@ -41,7 +41,7 @@ class Affectation
     #[Groups(['affectation_read', 'course_read'])]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'affectations')]
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'affectations')]
     #[Groups(['affectation_read', 'affectation_read_graph'])]
     private ?Course $course = null;
 

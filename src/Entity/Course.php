@@ -58,7 +58,7 @@ class Course
     /**
      * @var Collection<int, Affectation>
      */
-    #[ORM\OneToMany(targetEntity: Affectation::class, mappedBy: 'course', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Affectation::class, mappedBy: 'course', cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[Groups(['course_read', 'course_write'])]
     private Collection $affectations;
 
@@ -187,5 +187,38 @@ class Course
         }
 
         return $this;
+    }
+
+    public function getVolume(): float
+    {
+        $volume = 0;
+        foreach ($this->hourlyVolumes as $hourlyVolume) {
+            $volume += $hourlyVolume->getVolume();
+        }
+
+        return $volume;
+    }
+
+    public function getAffectedHours(): float
+    {
+        $volume = 0;
+        foreach ($this->affectations as $affectation) {
+            $groups = $affectation->getNumberGroupTaken();
+            foreach ($this->hourlyVolumes as $hourlyVolume) {
+                $volume += $hourlyVolume->getVolume() * $groups;
+            }
+        }
+
+        return $volume;
+    }
+
+    public function getAffectedGroups(): int
+    {
+        $groups = 0;
+        foreach ($this->affectations as $affectation) {
+            $groups += $affectation->getNumberGroupTaken();
+        }
+
+        return $groups;
     }
 }
