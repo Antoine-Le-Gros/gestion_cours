@@ -48,7 +48,7 @@ class AffectationRepository extends ServiceEntityRepository
             ->where('s.id = :semesterId')
             ->setParameter('semesterId', $semesterId)
             ->getQuery()
-            ->getResult()[0]['nbGroups'];
+            ->getResult()[0]['nbGroups'] ?? 0;
     }
 
     //    /**
