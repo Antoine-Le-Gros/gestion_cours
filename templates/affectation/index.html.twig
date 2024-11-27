@@ -116,6 +116,21 @@
             collectionHolder.dataset.index++;
             addTagFormDeleteLink(item);
         }
+
+        function addTagFormDeleteLink(item) {
+            const removeFormButton = document.createElement('button');
+            removeFormButton.innerText = 'Supprimer';
+            removeFormButton.type = 'button';
+            removeFormButton.classList.add('btn', 'btn-danger', 'remove-tag');
+
+            item.append(removeFormButton);
+
+            removeFormButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                // remove the li for the tag form
+                item.remove();
+            });
+        }
     </script>
 
 {% endblock %}
