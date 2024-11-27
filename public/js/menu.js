@@ -35,10 +35,12 @@ function initializeOffcanvasToggle() {
     if (menuToggle && menuClose && offcanvas) {
         menuToggle.addEventListener("click", function () {
             openOffcanvas(offcanvas);
+            menuToggle.style.display = 'none';
         });
 
         menuClose.addEventListener("click", function () {
             closeOffcanvas(offcanvas);
+            menuToggle.style.display = '';
         });
 
         document.addEventListener("click", function (e) {
@@ -46,6 +48,7 @@ function initializeOffcanvasToggle() {
                 !offcanvas.contains(e.target) &&
                 !menuToggle.contains(e.target)) {
                 closeOffcanvas(offcanvas);
+                menuToggle.style.display = '';
             }
         });
     } else {
