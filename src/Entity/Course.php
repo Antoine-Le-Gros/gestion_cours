@@ -43,7 +43,7 @@ class Course
 
     #[ORM\ManyToOne(inversedBy: 'courses')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['course_read', 'course_write', 'courseTitle_info'])]
+    #[Groups(['course_read', 'course_write', 'courseTitle_info', 'affectation_semester'])]
     private ?TypeCourse $typeCourse = null;
 
     #[ORM\Column(length: 50, nullable: true)]
@@ -66,7 +66,7 @@ class Course
      * @var Collection<int, HourlyVolume>
      */
     #[ORM\OneToMany(targetEntity: HourlyVolume::class, mappedBy: 'course', orphanRemoval: true)]
-    #[Groups(['course_read', 'affectation_read_graph', 'courseTitle_info'])]
+    #[Groups(['course_read', 'affectation_read_graph', 'courseTitle_info', 'affectation_semester'])]
     private Collection $hourlyVolumes;
 
     public function __construct()
