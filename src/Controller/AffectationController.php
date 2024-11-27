@@ -23,6 +23,18 @@ class AffectationController extends AbstractController
         $courses = $courseRepository->findBySemesterId($semester->getId());
 
         $form = $this->createForm(CoursesCollectionFormType::class, ['courses' => $courses]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $newCourses = $form->get('courses')->getData();
+
+            foreach ($newCourses as $course) {
+                $entityManager->persist($course);
+            }
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_affectation', ['id' => $id]);
+        }
 
         return $this->render('affectation/index.html.twig', [
             'courseTitles' => $courseTitles,
