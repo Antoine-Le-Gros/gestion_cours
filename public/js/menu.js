@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", initializeMenu);
+document.addEventListener("turbo:load", initializeMenu);
 
 function initializeMenu() {
     initializeSidebarToggle();
