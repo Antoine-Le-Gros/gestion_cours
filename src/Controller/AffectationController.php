@@ -28,6 +28,13 @@ class AffectationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $newCourses = $form->get('courses')->getData();
 
+            foreach ($courses as $course) {
+                if (!in_array($course, $newCourses)) {
+                    $course->getAffectations()->clear();
+                    $entityManager->persist($course);
+                }
+            }
+
             foreach ($newCourses as $course) {
                 $entityManager->persist($course);
             }
