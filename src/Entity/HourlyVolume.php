@@ -36,7 +36,7 @@ class HourlyVolume
 
     #[ORM\Column]
     #[Assert\GreaterThanOrEqual(0)]
-    #[Groups(['hourlyVolume_read', 'course_read', 'affectation_read_graph', 'courseTitle_info'])]
+    #[Groups(['hourlyVolume_read', 'course_read', 'affectation_read_graph', 'courseTitle_info', 'affectation_semester'])]
     private ?float $volume = null;
 
     #[ORM\ManyToOne(cascade: ['remove'], inversedBy: 'hourlyVolumes')]
@@ -45,7 +45,7 @@ class HourlyVolume
 
     #[ORM\ManyToOne(inversedBy: 'hourlyVolumes')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['course_read', 'hourlyVolume_graph_read', 'affectation_read_graph'])]
+    #[Groups(['course_read', 'hourlyVolume_graph_read', 'affectation_read_graph', 'affectation_semester'])]
     private ?Week $week = null;
 
     public function getId(): ?int
