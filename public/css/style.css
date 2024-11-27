@@ -206,16 +206,24 @@ a.sidebar-link:hover {
     padding: 20px;
 }
 
-.navbar-toggler {
+.custom-offcanvas-toggler {
     position: fixed;
-    top: 10px;
-    left: 10px;
+    top: 20px;
+    left: 20px;
     z-index: 1051;
-    background: none;
-    border: none;
+    cursor: pointer;
+    padding: 0.75rem 1.5rem;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.menu-icon {
+    position: fixed;
+    background-color: #5D5D5D;
+    border: 2px solid white;
+    border-radius: 12px;
     color: white;
     font-size: 1.5rem;
-    cursor: pointer;
+    padding: 0.5rem 1rem;
 }
 
 .custom-offcanvas {
