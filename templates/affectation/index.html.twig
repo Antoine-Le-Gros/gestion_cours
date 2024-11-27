@@ -51,4 +51,45 @@
     </div>
     {% endfor %}
 
+    {{ form_start(form) }}
+    <div class="container mt-5 text-black">
+        {% for courseForm in form.courses %}
+            <div class="course-form">
+                <div class="modal fade modal-lg" role="dialog" id="courseModal{{ courseForm.vars.value.id }}" tabindex="-1" aria-labelledby="courseModalLabel{{ courseForm.vars.value.id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="courseModalLabel{{ courseForm.vars.value.id }}">Assignation de {{ courseForm.vars.value.courseTitle.name }}</h5>
+                                <button type="reset" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <span class="alert-danger">{{ form_errors(form) }}</span>
+                                <span>Nombre maximum de groupe : </span><span id="maxGroupNumer-{{ courseForm.vars.value.id }}">{{ courseForm.vars.value.groupMaxNumber }}</span>
+                                <ul class="affectation affectations-{{ courseForm.vars.value.id }}"
+                                    data-index="{{ courseForm.affectations|length > 0 ? courseForm.affectations|last.vars.name + 1 : 0 }}"
+                                    data-prototype="{{ form_widget(courseForm.affectations.vars.prototype)|e('html_attr') }}"
+                                >
+                                    {% for affectation in courseForm.affectations %}
+                                        <li>
+                                            <span class="alert-danger">{{ form_errors(affectation) }}</span>
+                                            {{ form_row(affectation) }}
+                                        </li>
+                                        <hr>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Sauvegarder</button>
+                                <button type="button" class="add_item_link btn btn-success" data-collection-holder-class="affectations-{{ courseForm.vars.value.id }}">Nouvelle Affectation</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Continuer</button>
+                                <button type="reset" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {{ form_end(form) }}
+
 {% endblock %}
