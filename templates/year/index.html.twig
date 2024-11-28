@@ -1,20 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello YearController!{% endblock %}
+{%  set title = "Liste des années" %}
+
+{% block title %}{{ title }}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<h1 class="d-flex justify-content-center mb-5">{{ title }}</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/working/clav0016/sae5-01/src/Controller/YearController.php</code></li>
-        <li>Your template at <code>/working/clav0016/sae5-01/templates/year/index.html.twig</code></li>
-    </ul>
-</div>
+    <div class="d-flex justify-content-center flex-wrap">
+    {% for year in years %}
+            <a class="btn btn-outline-secondary p-4 px-5 m-4 text-white border-white"
+               href="{{ path('app_year_show', {'id': year.id}) }}"
+               style="font-size: 1.5rem; border-radius: 10px;">
+                {{ year.name }}
+            </a>
+    {% else %}
+        <tr>
+            <td colspan="11" class="text-center">Pas d'année trouvée</td>
+        </tr>
+    {% endfor %}
+    </div>
+
+
 {% endblock %}
