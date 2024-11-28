@@ -41,6 +41,7 @@ class Module
 
     #[ORM\ManyToOne(inversedBy: 'modules')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['affectation_semester'])]
     private ?Semester $semester = null;
 
     /**
