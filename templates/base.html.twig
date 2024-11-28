@@ -2,6 +2,7 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
@@ -14,7 +15,53 @@
         {% endblock %}
 
     </head>
-    <body class=" d-flex flex-row flex-grow-1 ">
+    <body class="{% if show_navbar is not defined or show_navbar %}
+ d-flex flex-row flex-grow-1 {% else %} mobile-page {%  endif %}">
+    {% if show_offcanvas is not defined or show_offcanvas %}
+        <button class="navbar-toggler custom-offcanvas-toggler d-md-none" id="menuToggle">
+            <span class="menu-icon text-white">☰</span>
+        </button>
+        <div class="custom-offcanvas d-md-none" id="mobileMenu">
+            <div class="custom-offcanvas-header">
+                <h5 class="custom-offcanvas-title" id="mobileMenuLabel">Menu</h5>
+                <button id="menuClose" class="btn-close btn-close-white"></button>
+            </div>
+            <div class="custom-offcanvas-body">
+                <ul class="sidebar-nav">
+                    <li class="sidebar-item d-flex flex-row">
+                        <a class="sidebar-link text-white text-decoration-none" href="/me">
+                            <i class="lni lni-user-4"></i>
+                            <span>Profil</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item d-flex flex-row">
+                        <a class="sidebar-link text-white text-decoration-none" href="/upload">
+                            <i class="lni lni-calendar-days"></i>
+                            <span>Année</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item d-flex flex-row">
+                        <a class="sidebar-link text-white text-decoration-none" href="/user">
+                            <i class="lni lni-briefcase-2"></i>
+                            <span>Enseignants</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item d-flex flex-row">
+                        <a class="sidebar-link text-white text-decoration-none" href="{{ path("app_history") }}">
+                            <i class="lni lni-box-archive-1"></i>
+                            <span>Historique</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item logout d-flex flex-row">
+                        <a class="sidebar-link text-white text-decoration-none" href="{{ path('app_logout') }}">
+                            <i class="lni lni-exit"></i>
+                            <span>Déconnexion</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    {%  endif %}
     {% if show_navbar is not defined or show_navbar %}
         <div class="wrapper">
             <aside class="position-fixed" id="sidebar">

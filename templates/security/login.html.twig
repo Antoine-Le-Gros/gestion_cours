@@ -1,66 +1,55 @@
 {% extends 'base.html.twig' %}
 
 {% set show_navbar = false %}
+{% set show_offcanvas = false %}
 
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-    <div class="container-login">
-        <form method="post">
-            {% if error %}
-                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-            {% endif %}
+    <body class="mobile-page">
+        <div class="container-login">
+            <form method="post">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
 
-            {% if app.user %}
-                <div class="mb-3">
-                    Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                {% if app.user %}
+                    <div class="mb-3">
+                        Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                    </div>
+                {% endif %}
+
+                <h1 class="h3 mb-3 font-weight-normal text-center">Connexion</h1>
+                <div class="form-group">
+                    <label for="inputEmail">Identifiant</label>
+                    <input value="{{ last_username }}" name="username" id="inputEmail"
+                           class="form-control color-white" autocomplete="email" required autofocus>
                 </div>
-            {% endif %}
 
-            <h1 class="h3 mb-3 font-weight-normal text-center">Connexion</h1>
-            <div class="form-group">
-                <label for="inputEmail">Identifiant</label>
-                <input value="{{ last_username }}" name="username" id="inputEmail"
-                       class="form-control" autocomplete="email" required autofocus>
-            </div>
-
-            <div class="form-group">
-                <div class="d-flex justify-content-between align-items-center">
-                    <label for="inputPassword">Mot de passe</label>
-                    <span id="togglePassword" class="toggle-password">
-                        <i class="bi bi-eye-slash-fill"></i>
-                    </span>
+                <div class="form-group">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <label for="inputPassword">Mot de passe</label>
+                        <span id="togglePassword" class="toggle-password">
+                        </span>
+                    </div>
+                    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
                 </div>
-                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-            </div>
-            <input type="hidden" name="_csrf_token"
-                   value="{{ csrf_token('authenticate') }}"
-            >
+                <input type="hidden" name="_csrf_token"
+                       value="{{ csrf_token('authenticate') }}"
+                >
 
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" name="_remember_me"> Se souvenir de moi
-                </label>
-            </div>
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" name="_remember_me"> Se souvenir de moi
+                    </label>
+                </div>
 
-            <div class="d-flex justify-content">
-                <button class="btn btn-lg btn-primary" type="submit">
-                    Se connecter
-                </button>
-            </div>
-        </form>
-    </div>
-
-    <script>
-        const togglePassword = document.getElementById('togglePassword');
-        const passwordInput = document.getElementById('inputPassword');
-
-        togglePassword.addEventListener('click', function() {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-
-            this.querySelector('i').classList.toggle('bi-eye-slash-fill');
-            this.querySelector('i').classList.toggle('bi-eye-fill');
-        });
-    </script>
+                <div class="d-flex justify-content">
+                    <button class="btn btn-lg btn-primary" type="submit">
+                        Se connecter
+                    </button>
+                </div>
+            </form>
+        </div>
+    </body>
 {% endblock %}

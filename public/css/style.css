@@ -191,3 +191,132 @@ a.sidebar-link:hover {
 .container {
     text-align: center;
 }
+
+.mobile-page .content {
+    margin-left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.mobile-page .container-login {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.custom-offcanvas-toggler {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1051;
+    cursor: pointer;
+    padding: 0.75rem 1.5rem;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.menu-icon {
+    position: fixed;
+    background-color: #5D5D5D;
+    border: 2px solid white;
+    border-radius: 12px;
+    color: white;
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+}
+
+.custom-offcanvas {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 70%;
+    max-width: 300px;
+    height: 100vh;
+    background-color: #5D5D5D;
+    z-index: 1050;
+    transition: transform 0.3s ease-in-out;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-offcanvas.show {
+    left: 0 !important;
+}
+
+.custom-offcanvas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #3b3b3b;
+    color: white;
+}
+
+.custom-offcanvas-title {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.custom-offcanvas-body {
+    padding: 1rem;
+    flex-grow: 1;
+}
+/* media queries pour format mobile */
+@media (max-width: 767px) {
+    /* sidebar */
+    .wrapper {
+        display: none;
+    }
+
+    .content {
+        margin-left: 0 !important;
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+    /* login */
+    .container-login {
+        margin-left: 0;
+        padding: 20px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .form-group label,
+    .form-control,
+    .btn {
+        font-size: 1rem;
+    }
+
+    .h1 {
+        font-size: 1.5rem;
+    }
+    /* offcanvas */
+    .offcanvas {
+        background-color: #5D5D5D;
+        width: 180px;
+    }
+
+    .offcanvas-body .nav-link {
+        color: white;
+        display: flex;
+        align-items: center;
+        padding: 0.625rem 1rem;
+    }
+
+    .offcanvas-body .nav-link i {
+        font-size: 1.5rem;
+        margin-right: 0.75rem;
+    }
+}
