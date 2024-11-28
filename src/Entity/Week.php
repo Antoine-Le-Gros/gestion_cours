@@ -36,7 +36,7 @@ class Week
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Groups(['week_read', 'course_read', 'affectation_read_graph'])]
+    #[Groups(['week_read', 'course_read', 'affectation_read_graph', 'affectation_semester'])]
     private ?int $number = null;
 
     #[ORM\ManyToOne(targetEntity: Semester::class, inversedBy: 'weeks')]
