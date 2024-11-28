@@ -48,8 +48,10 @@ class AffectationRepository extends ServiceEntityRepository
             ->join('c.hourlyVolumes', 'h')
             ->join('h.week', 'w')
             ->join('w.semesters', 's')
+            ->join('c.courseTitle', 'ct')
             ->andWhere('s.id = :semesterId')
             ->setParameter('semesterId', $semesterId)
+            ->orderBy('ct.name', 'ASC')
             ->getQuery()
             ->getResult();
     }
