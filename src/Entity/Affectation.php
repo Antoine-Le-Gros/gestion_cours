@@ -11,9 +11,12 @@ use ApiPlatform\Metadata\Post;
 use App\Repository\AffectationRepository;
 use App\State\SemesterAffectationProvider;
 use App\State\UserYearAffectationProvider;
+use App\Validator as CustomAssert;
+use App\Validator\CorrectNumberOfHourValidator;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: AffectationRepository::class)]
 #[ApiResource(
@@ -54,12 +57,22 @@ class Affectation
 
     #[ORM\ManyToOne(inversedBy: 'affectations')]
     #[Groups(['affectation_read', 'course_read'])]
+    #[CustomAssert\CorrectNumberOfHour]
+    #[Assert\Valid]
     private ?User $teacher = null;
 
     #[ORM\Column]
     #[Assert\GreaterThan(0)]
     #[Groups(['affectation_read', 'affectation_write', 'affectation_read_graph', 'affectation_semester'])]
     private ?int $numberGroupTaken = null;
+
+    #[Assert\Callback]
+    public function validate(ExecutionContextInterface $context): void
+    {
+        $validator = new CorrectNumberOfHourValidator();
+        $validator->initialize($context);
+        $validator->validate($this, new Assert\Callback());
+    }
 
     public function getId(): ?int
     {

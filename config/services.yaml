@@ -26,3 +26,8 @@ services:
     App\State\UserPasswordHasher:
         bind:
             $processor: '@api_platform.doctrine.orm.state.persist_processor'
+
+    App\Validator\CorrectNumberOfAffectationValidator:
+        tags: [ 'validator.constraint_validator' ]
+    App\Validator\CorrectNumberOfHourValidator:
+        tags: [ 'validator.constraint_validator' ]
