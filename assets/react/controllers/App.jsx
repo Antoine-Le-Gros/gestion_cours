@@ -25,7 +25,7 @@ function App() {
                 <Route path="/history/semester/:id">
                     {(params) => <HistorySemester params={{id: params.id}} />}
                 </Route>
-                <Route path="/discover">
+                <Route path="/">
                     <CourseDiscovery/>
                 </Route>
                 <Route path="/history/teacher">
