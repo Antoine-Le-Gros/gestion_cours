@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Affectation;
 use App\Form\CoursesCollectionFormType;
 use App\Repository\CourseRepository;
 use App\Repository\CourseTitleRepository;
@@ -24,29 +25,47 @@ class AffectationController extends AbstractController
 
         $form = $this->createForm(CoursesCollectionFormType::class, ['courses' => $courses]);
         $form->handleRequest($request);
+        $courseErrors = [];
+        $affectationErrors = [];
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $newCourses = $form->get('courses')->getData();
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $newCourses = $form->get('courses')->getData();
 
-            foreach ($courses as $course) {
-                if (!in_array($course, $newCourses)) {
-                    $course->getAffectations()->clear();
+                foreach ($courses as $course) {
+                    if (!in_array($course, $newCourses)) {
+                        $course->getAffectations()->clear();
+                        $entityManager->persist($course);
+                    }
+                }
+
+                foreach ($newCourses as $course) {
                     $entityManager->persist($course);
                 }
-            }
+                $entityManager->flush();
 
-            foreach ($newCourses as $course) {
-                $entityManager->persist($course);
+                return $this->redirectToRoute('app_affectation', ['id' => $id]);
+            } else {
+                foreach ($form->getErrors(true) as $error) {
+                    $cause = $error->getCause();
+                    if ($cause->getInvalidValue() instanceof Affectation) {
+                        $affectationErrors[] = $cause->getInvalidValue()->getId();
+                        $courseErrors[] = $cause->getInvalidValue()->getCourse()->getId();
+                    } else {
+                        $courseErrors[] = $cause->getInvalidValue()->getOwner()->getId();
+                    }
+                }
             }
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_affectation', ['id' => $id]);
         }
+
+        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
 
         return $this->render('affectation/index.html.twig', [
             'courseTitles' => $courseTitles,
             'form' => $form->createView(),
             'semester' => $semester,
-        ]);
+            'courseErrors' => $courseErrors,
+            'affectationsErrors' => $affectationErrors,
+        ], $response);
     }
 }
