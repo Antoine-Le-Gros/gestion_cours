@@ -3,6 +3,11 @@
 {% block title %}Hello AffectationController!{% endblock %}
 
 {% block body %}
+    {% if affectationsErrors|length > 0 %}
+        <span class="alert alert-danger">L'affectation n'est pas possible (Nombre d'heures)</span>
+    {% elseif courseErrors|length > 0 %}
+        <span class="alert alert-danger">L'affectation n'est pas possible (Nombre de groupes)</span>
+    {% endif %}
 
     {% for courseTitle in courseTitles %}
         <div class="m-4">
@@ -15,40 +20,39 @@
                         {% endfor %}
                     </span>
                 </h3>
-
             </div>
-        <table class="table table-dark table-striped">
-            <thead>
-            <tr>
-                <th class="bg-black">Nb groupes affectés / Nb de groupes</th>
-                <th class="bg-black">Type</th>
-                <th class="bg-black">Volume Horaire</th>
-                <th class="bg-black">Assignation</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for course in courseTitle.courses %}
+            <table class="table table-dark table-striped">
+                <thead>
                 <tr>
-                    <td>
-                        <span class="rounded-circle {% if course.affectedGroups == course.groupMaxNumber %}bg-success{% elseif course.affectedHours == 0 %}bg-danger{% else %}bg-warning{% endif %} m-2"> &nbsp; &nbsp;&nbsp; </span>
-                        {{ course.affectedGroups }}/{{ course.groupMaxNumber }}
-                    </td>
-                    <td>{{ course.typeCourse.name }}</td>
-                    <td> {{ course.volume }} </td>
-                    <td>
-                        <div class="btn-group">
-                            <button type="button" class="btn rounded-pill btn-primary" data-bs-toggle="modal" data-bs-target="#courseModal{{ course.id }}">Assigner</button>
-                        </div>
-                    </td>
+                    <th class="bg-black">Nb groupes affectés / Nb de groupes</th>
+                    <th class="bg-black">Type</th>
+                    <th class="bg-black">Volume Horaire</th>
+                    <th class="bg-black">Assignation</th>
                 </tr>
-            {% else %}
-                <tr>
-                    <td colspan="11" class="text-center">Pas de cours trouvés</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                {% for course in courseTitle.courses %}
+                    <tr class="{% if course.id in courseErrors %}table-danger{% endif %}">
+                        <td>
+                            <span class="rounded-circle {% if course.affectedGroups == course.groupMaxNumber %}bg-success{% elseif course.affectedHours == 0 or course.id in courseErrors %}bg-danger{% else %}bg-warning{% endif %} m-2"> &nbsp; &nbsp;&nbsp; </span>
+                            {{ course.affectedGroups }}/{{ course.groupMaxNumber }}
+                        </td>
+                        <td>{{ course.typeCourse.name }}</td>
+                        <td>{{ course.volume }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm rounded-pill btn-primary" data-bs-toggle="modal" data-bs-target="#courseModal{{ course.id }}">Assigner</button>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="11" class="text-center">Pas de cours trouvés</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% endfor %}
 
     {{ form_start(form) }}
@@ -64,24 +68,22 @@
                             </div>
                             <div class="modal-body">
                                 <span class="alert-danger">{{ form_errors(form) }}</span>
-                                <span>Nombre maximum de groupe : </span><span id="maxGroupNumer-{{ courseForm.vars.value.id }}">{{ courseForm.vars.value.groupMaxNumber }}</span>
+                                <span>Nombre maximum de groupes : </span><span id="maxGroupNumer-{{ courseForm.vars.value.id }}">{{ courseForm.vars.value.groupMaxNumber }}</span>
                                 <ul class="affectation affectations-{{ courseForm.vars.value.id }}"
                                     data-index="{{ courseForm.affectations|length > 0 ? courseForm.affectations|last.vars.name + 1 : 0 }}"
                                     data-prototype="{{ form_widget(courseForm.affectations.vars.prototype)|e('html_attr') }}"
                                 >
                                     {% for affectation in courseForm.affectations %}
                                         <li>
-                                            <span class="alert-danger">{{ form_errors(affectation) }}</span>
-                                            {{ form_row(affectation) }}
+                                            {{ form_widget(affectation) }}
                                         </li>
                                         <hr>
                                     {% endfor %}
                                 </ul>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Sauvegarder</button>
                                 <button type="button" class="add_item_link btn btn-success" data-collection-holder-class="affectations-{{ courseForm.vars.value.id }}">Nouvelle Affectation</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Continuer</button>
+                                <button type="submit" class="btn btn-primary">Sauvegarder</button>
                                 <button type="reset" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
                             </div>
                         </div>
@@ -98,55 +100,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script></body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-    <script>
-        document
-            .querySelectorAll('.add_item_link')
-            .forEach(btn => {
-                btn.addEventListener("click", addFormToCollection)
-            });
-
-        function addFormToCollection(e) {
-            const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
-
-            const item = document.createElement('li');
-
-            item.innerHTML = collectionHolder
-                .dataset
-                .prototype
-                .replace(
-                    /__name__/g,
-                    collectionHolder.dataset.index
-                );
-
-            collectionHolder.appendChild(item);
-            collectionHolder.appendChild(document.createElement('hr'));
-
-            collectionHolder.dataset.index++;
-            addTagFormDeleteLink(item);
-        }
-
-        document
-            .querySelectorAll('ul.affectation li')
-            .forEach((tag) => {
-                addTagFormDeleteLink(tag)
-            })
-
-        function addTagFormDeleteLink(item) {
-            const removeFormButton = document.createElement('button');
-            removeFormButton.innerText = 'Supprimer';
-            removeFormButton.type = 'button';
-            removeFormButton.classList.add('btn', 'btn-danger', 'remove-tag');
-
-            item.append(removeFormButton);
-
-            removeFormButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                // remove the li for the tag form
-                item.remove();
-            });
-        }
-    </script>
-
+    <script src="{{ asset('js/affectation.js') }}"></script>
 {% endblock %}
