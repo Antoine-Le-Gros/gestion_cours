@@ -22,7 +22,7 @@ function initializeSidebarToggle() {
 function toggleSidebar(sidebar, content, hamBurger) {
     if (sidebar && content && hamBurger) {
         const isExpanded = sidebar.classList.toggle("expand");
-        content.style.marginLeft = isExpanded ? "180px" :"70px";
+        content.style.marginLeft = isExpanded ? "260px" :"70px";
         hamBurger.setAttribute("aria-expanded", isExpanded);
     }
 }
