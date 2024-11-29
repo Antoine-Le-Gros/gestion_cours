@@ -5,32 +5,19 @@ import {fetchSemesterAffectations} from "../../services/api.js";
 
 export default function HistorySemester({ params }) {
     const [affectationData, setAffectationData] = useState([]);
-    const [semester, setSemester] = useState(parseInt(params.id));
     const [isLoading, setIsLoading] = useState(false);
     const [showWeeks, setShowWeeks] = useState(true);
 
     useEffect(() => {
         setIsLoading(true);
-        fetchSemesterAffectations(semester)
+        fetchSemesterAffectations(params.id)
             .then((data) => setAffectationData(data['hydra:member']))
             .finally(() => setIsLoading(false));
-    }, [semester]);
+    }, []);
 
     return (
         <>
-            <div className="d-flex flex-row justify-content-center gap-3 m-3">
-                <button
-                    className="btn btn-dark"
-                    onClick={() => setSemester(semester - 1)}
-                    disabled={semester === 1}>
-                    <i className="bi bi-0-circle">Précédent</i>
-                </button>
-                <p>S{semester}</p>
-                <button
-                    className="btn btn-dark"
-                    onClick={() => setSemester(semester + 1)}
-                    disabled={semester === 6}>
-                    <i className="bi bi-arrow-right">Suivant</i></button>
+            <div className="d-flex flex-row  gap-3 m-3">
                 <button className="btn btn-primary" onClick={() => setShowWeeks(!showWeeks)}>
                     {showWeeks ? "Cacher les semaines" : "Afficher les semaines"}
                 </button>
