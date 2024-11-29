@@ -8,8 +8,9 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use App\DataProvider\AffectationProvider;
 use App\Repository\AffectationRepository;
+use App\State\SemesterAffectationProvider;
+use App\State\UserYearAffectationProvider;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -26,7 +27,13 @@ use Symfony\Component\Validator\Constraints as Assert;
             uriTemplate: '/users/{userId}/{yearId}/affectations',
             normalizationContext: ['groups' => ['affectation_read_graph']],
             security: "is_granted('ROLE_USER')",
-            provider: AffectationProvider::class
+            provider: UserYearAffectationProvider::class
+        ),
+        new GetCollection(
+            uriTemplate: '/semesters/{id}/affectations',
+            normalizationContext: ['groups' => ['affectation_semester', 'affectation_read']],
+            security: "is_granted('ROLE_USER')",
+            provider: SemesterAffectationProvider::class
         ),
     ],
     normalizationContext: ['groups' => ['affectation_read']],
@@ -51,7 +58,7 @@ class Affectation
 
     #[ORM\Column]
     #[Assert\GreaterThan(0)]
-    #[Groups(['affectation_read', 'affectation_write', 'affectation_read_graph'])]
+    #[Groups(['affectation_read', 'affectation_write', 'affectation_read_graph', 'affectation_semester'])]
     private ?int $numberGroupTaken = null;
 
     public function getId(): ?int

@@ -6,6 +6,7 @@ import YearList from "../components/Page/YearList.js";
 import CourseDiscovery from "../components/Page/CourseDiscovery.js";
 import HistoryTeacher from "../components/Page/HistoryTeacher.js";
 import TeacherList from "../components/Page/TeacherList.js";
+import HistorySemester from "../components/Page/HistorySemester.js";
 
 console.log("App component loaded");
 function App() {
@@ -20,6 +21,9 @@ function App() {
                 </Route>
                 <Route path="/history/year">
                     <YearList/>
+                </Route>
+                <Route path="/history/semester/:id">
+                    {(params) => <HistorySemester params={{id: params.id}} />}
                 </Route>
                 <Route path="/discover">
                     <CourseDiscovery/>

@@ -66,7 +66,7 @@ export default function YearList() {
                                     {year.semesters.map((semester) => (
                                         <a
                                             key={semester.id}
-                                            href={`/history/${year.id}/${semester.id}`}
+                                            href={`/history/semester/${semester.id}`}
                                             className="badge bg-light text-dark me-1"
                                             style={{ textDecoration: "none" }}
                                         >

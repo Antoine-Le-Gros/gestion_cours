@@ -36,17 +36,19 @@ class Module
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['course_read', 'affectation_read', 'module_read', 'module_write'])]
+    #[Groups(['course_read', 'affectation_read', 'module_read', 'module_write', 'semester_historic'])]
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'modules')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['affectation_semester'])]
     private ?Semester $semester = null;
 
     /**
      * @var Collection<int, CourseTitle>
      */
     #[ORM\ManyToMany(targetEntity: CourseTitle::class, inversedBy: 'modules')]
+    #[Groups(['semester_historic'])]
     private Collection $courseTitles;
 
     public function __construct()

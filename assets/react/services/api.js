@@ -46,6 +46,11 @@ export function fetchAffecationByUserAndYear(userId, yearId) {
         response.ok ? response.json() : Promise.resolve(null),
     );
 }
+export function fetchSemesterAffectations(semesterId) {
+    return fetch(`${BASE_URL}/semesters/${semesterId}/affectations`).then((response) =>
+        response.ok ? response.json() : Promise.resolve(null),
+    );
+}
 export function fetchCourseTitleInformation(search = "", semester, tag = 0) {
     if(!tag){
         return fetch(`${BASE_URL}/course_titles_information?search=${search}&semester=${semester}`).then((response) =>

@@ -56,6 +56,7 @@ class Semester
      * @var Collection<int, Week>
      */
     #[ORM\OneToMany(targetEntity: Week::class, mappedBy: 'semesters', orphanRemoval: true)]
+    #[Groups(['affectation_semester'])]
     private Collection $weeks;
 
     private float $completion = 0.;

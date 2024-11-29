@@ -37,6 +37,25 @@ class AffectationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return Affectation[]
+     */
+    public function findAffectationBySemester(int $semesterId): array
+    {
+        return $this->createQueryBuilder('a')
+            ->join('a.teacher', 't')
+            ->join('a.course', 'c')
+            ->join('c.hourlyVolumes', 'h')
+            ->join('h.week', 'w')
+            ->join('w.semesters', 's')
+            ->join('c.courseTitle', 'ct')
+            ->andWhere('s.id = :semesterId')
+            ->setParameter('semesterId', $semesterId)
+            ->orderBy('ct.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function getAllAffectationGroupsTakenBySemester(int $semesterId): float
     {
         return $this->createQueryBuilder('a')
