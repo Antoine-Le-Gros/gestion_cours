@@ -22,7 +22,7 @@ function App() {
                 <Route path="/history/year">
                     <YearList/>
                 </Route>
-                <Route path="/history/year/:id">
+                <Route path="/history/semester/:id">
                     {(params) => <HistorySemester params={{id: params.id}} />}
                 </Route>
                 <Route path="/discover">
