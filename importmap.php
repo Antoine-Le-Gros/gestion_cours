@@ -62,4 +62,7 @@ return [
     'prop-types' => [
         'version' => '15.8.1',
     ],
+    'affectation' => [
+        'path' => './assets/js/affectation.js',
+    ],
 ];

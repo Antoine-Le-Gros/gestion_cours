@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\CourseRepository;
+use App\Validator as CustomAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -60,6 +61,8 @@ class Course
      */
     #[ORM\OneToMany(targetEntity: Affectation::class, mappedBy: 'course', cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[Groups(['course_read', 'course_write'])]
+    #[CustomAssert\CorrectNumberOfAffectation]
+    #[Assert\Valid]
     private Collection $affectations;
 
     /**

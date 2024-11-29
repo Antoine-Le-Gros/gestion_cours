@@ -35,11 +35,13 @@ class CourseRepository extends ServiceEntityRepository
     public function findBySemesterId(int $semesterId): array
     {
         return $this->createQueryBuilder('c')
-            ->select('c', 'ct', 'hv', 'm', 's')
+            ->select('c', 'ct', 'hv', 'm', 's', 'a', 't')
             ->join('c.courseTitle', 'ct')
             ->join('ct.modules', 'm')
             ->join('m.semester', 's')
             ->join('c.hourlyVolumes', 'hv')
+            ->leftJoin('c.affectations', 'a')
+            ->leftJoin('a.teacher', 't')
             ->where('s.id = :semesterId')
             ->setParameter('semesterId', $semesterId)
             ->getQuery()
