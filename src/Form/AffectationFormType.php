@@ -18,13 +18,14 @@ class AffectationFormType extends AbstractType
             ->add('teacher', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => function (User $user) {
-                    return ucwords($user->getFirstName()).' '.strtoupper($user->getLastName());
+                    return ucwords($user->getFirstName()).' '.strtoupper($user->getLastName().' | '.$user->getRemainingHours().' Heure(s) libre(s)');
                 },
             ])
             ->add('numberGroupTaken', IntegerType::class, [
                 'label' => 'Nombre de groupes pris',
                 'empty_data' => 1,
                 'attr' => [
+                    'min' => 1,
                     'type' => 'number',
                 ],
             ])
