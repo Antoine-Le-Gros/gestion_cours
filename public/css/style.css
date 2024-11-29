@@ -139,7 +139,7 @@ a.sidebar-link:hover {
 }
 
 #sidebar.expand {
-    width: 180px;
+    width: 260px;
     transform: translateX(0);
 }
 
@@ -166,7 +166,7 @@ a.sidebar-link:hover {
     transition: margin-left 0.3s ease-in-out;
 }
 #sidebar.expand + .content {
-    margin-left: 180px;
+    margin-left: 260px;
 }
 
 .container-login {
