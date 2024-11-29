@@ -178,7 +178,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Affectation>
      */
-    #[ORM\OneToMany(targetEntity: Affectation::class, mappedBy: 'teacher')]
+    #[ORM\OneToMany(targetEntity: Affectation::class, mappedBy: 'teacher', fetch: 'EAGER')]
     private Collection $affectations;
 
     /**
@@ -392,5 +392,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->hoursMax = $hoursMax;
 
         return $this;
+    }
+
+    public function getRemainingHours(): float
+    {
+        $totalHoursTaken = 0;
+        foreach ($this->affectations as $affectation) {
+            $totalGroups = $affectation->getNumberGroupTaken();
+            $totalHoursTaken += $totalGroups * $affectation->getCourse()->getVolume();
+        }
+
+        return $this->getHoursMax() - $totalHoursTaken;
     }
 }
