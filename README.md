@@ -22,18 +22,45 @@ composer install
 ```
 Installer __composer__ est obligatoire si l'on veut installer les différentes bibliothèques et dépendances du projet, avec les bonnes versions.
 
-## Lancement du projet
-### Docker
-Pour lancer le conteneur docker, lancez la commande :
+## Lancement Rapide
+
+### Commandes
+
+#### Installation des dépendances
+```shell
+composer install
+```
+```shell
+npm install
+```
+#### Construction et lancement
+```shell
+composer start
+```
+```shell
+npm run dev
+```
 ```shell
 docker compose up -d
 ```
+```shell
+composer sass
+```
+#### Initialisation de la bd
+```shell
+composer db:dev
+```
 
-## Base de données
+#### Fichier Excel d'une année
+
+[Téléchargement du fichier](excel/edt_file.xlsx)
+
+Se trouve à l'emplacement `excel/edt_file.xlsx`
+
+### Base de données
 
 La base de données est disponible à l'URL : http://localhost:7080
 
-### Identifiants
 Voici l'identifiant utilisé dans le projet pour se connecter à la base de données __PostgreSQL__ :
 ```
 Serveur : database
@@ -42,12 +69,6 @@ Mot de passe : test
 Base de données : sae5
 ```
 
-## Serveur web local
-
-Lancez le serveur Web local avec cette commande :
-```shell
-composer start
-```
 ### Accès au serveur Web symfony
 
 Naviguez alors à partir de cette adresse : <http://127.0.0.1:8000>
@@ -56,16 +77,19 @@ Naviguez alors à partir de cette adresse : <http://127.0.0.1:8000>
 
 Naviguez alors à partir de cette adresse : <http://127.0.0.1:8000/api>
 
-### React
-Transpiler les ressources front avec Babel
-```shell
-npm run build
-```
+### Identifiants de connexions
 
-Transpiler les ressources front avec Babel en mode watch
-```shell
-npm run dev
-```
+> #### Professeur
+> Identifiant : ```agregate@example.com```  
+> Mot de passe : ```test```
+
+> #### Administration
+> Identifiant : ```admin@example.com```  
+> Mot de passe : ```test```
+
+> #### SuperAdmin
+> Identifiant : ```superadmin@example.com```  
+> Mot de passe : ```pass```
 
 ## Scripts
 ### start
@@ -149,6 +173,13 @@ Ce script lance la commande suivante. Elle charge les données des utilisateurs 
 php bin/console doctrine:fixtures:load --group=user --append
 ```
 
+### db:dev
+Ce script lance la commande suivante. Elle charge les données nécessaire a une utilisation en développement
+```shell
+composer db:type
+composer db:user
+```
+
 ### sass
 Ce script lance la commande suivante.  elle lance la compilation dynamique des fichiers Sass
 ```shell
@@ -156,13 +187,22 @@ php bin/console sass:build --watch
 ```
 
 ## Rôles
+
+### Anonyme
+Ce rôle est attribué à un utilisateur qui n'est pas connecté à l'application. Il ne possède pas d'accès aux pages d'historique
+et ne peut pas consulter l'historique d'un professeur. Il peut consulter la liste de toute les matières de l'année en cours.
+
+### Professeur
+Ce rôle est attribué à un utilisateur qui a la possibilité de consulter les matières auxquelles il a été affecté. Il ne
+possède pas d'accès CRUD aux entités de l'application, et ne peut pas affecter de matières à des professeurs.
+
+### Administrateur
+Ce rôle est attribué à un utilisateur qui a la possibilité de gérer les années et les professeurs. Il peut affecter des
+professurs a des matières en fonction de semestre et possède tous les accès nécessairepour faire contionner l'application.
+Il ne possède pas d'accès CRUD aux entres entités que Années, les Users et le système d'affectation.
+
 ### Super administrateur
 Ce rôle est réservé uniquement aux développeurs de l'application. Il permet d'accèder à toutes les pages de l'application
 sans exception, en plus de pouvoir accéder à la page située à la route __/admin__. Cette route est uniquement accèssible
 en passant par l'URL, et si vous ne possèdez pas ce rôle, l'accès a cette route vous sera refusé.
 
-Les identifiants et mot de passe du super administrateur sont les suivants :
-```
-Identifiant : superadmin
-Mot de passe : pass
-```
