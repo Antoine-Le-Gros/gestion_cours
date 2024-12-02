@@ -67,6 +67,14 @@
                             </a>
                         </li>
                     {% endif %}
+                    {% if  is_granted('ROLE_SUPER_ADMIN') %}
+                        <li class="sidebar-item d-flex flex-row">
+                            <a class="sidebar-link text-white text-decoration-none" href="/admin">
+                                <i class="lni lni-gear-1"></i>
+                                <span>CRUD</span>
+                            </a>
+                        </li>
+                    {% endif %}
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <li class="sidebar-item">
                         <a href="{{ path("app_history_year") }}" class="sidebar-link text-decoration-none">
@@ -149,6 +157,14 @@
                             <span>Enseignants</span>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="sidebar-item d-flex flex-row">
+                            <a class="sidebar-link text-white text-decoration-none" href="/admin">
+                                <i class="lni lni-gear-1"></i>
+                                <span>CRUD</span>
+                            </a>
+                        </li>
                     {% endif %}
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <li class="sidebar-item">
